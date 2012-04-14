@@ -1,0 +1,339 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta26.dtd" >
+   <PATCH nodename="C:\kimchiandchips\VVVV.Research\VVVV.Nodes.FlyCapture\Package\Patches\ListDevices.v4p" filename="C:\kimchiandchips\VVVV.Research\VVVV.Nodes.FlyCapture\Package\Patches\ListDevices.v4p" systemname="ListDevices">
+   <BOUNDS height="7560" left="4815" top="1395" type="Window" width="11175">
+   </BOUNDS>
+   <NODE componentmode="InABox" id="1" nodename="IOBox (Value Advanced)" systemname="IOBox (Value Advanced)">
+   <BOUNDS height="0" left="4785" top="255" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="480" left="4785" top="255" type="Box" width="480">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN encoded="0" pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Refresh">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="InABox" id="2" nodename="IOBox (Node)" systemname="IOBox (Node)">
+   <BOUNDS height="0" left="4800" top="1620" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="240" left="4800" top="1620" type="Box" width="795">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="GUID">
+   </PIN>
+   <PIN pinname="Input Node" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="Hidden" filename="..\Plugins\VVVV.Nodes.FlyCapture.dll" id="6" nodename="ListCameras (FlyCapture)" systemname="ListCameras (FlyCapture)">
+   <BOUNDS height="270" left="4800" top="1200" type="Node" width="2280">
+   </BOUNDS>
+   <PIN pinname="Refresh" visible="1">
+   </PIN>
+   <PIN pinname="GUID" visible="1">
+   </PIN>
+   <PIN pinname="Interface" visible="1">
+   </PIN>
+   <PIN pinname="Info" visible="1">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="6" dstpinname="Refresh" srcnodeid="1" srcpinname="Y Output Value">
+   </LINK>
+   <LINK dstnodeid="2" dstpinname="Input Node" srcnodeid="6" srcpinname="GUID">
+   </LINK>
+   <NODE componentmode="InABox" id="8" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="510" top="3360" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="480" left="510" top="3360" type="Box" width="1170">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Vendor">
+   </PIN>
+   <PIN pinname="Input String" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="InABox" id="9" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="1905" top="3360" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="480" left="1905" top="3360" type="Box" width="1170">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Model">
+   </PIN>
+   <PIN pinname="Input String" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="InABox" id="10" nodename="IOBox (Value Advanced)" systemname="IOBox (Value Advanced)">
+   <BOUNDS height="0" left="3315" top="3360" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="480" left="3315" top="3360" type="Box" width="1170">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Serial">
+   </PIN>
+   <PIN pinname="Y Input Value" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="InABox" id="11" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="4725" top="3360" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="480" left="4725" top="3360" type="Box" width="1170">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Sensor">
+   </PIN>
+   <PIN pinname="Input String" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="InABox" id="12" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="6135" top="3360" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="480" left="6135" top="3360" type="Box" width="1170">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Resolution">
+   </PIN>
+   <PIN pinname="Input String" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="Hidden" filename="..\Plugins\VVVV.Nodes.FlyCapture.dll" id="13" nodename="Info (FlyCapture General)" systemname="Info (FlyCapture General)">
+   <BOUNDS height="270" left="510" top="2835" type="Node" width="7080">
+   </BOUNDS>
+   <PIN pinname="Vendor" visible="1">
+   </PIN>
+   <PIN pinname="Model" visible="1">
+   </PIN>
+   <PIN pinname="Serial" visible="1">
+   </PIN>
+   <PIN pinname="Sensor" visible="1">
+   </PIN>
+   <PIN pinname="Resolution" visible="1">
+   </PIN>
+   <PIN pinname="Info" visible="1">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="8" dstpinname="Input String" srcnodeid="13" srcpinname="Vendor">
+   </LINK>
+   <LINK dstnodeid="9" dstpinname="Input String" srcnodeid="13" srcpinname="Model">
+   </LINK>
+   <LINK dstnodeid="10" dstpinname="Y Input Value" srcnodeid="13" srcpinname="Serial">
+   </LINK>
+   <LINK dstnodeid="11" dstpinname="Input String" srcnodeid="13" srcpinname="Sensor">
+   </LINK>
+   <LINK dstnodeid="12" dstpinname="Input String" srcnodeid="13" srcpinname="Resolution">
+   </LINK>
+   <NODE componentmode="InABox" id="14" nodename="IOBox (Value Advanced)" systemname="IOBox (Value Advanced)">
+   <BOUNDS height="0" left="7545" top="3360" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="480" left="7545" top="3360" type="Box" width="480">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Color">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="14" dstpinname="Y Input Value" srcnodeid="13" srcpinname="Color">
+   </LINK>
+   <LINK dstnodeid="13" dstpinname="Info" linkstyle="VHV" srcnodeid="6" srcpinname="Info">
+   <LINKPOINT x="7020" y="2138">
+   </LINKPOINT>
+   <LINKPOINT x="570" y="2138">
+   </LINKPOINT>
+   </LINK>
+   <NODE componentmode="Hidden" filename="..\Plugins\VVVV.Nodes.FlyCapture.dll" id="15" nodename="Info (FlyCapture Driver)" systemname="Info (FlyCapture Driver)">
+   <BOUNDS height="270" left="270" top="5115" type="Node" width="9150">
+   </BOUNDS>
+   <PIN pinname="Info" visible="1">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="15" dstpinname="Info" linkstyle="VHV" srcnodeid="6" srcpinname="Info">
+   <LINKPOINT x="7050" y="2145">
+   </LINKPOINT>
+   <LINKPOINT x="300" y="2145">
+   </LINKPOINT>
+   </LINK>
+   <NODE componentmode="InABox" id="16" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="270" top="5640" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="660" left="270" top="5640" type="Box" width="1245">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Driver">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="16" dstpinname="Input String" srcnodeid="15" srcpinname="Driver">
+   </LINK>
+   <NODE componentmode="InABox" id="17" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="1575" top="5640" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="660" left="1575" top="5640" type="Box" width="1245">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Type">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="17" dstpinname="Input String" srcnodeid="15" srcpinname="Type">
+   </LINK>
+   <NODE componentmode="InABox" id="18" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="2865" top="5640" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="660" left="2865" top="5640" type="Box" width="1245">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Firmware">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="18" dstpinname="Input String" srcnodeid="15" srcpinname="Firmware">
+   </LINK>
+   <NODE componentmode="InABox" id="19" nodename="IOBox (Value Advanced)" systemname="IOBox (Value Advanced)">
+   <BOUNDS height="0" left="4170" top="5640" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="660" left="4170" top="5640" type="Box" width="1245">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Bus">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="19" dstpinname="Y Input Value" srcnodeid="15" srcpinname="Bus">
+   </LINK>
+   <NODE componentmode="InABox" id="20" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="5460" top="5640" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="660" left="5460" top="5640" type="Box" width="1245">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="|Bus Speed|">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="20" dstpinname="Input String" srcnodeid="15" srcpinname="Bus Speed">
+   </LINK>
+   <NODE componentmode="InABox" id="21" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="6765" top="5640" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="660" left="6765" top="5640" type="Box" width="1245">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="|PCIe Speed|">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="21" dstpinname="Input String" srcnodeid="15" srcpinname="PCIe Speed">
+   </LINK>
+   <NODE componentmode="InABox" id="22" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="0" left="8055" top="5640" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="660" left="8055" top="5640" type="Box" width="1245">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN encoded="0" pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="|User Defined Name|">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="22" dstpinname="Input String" srcnodeid="15" srcpinname="User Defined Name">
+   </LINK>
+   <NODE componentmode="InABox" id="23" nodename="IOBox (Value Advanced)" systemname="IOBox (Value Advanced)">
+   <BOUNDS height="0" left="9375" top="5640" type="Node" width="0">
+   </BOUNDS>
+   <BOUNDS height="660" left="9375" top="5640" type="Box" width="1245">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="|Node number|">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="23" dstpinname="Y Input Value" srcnodeid="15" srcpinname="Node number">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="24" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Node" left="7020" top="1620" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="7020" top="1620" width="795" height="240">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||" encoded="0">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Count" encoded="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="6" srcpinname="Count" dstnodeid="24" dstpinname="Y Input Value">
+   </LINK>
+   </PATCH>
