@@ -74,7 +74,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 		{
 			get
 			{
-				return new CVImageAttributes(this.Size, TColourFormat.L8);
+				return new CVImageAttributes(this.Size, TColorFormat.L8);
 			}
 		}
 

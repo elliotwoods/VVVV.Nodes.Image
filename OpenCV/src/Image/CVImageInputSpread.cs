@@ -28,7 +28,13 @@ namespace VVVV.Nodes.OpenCV
 
 		public bool CheckInputSize()
 		{
-			if (FInputPin[0] == null)
+			bool noInput = false;
+			if (FInputPin.SliceCount == 0)
+				noInput = false;
+			else if (FInputPin[0] == null)
+				noInput = false;
+
+			if (noInput)
 			{
 				if (FInput.SliceCount == 0)
 					return false;
@@ -48,7 +54,8 @@ namespace VVVV.Nodes.OpenCV
 				for (int iAdd = FInput.SliceCount; iAdd < FInputPin.SliceCount; iAdd++)
 				{
 					CVImageInput add = new CVImageInput();
-					add.Connect(FInputPin[iAdd]);
+					if (FInputPin[iAdd] != null)
+						add.Connect(FInputPin[iAdd]);
 					FInput.Add(add);
 				}
 
@@ -115,7 +122,10 @@ namespace VVVV.Nodes.OpenCV
 		{
 			get
 			{
-				return !(FInputPin[0] == null && FInputPin.SliceCount == 1);
+				if (FInputPin.SliceCount > 0)
+					return !(FInputPin[0] == null && FInputPin.SliceCount == 1);
+				else
+					return false;
 			}
 		}
 

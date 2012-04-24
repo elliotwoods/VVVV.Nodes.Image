@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace VVVV.Nodes.OpenCV
 {
-	public enum TColourFormat { UnInitialised, RGB8, RGB32F, RGBA8, RGBA32F, L8, L16, L32S, L32F };
+	public enum TColorFormat { UnInitialised, RGB8, RGB32F, RGBA8, RGBA32F, L8, L16, L32S, L32F };
 
 	public enum TChannelFormat { UnInitialised, Byte, UShort, UInt, Float};
 
@@ -22,29 +22,29 @@ namespace VVVV.Nodes.OpenCV
 
 	public class CVImageAttributes : ICloneable
 	{
-		public TColourFormat ColourFormat;
+		public TColorFormat ColourFormat;
 		public Size FSize = new Size();
 
 		public CVImageAttributes()
 		{
-			ColourFormat = TColourFormat.UnInitialised;
+			ColourFormat = TColorFormat.UnInitialised;
 			FSize = new Size(0, 0);
 		}
 
-		public CVImageAttributes(Size size, TColourFormat format)
+		public CVImageAttributes(Size size, TColorFormat format)
 		{
 			FSize = size;
 			ColourFormat = format;
 		}
 
-		public CVImageAttributes(TColourFormat c, int w, int h)
+		public CVImageAttributes(TColorFormat c, int w, int h)
 		{
 			ColourFormat = c;
 			FSize.Width = w;
 			FSize.Height = h;
 		}
 
-		public bool CheckChanges(TColourFormat c, Size s)
+		public bool CheckChanges(TColorFormat c, Size s)
 		{
 			bool changed = false;
 			if (c != ColourFormat)
@@ -65,7 +65,7 @@ namespace VVVV.Nodes.OpenCV
 		{
 			get
 			{
-				return ColourFormat != TColourFormat.UnInitialised;
+				return ColourFormat != TColorFormat.UnInitialised;
 			}
 		}
 		public int Width

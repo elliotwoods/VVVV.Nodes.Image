@@ -126,7 +126,9 @@ namespace VVVV.Nodes.OpenCV
 
 			lock (FLockProcess)
 			{
-				if (FInput[0] == null)
+				if (FInput.SliceCount == 0)
+					SpreadMax = 0;
+				else if (FInput[0] == null)
 					SpreadMax = 0;
 
 				for (int i = FProcess.SliceCount; i < SpreadMax; i++)

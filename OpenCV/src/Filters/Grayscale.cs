@@ -16,13 +16,13 @@ namespace VVVV.Nodes.OpenCV
 {
 	public class GrayscaleInstance : IFilterInstance
 	{
-		TColourFormat FOutFormat;
+		TColorFormat FOutFormat;
 		public override void Initialise()
 		{
 			FOutFormat = ImageUtils.MakeGrayscale(FInput.ImageAttributes.ColourFormat);
 
 			//if we can't convert or it's already grayscale, just pass through
-			if (FOutFormat == TColourFormat.UnInitialised)
+			if (FOutFormat == TColorFormat.UnInitialised)
 				FOutFormat = FInput.ImageAttributes.ColourFormat;
 
 			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, FOutFormat);

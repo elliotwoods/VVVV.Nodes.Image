@@ -65,7 +65,7 @@ namespace VVVV.Nodes.OpenCV
 			CvInvoke.cvPyrDown(FInput.CvMat, FOutput.CvMat, FILTER_TYPE.CV_GAUSSIAN_5x5);
 			FInput.ReleaseForReading(); //and  this after you've finished with FImage
 
-			if (FInput.ImageAttributes.ColourFormat==TColourFormat.RGB8)
+			if (FInput.ImageAttributes.ColourFormat==TColorFormat.RGB8)
 				PixelWiseAdd();
 			
 			FOutput.Send();

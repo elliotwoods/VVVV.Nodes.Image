@@ -43,8 +43,8 @@ namespace VVVV.Nodes.OpenCV
 
 			if (FThresholdEnabled)
 			{
-				FOutput.Image.Initialise(FInput.ImageAttributes.Size, TColourFormat.L8);
-				FBuffer.Initialise(FInput.ImageAttributes.Size, TColourFormat.L8);
+				FOutput.Image.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
+				FBuffer.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 			}
 			else
 			{
@@ -57,16 +57,16 @@ namespace VVVV.Nodes.OpenCV
 		{
 			if (FThresholdEnabled)
 			{
-				if (FInput.ImageAttributes.ColourFormat != TColourFormat.L8)
+				if (FInput.ImageAttributes.ColourFormat != TColorFormat.L8)
 				{
-					FInput.Image.GetImage(TColourFormat.L8, FOutput.Image);
+					FInput.Image.GetImage(TColorFormat.L8, FOutput.Image);
 
 					if (DifferenceMode == TDifferenceMode.AbsoluteDifference)
 						CvInvoke.cvAbsDiff(FOutput.CvMat, FBuffer.CvMat, FOutput.CvMat);
 
 					CvInvoke.cvThreshold(FOutput.CvMat, FOutput.CvMat, 255.0d * Threshold, 255, THRESH.CV_THRESH_BINARY);
 
-					FInput.Image.GetImage(TColourFormat.L8, FBuffer);
+					FInput.Image.GetImage(TColorFormat.L8, FBuffer);
 				}
 				else
 				{

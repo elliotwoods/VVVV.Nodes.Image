@@ -34,11 +34,11 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Initialise()
 		{
-			FOutput.Image.Initialise(FInput.ImageAttributes.Size, TColourFormat.L8);
-			FBackground.Initialise(FInput.ImageAttributes.Size, TColourFormat.L8);
+			FOutput.Image.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
+			FBackground.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 		}
 
-		private bool NeedsConversion { get { return FInput.ImageAttributes.ColourFormat != TColourFormat.L8; } }
+		private bool NeedsConversion { get { return FInput.ImageAttributes.ColourFormat != TColorFormat.L8; } }
 
 		public override void Process()
 		{

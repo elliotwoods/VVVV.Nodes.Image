@@ -51,7 +51,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 
 		public override void Initialise()
 		{
-			FGreyscale.Initialise(FInput.ImageAttributes.Size, TColourFormat.L8);
+			FGreyscale.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 			FPositive.Initialise(FGreyscale.ImageAttributes);
 			FNegative.Initialise(FGreyscale.ImageAttributes);
 			ScanSet.Allocate(FInput.ImageAttributes.Size);

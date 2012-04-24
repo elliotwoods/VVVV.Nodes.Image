@@ -1,0 +1,203 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta26.dtd" >
+   <PATCH nodename="C:\kimchiandchips\VVVV.Research\VVVV.Nodes.OpenNI\Samples\1. Images.v4p" filename="C:\kimchiandchips\VVVV.Research\VVVV.Nodes.OpenNI\Samples\0. Context.v4p" systemname="0. Context">
+   <BOUNDS height="12135" left="7200" top="1425" type="Window" width="8895">
+   </BOUNDS>
+   <NODE componentmode="InABox" id="3" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="100" left="6480" top="2355" type="Node" width="100">
+   </BOUNDS>
+   <BOUNDS height="240" left="6480" top="2355" type="Box" width="1740">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Status">
+   </PIN>
+   </NODE>
+   <NODE componentmode="InABox" id="4" nodename="IOBox (Value Advanced)" systemname="IOBox (Value Advanced)">
+   <BOUNDS height="100" left="2205" top="495" type="Node" width="100">
+   </BOUNDS>
+   <BOUNDS height="480" left="2205" top="495" type="Box" width="480">
+   </BOUNDS>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Open">
+   </PIN>
+   </NODE>
+   <NODE componentmode="Hidden" filename="..\..\Prerequisites\VVVV.Nodes.OpenNI.dll" id="5" nodename="Context (OpenNI)" systemname="Context (OpenNI)">
+   <BOUNDS height="270" left="2190" top="1365" type="Node" width="4350">
+   </BOUNDS>
+   <PIN pinname="Filename">
+   </PIN>
+   <PIN pinname="Open" visible="1">
+   </PIN>
+   <PIN pinname="Status" visible="1">
+   </PIN>
+   <PIN pinname="Context" visible="1">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="5" dstpinname="Open" srcnodeid="4" srcpinname="Y Output Value">
+   </LINK>
+   <LINK dstnodeid="3" dstpinname="Input String" srcnodeid="5" srcpinname="Status">
+   </LINK>
+   <NODE componentmode="Hidden" filename="..\..\Prerequisites\VVVV.Nodes.OpenNI.dll" id="7" nodename="Images (OpenNI)" systemname="Images (OpenNI)">
+   <BOUNDS height="270" left="2190" top="3360" type="Node" width="4365">
+   </BOUNDS>
+   <PIN pinname="Context" visible="1">
+   </PIN>
+   <PIN pinname="Status" visible="1">
+   </PIN>
+   <PIN pinname="RGB" visible="1">
+   </PIN>
+   <PIN pinname="Depth" visible="1">
+   </PIN>
+   <PIN pinname="Image" visible="1">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="7" dstpinname="Context" srcnodeid="5" srcpinname="Context">
+   </LINK>
+   <NODE componentmode="InABox" id="8" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="100" left="6480" top="4305" type="Node" width="100">
+   </BOUNDS>
+   <BOUNDS height="240" left="6480" top="4305" type="Box" width="1740">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="1">
+   </PIN>
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="Status">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="8" dstpinname="Input String" srcnodeid="7" srcpinname="Status">
+   </LINK>
+   <NODE componentmode="Hidden" id="11" nodename="Cons (EX9.Texture)" systemname="Cons (EX9.Texture)">
+   <BOUNDS height="270" left="2175" top="4965" type="Node" width="1515">
+   </BOUNDS>
+   <PIN pinname="Texture In 1" visible="1">
+   </PIN>
+   <PIN pinname="Texture In 2" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="Hidden" id="13" nodename="Scale (Transform)" systemname="Scale (Transform)">
+   <BOUNDS height="100" left="1260" top="7110" type="Node" width="100">
+   </BOUNDS>
+   <PIN pinname="Transform Out" visible="1">
+   </PIN>
+   <PIN pinname="Transform In" visible="1">
+   </PIN>
+   <PIN pinname="Y" slicecount="1" values="2">
+   </PIN>
+   </NODE>
+   <NODE componentmode="Hidden" id="14" nodename="Translate (Transform)" systemname="Translate (Transform)">
+   <BOUNDS height="100" left="1245" top="6555" type="Node" width="100">
+   </BOUNDS>
+   <PIN pinname="Transform Out" visible="1">
+   </PIN>
+   <PIN pinname="X" visible="1">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="13" dstpinname="Transform In" srcnodeid="14" srcpinname="Transform Out">
+   </LINK>
+   <NODE componentmode="Hidden" id="15" nodename="LinearSpread (Spreads)" systemname="LinearSpread (Spreads)">
+   <BOUNDS height="100" left="1485" top="5970" type="Node" width="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Spread Count" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Width" slicecount="1" values="2">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="14" dstpinname="X" srcnodeid="15" srcpinname="Output">
+   </LINK>
+   <NODE componentmode="InABox" id="16" nodename="Renderer (EX9)" systemname="Renderer (EX9)">
+   <BOUNDS height="100" left="645" top="8145" type="Node" width="100">
+   </BOUNDS>
+   <BOUNDS height="3075" left="645" top="8145" type="Box" width="7440">
+   </BOUNDS>
+   <BOUNDS height="5010" left="8835" top="12300" type="Window" width="6240">
+   </BOUNDS>
+   <PIN pinname="Layers" visible="1">
+   </PIN>
+   </NODE>
+   <NODE componentmode="InABox" id="18" nodename="IOBox (String)" systemname="IOBox (String)">
+   <BOUNDS height="270" left="6015" top="4815" type="Node" width="4005">
+   </BOUNDS>
+   <BOUNDS height="510" left="6015" top="4815" type="Box" width="2190">
+   </BOUNDS>
+   <PIN encoded="0" pinname="Input String" slicecount="1" visible="0" values="|//Status pin on Images node is likely to be depreciated|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE componentmode="Hidden" filename="%VVVV%\effects\Constant.fx" id="12" nodename="Constant (EX9.Effect)" systemname="Constant (EX9.Effect)">
+   <BOUNDS height="270" left="660" top="7665" type="Node" width="2760">
+   </BOUNDS>
+   <PIN pinname="Texture" visible="1">
+   </PIN>
+   <PIN pinname="Transform" visible="1">
+   </PIN>
+   <PIN pinname="Layer" visible="1">
+   </PIN>
+   <PIN pinname="Color" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Mesh" visible="1">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="12" dstpinname="Texture" srcnodeid="11" srcpinname="Texture Out">
+   </LINK>
+   <LINK dstnodeid="12" dstpinname="Transform" srcnodeid="13" srcpinname="Transform Out">
+   </LINK>
+   <LINK dstnodeid="16" dstpinname="Layers" srcnodeid="12" srcpinname="Layer">
+   </LINK>
+   <NODE componentmode="Hidden" id="21" nodename="Grid (EX9.Geometry)" systemname="Grid (EX9.Geometry)">
+   <BOUNDS height="100" left="720" top="7110" type="Node" width="100">
+   </BOUNDS>
+   <PIN pinname="Mesh" visible="1">
+   </PIN>
+   </NODE>
+   <LINK dstnodeid="12" dstpinname="Mesh" linkstyle="VHV" srcnodeid="21" srcpinname="Mesh">
+   <LINKPOINT x="780" y="7515">
+   </LINKPOINT>
+   <LINKPOINT x="960" y="7515">
+   </LINKPOINT>
+   </LINK>
+   <NODE systemname="AsTexture (EmguCV)" filename="..\..\VVVV.Nodes.EmguCV\Build\plugins\VVVV.Nodes.EmguCV.dll" nodename="AsTexture (EmguCV)" componentmode="Hidden" id="22">
+   <BOUNDS type="Node" left="2175" top="4305" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Image" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="2175" top="4305">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="7" srcpinname="Image" dstnodeid="22" dstpinname="Image">
+   </LINK>
+   <LINK srcnodeid="22" srcpinname="Texture Out" dstnodeid="11" dstpinname="Texture In 1">
+   </LINK>
+   <NODE systemname="AsTexture (EmguCV)" filename="..\..\VVVV.Nodes.EmguCV\Build\plugins\VVVV.Nodes.EmguCV.dll" nodename="AsTexture (EmguCV)" componentmode="Hidden" id="23">
+   <BOUNDS type="Node" left="3630" top="4305" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Image" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="3630" top="4305">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="23" srcpinname="Texture Out" dstnodeid="11" dstpinname="Texture In 2">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="Depth" dstnodeid="23" dstpinname="Image">
+   </LINK>
+   </PATCH>

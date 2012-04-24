@@ -29,7 +29,7 @@ namespace VVVV.Nodes.OpenCV
 			Initialise(attributes.Size, attributes.ColourFormat);
 		}
 
-		public bool Initialise(System.Drawing.Size size, TColourFormat format)
+		public bool Initialise(System.Drawing.Size size, TColorFormat format)
 		{
 			bool changedAttributes = FImageAttributes.CheckChanges(format, size);
 
@@ -42,7 +42,7 @@ namespace VVVV.Nodes.OpenCV
 				return false;
 		}
 
-		public void GetImage(TColourFormat format, CVImage target)
+		public void GetImage(TColorFormat format, CVImage target)
 		{
 			if (format == this.NativeFormat)
 				ImageUtils.CopyImage(this, target);
@@ -60,7 +60,7 @@ namespace VVVV.Nodes.OpenCV
 			if (source == null)
 				return false;
 
-			TColourFormat sourceFormat = ImageUtils.GetFormat(source);
+			TColorFormat sourceFormat = ImageUtils.GetFormat(source);
 			bool Reinitialise = Initialise(source.Size, sourceFormat);
 
 			ImageUtils.CopyImage(source, this);

@@ -24,6 +24,25 @@ namespace VVVV.Nodes.OpenCV
 			return imagePoints;
 		}
 
+		public static PointF[][] ImagePoints(ISpread<Vector2D> input, int pointsPerImage)
+		{
+			int images = input.SliceCount / pointsPerImage;
+
+			PointF[][] imagePoints = new PointF[images][];
+
+			for (int i = 0; i < images; i++)
+			{
+				imagePoints[i] = new PointF[pointsPerImage];
+				for (int j = 0; j < pointsPerImage; j++)
+				{
+					imagePoints[i][j].X = (float)input[i * pointsPerImage + j].x;
+					imagePoints[i][j].Y = (float)input[i * pointsPerImage + j].y;
+				}
+			}
+
+			return imagePoints;
+		}
+
 		public static MCvPoint3D32f[] ObjectPoints(ISpread<Vector3D> input)
 		{
 			MCvPoint3D32f[] objectPoints = new MCvPoint3D32f[input.SliceCount];

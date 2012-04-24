@@ -19,12 +19,12 @@ using VVVV.Nodes.OpenCV;
 
 #endregion usings
 
-namespace VVVV.Nodes.OpenNI
+namespace VVVV.Nodes.OpenCV.OpenNI
 {
 	enum ImageNodeMode { RGB, IR };
 
 	#region PluginInfo
-	[PluginInfo(Name = "Images", Category = "OpenNI", Help = "OpenNI Image generator", Tags = "")]
+	[PluginInfo(Name = "Images", Category = "OpenCV", Version = "OpenNI", Help = "OpenNI Image generator", Tags = "")]
 	#endregion PluginInfo
 	public class ImageNode : IPluginEvaluate, IDisposable
 	{
@@ -79,7 +79,7 @@ namespace VVVV.Nodes.OpenNI
                         imageMode.YRes = 480;
                         imageMode.FPS = 30;
                         FImageGenerator.MapOutputMode = imageMode;
-                        Image.Image.Initialise(size, TColourFormat.RGB8);
+                        Image.Image.Initialise(size, TColorFormat.RGB8);
 
                         if (FState.DepthGenerator.AlternativeViewpointCapability.IsViewpointSupported(FImageGenerator))
                         {
@@ -94,12 +94,12 @@ namespace VVVV.Nodes.OpenNI
                     else
                     {
                         FIRGenerator = new IRGenerator(FState.Context);
-                        Image.Image.Initialise(size, TColourFormat.L16);
+                        Image.Image.Initialise(size, TColorFormat.L16);
                         FIRGenerator.StartGenerating();
                     }
 
-                    Depth.Image.Initialise(size, TColourFormat.L16);
-                    World.Image.Initialise(size, TColourFormat.RGB32F);
+                    Depth.Image.Initialise(size, TColorFormat.L16);
+                    World.Image.Initialise(size, TColorFormat.RGB32F);
 
                     for (int x = 0; x < 640; x++)
                         for (int y = 0; y < 480; y++)

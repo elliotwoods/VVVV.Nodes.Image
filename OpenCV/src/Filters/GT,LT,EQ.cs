@@ -21,7 +21,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Initialise()
 		{
-			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColourFormat.L8);
+			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
 		}
 
 		public override void Process()
@@ -58,7 +58,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Initialise()
 		{
-			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColourFormat.L8);
+			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
 		}
 
 		public override void Process()
@@ -94,7 +94,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Initialise()
 		{
-			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColourFormat.L8);
+			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
 		}
 
 		public override void Process()

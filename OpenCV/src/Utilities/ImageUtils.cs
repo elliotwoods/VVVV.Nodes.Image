@@ -22,50 +22,50 @@ namespace VVVV.Nodes.OpenCV
 			System.Diagnostics.Debug.Print(e.Message);
 		}
 
-		public static COLOR_CONVERSION ConvertRoute(TColourFormat src, TColourFormat dst)
+		public static COLOR_CONVERSION ConvertRoute(TColorFormat src, TColorFormat dst)
 		{
 			switch (src)
 			{
-				case TColourFormat.L8:
+				case TColorFormat.L8:
 					{
 						switch (dst)
 						{
-							case TColourFormat.RGBA8:
+							case TColorFormat.RGBA8:
 								return COLOR_CONVERSION.CV_GRAY2RGBA;
 						}
 						break;
 					}
 
-				case TColourFormat.RGB8:
+				case TColorFormat.RGB8:
 					{
 						switch (dst)
 						{
-							case TColourFormat.L8:
+							case TColorFormat.L8:
 								return COLOR_CONVERSION.CV_RGB2GRAY;
 
-							case TColourFormat.RGBA8:
+							case TColorFormat.RGBA8:
 								return COLOR_CONVERSION.CV_RGB2RGBA;
 						}
 						break;
 					}
-				case TColourFormat.RGBA8:
+				case TColorFormat.RGBA8:
 					{
 						switch (dst)
 						{
-							case TColourFormat.L8:
+							case TColorFormat.L8:
 								return COLOR_CONVERSION.CV_RGBA2GRAY;
 						}
 						break;
 					}
 
-				case TColourFormat.RGB32F:
+				case TColorFormat.RGB32F:
 					{
 						switch (dst)
 						{
-							case TColourFormat.L32F:
+							case TColorFormat.L32F:
 								return COLOR_CONVERSION.CV_RGBA2GRAY;
 
-							case TColourFormat.RGBA32F:
+							case TColorFormat.RGBA32F:
 								return COLOR_CONVERSION.CV_RGB2RGBA;
 						}
 						break;
@@ -75,84 +75,84 @@ namespace VVVV.Nodes.OpenCV
 			return COLOR_CONVERSION.CV_COLORCVT_MAX;
 		}
 
-		public static IImage CreateImage(int width, int height, TColourFormat format)
+		public static IImage CreateImage(int width, int height, TColorFormat format)
 		{
 			switch(format)
 			{
-				case TColourFormat.L8:
+				case TColorFormat.L8:
 					return new Image<Gray, byte>(width, height);
-				case TColourFormat.L16:
+				case TColorFormat.L16:
 					return new Image<Gray, ushort>(width, height);
-				case TColourFormat.L32S:
+				case TColorFormat.L32S:
 					return new Image<Gray, int>(width, height);
-				case TColourFormat.L32F:
+				case TColorFormat.L32F:
 					return new Image<Gray, float>(width, height);
 
-				case TColourFormat.RGB8:
+				case TColorFormat.RGB8:
 					return new Image<Rgb, byte>(width, height);
-				case TColourFormat.RGB32F:
+				case TColorFormat.RGB32F:
 					return new Image<Rgb, float>(width, height);
 
-				case TColourFormat.RGBA8:
+				case TColorFormat.RGBA8:
 					return new Image<Rgba, byte>(width, height);
-				case TColourFormat.RGBA32F:
+				case TColorFormat.RGBA32F:
 					return new Image<Rgba, float>(width, height);
 			}
 
 			throw (new NotImplementedException("We have not implemented the automatic creation of this image type"));
 		}
 
-		public static TColourFormat GetFormat(IImage image)
+		public static TColorFormat GetFormat(IImage image)
 		{
 			Image<Gray, byte> ImageL8 = image as Image<Gray, byte>;
 			if (ImageL8 != null)
-				return TColourFormat.L8;
+				return TColorFormat.L8;
 
 			Image<Gray, ushort> ImageL16 = image as Image<Gray, ushort>;
 			if (ImageL16 != null)
-				return TColourFormat.L16;
+				return TColorFormat.L16;
 			
 			Image<Rgb, byte> ImageRGB8 = image as Image<Rgb, byte>;
 			if (ImageRGB8 != null)
-				return TColourFormat.RGB8;
+				return TColorFormat.RGB8;
 			//camera captures seem to arrive as bgr even though rgb
 			//may need to revisit this later on
 			Image<Bgr, byte> ImageBGR8 = image as Image<Bgr, byte>;
 			if (ImageBGR8 != null)
-				return TColourFormat.RGB8;
+				return TColorFormat.RGB8;
 
 			Image<Rgb, float> ImageRGB32F = image as Image<Rgb, float>;
 			if (ImageRGB32F != null)
-				return TColourFormat.RGB32F;
+				return TColorFormat.RGB32F;
 
 			Image<Rgba, byte> ImageRGBA8 = image as Image<Rgba, byte>;
 			if (ImageRGBA8 != null)
-				return TColourFormat.RGBA8;
+				return TColorFormat.RGBA8;
 
-			return TColourFormat.UnInitialised;
+			return TColorFormat.UnInitialised;
 		}
 
-		public static uint BytesPerPixel(TColourFormat format)
+		public static uint BytesPerPixel(TColorFormat format)
 		{
 			switch (format)
 			{
-				case TColourFormat.L8:
+				case TColorFormat.L8:
 					return 1;
-				case TColourFormat.L16:
+				case TColorFormat.L16:
 					return 2;
-				case TColourFormat.L32F:
+				case TColorFormat.L32F:
 					return 4;
 
-				case TColourFormat.RGB8:
+				case TColorFormat.RGB8:
 					return 3;
 
-				case TColourFormat.RGB32F:
+				case TColorFormat.RGB32F:
 					return 3 * sizeof(float);
 
-				case TColourFormat.RGBA8:
+				case TColorFormat.RGBA8:
 					return 4;
 
-				case TColourFormat.RGBA32F:
+				case TColorFormat.RGBA32F:
 					return 4 * sizeof(float);
 
 				default:
@@ -160,25 +160,25 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public static int ChannelCount(TColourFormat format)
+		public static int ChannelCount(TColorFormat format)
 		{
 			switch (format)
 			{
-				case TColourFormat.L8:
+				case TColorFormat.L8:
 					return 1;
-				case TColourFormat.L16:
+				case TColorFormat.L16:
 					return 1;
 
-				case TColourFormat.RGB8:
+				case TColorFormat.RGB8:
 					return 3;
 
-				case TColourFormat.RGB32F:
+				case TColorFormat.RGB32F:
 					return 3;
 
-				case TColourFormat.RGBA8:
+				case TColorFormat.RGBA8:
 					return 4;
 
-				case TColourFormat.RGBA32F:
+				case TColorFormat.RGBA32F:
 					return 4;
 
 				default:
@@ -186,42 +186,42 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public static TColourFormat MakeGrayscale(TColourFormat format)
+		public static TColorFormat MakeGrayscale(TColorFormat format)
 		{
 			switch (format)
 			{
-				case TColourFormat.RGB8:
-					return TColourFormat.L8;
+				case TColorFormat.RGB8:
+					return TColorFormat.L8;
 
-				case TColourFormat.RGB32F:
-					return TColourFormat.L32F;
+				case TColorFormat.RGB32F:
+					return TColorFormat.L32F;
 
-				case TColourFormat.RGBA8:
-					return TColourFormat.L8;
+				case TColorFormat.RGBA8:
+					return TColorFormat.L8;
 
-				case TColourFormat.RGBA32F:
-					return TColourFormat.L32F;
+				case TColorFormat.RGBA32F:
+					return TColorFormat.L32F;
 
 				default:
-					return TColourFormat.UnInitialised;
+					return TColorFormat.UnInitialised;
 			}
 		}
 
-		public static TChannelFormat ChannelFormat(TColourFormat format)
+		public static TChannelFormat ChannelFormat(TColorFormat format)
 		{
 			switch(format)
 			{
-				case TColourFormat.L8:
-				case TColourFormat.RGB8:
-				case TColourFormat.RGBA8:
+				case TColorFormat.L8:
+				case TColorFormat.RGB8:
+				case TColorFormat.RGBA8:
 					return TChannelFormat.Byte;
 
-				case TColourFormat.L16:
+				case TColorFormat.L16:
 					return TChannelFormat.UShort;
 
-				case TColourFormat.L32F:
-				case TColourFormat.RGB32F:
-				case TColourFormat.RGBA32F:
+				case TColorFormat.L32F:
+				case TColorFormat.RGB32F:
+				case TColorFormat.RGBA32F:
 					return TChannelFormat.Float;
 
 				default:
@@ -229,21 +229,21 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public static Format GetDXFormat(TColourFormat format)
+		public static Format GetDXFormat(TColorFormat format)
 		{
 			switch (format)
 			{
-				case TColourFormat.L8:
+				case TColorFormat.L8:
 					return Format.L8;
-				case TColourFormat.L16:
+				case TColorFormat.L16:
 					return Format.L16;
-				case TColourFormat.L32F:
+				case TColorFormat.L32F:
 					return Format.R32F;
 
-				case TColourFormat.RGBA32F:
+				case TColorFormat.RGBA32F:
 					return Format.A32B32G32R32F;
 
-				case TColourFormat.RGBA8:
+				case TColorFormat.RGBA8:
 					return Format.A8R8G8B8;
 
 				default:
@@ -251,25 +251,25 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public static string AsString(TColourFormat format)
+		public static string AsString(TColorFormat format)
 		{
 			switch (format)
 			{
-				case TColourFormat.L8:
+				case TColorFormat.L8:
 					return "L8";
-				case TColourFormat.L16:
+				case TColorFormat.L16:
 					return "L16";
 
-				case TColourFormat.RGB8:
+				case TColorFormat.RGB8:
 					return "RGB8";
 
-				case TColourFormat.RGB32F:
+				case TColorFormat.RGB32F:
 					return "RGB32F";
 
-				case TColourFormat.RGBA8:
+				case TColorFormat.RGBA8:
 					return "RGBA8";
 
-				case TColourFormat.RGBA32F:
+				case TColorFormat.RGBA32F:
 					return "RGBA32F";
 
 				default:
@@ -279,8 +279,8 @@ namespace VVVV.Nodes.OpenCV
 
 		public static Texture CreateTexture(CVImageAttributes attributes, Device device)
 		{
-			TColourFormat format = attributes.ColourFormat;
-			TColourFormat newFormat;
+			TColorFormat format = attributes.ColourFormat;
+			TColorFormat newFormat;
 			bool useConverted = NeedsConversion(format, out newFormat);
 
 			try
@@ -294,20 +294,20 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public static bool NeedsConversion(TColourFormat format, out TColourFormat targetFormat)
+		public static bool NeedsConversion(TColorFormat format, out TColorFormat targetFormat)
 		{
 			switch(format)
 			{
-				case TColourFormat.RGB8:
-					targetFormat = TColourFormat.RGBA8;
+				case TColorFormat.RGB8:
+					targetFormat = TColorFormat.RGBA8;
 					return true;
 
-				case TColourFormat.RGB32F:
-					targetFormat = TColourFormat.RGBA32F;
+				case TColorFormat.RGB32F:
+					targetFormat = TColorFormat.RGBA32F;
 					return true;
 
 				default:
-					targetFormat = TColourFormat.UnInitialised;
+					targetFormat = TColorFormat.UnInitialised;
 					return false;
 			}
 		}
@@ -430,7 +430,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public static unsafe Spread<double> GetPixelAsDoubles(CVImage source, uint column, uint row)
 		{
-			TColourFormat format = source.ImageAttributes.ColourFormat;
+			TColorFormat format = source.ImageAttributes.ColourFormat;
 			uint channelCount = (uint)ChannelCount(format);
 
 			if (channelCount == 0)

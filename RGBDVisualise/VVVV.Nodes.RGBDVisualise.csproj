@@ -127,9 +127,9 @@
       <Project>{C3773330-81FA-4253-823E-1BDE1529AA99}</Project>
       <Name>Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OpenCV\VVVV.Nodes.KC.OpenCV.csproj">
+    <ProjectReference Include="..\OpenCV\VVVV.Nodes.OpenCV.csproj">
       <Project>{E9A7FC26-34E0-4C1E-83D8-C01A169422B2}</Project>
-      <Name>VVVV.Nodes.KC.OpenCV</Name>
+      <Name>VVVV.Nodes.OpenCV</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

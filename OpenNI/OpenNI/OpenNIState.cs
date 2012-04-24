@@ -5,7 +5,7 @@ using System.Text;
 using OpenNI;
 using System.Threading;
 
-namespace VVVV.Nodes.OpenNI
+namespace VVVV.Nodes.OpenCV.OpenNI
 {
     class OpenNIState
     {

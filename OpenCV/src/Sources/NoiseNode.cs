@@ -26,7 +26,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public void Refresh()
 		{
-			FOutput.Image.Initialise(FSize, TColourFormat.RGBA32F);
+			FOutput.Image.Initialise(FSize, TColorFormat.RGBA32F);
 			FillRandomValues();
 			FOutput.Send();
 		}

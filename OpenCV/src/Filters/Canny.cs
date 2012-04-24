@@ -41,7 +41,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Initialise()
 		{
-			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColourFormat.L8);
+			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 			FOutput.Image.Initialise(FGrayscale.ImageAttributes);
 		}
 

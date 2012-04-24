@@ -35,7 +35,7 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public TColourFormat NativeFormat
+		public TColorFormat NativeFormat
 		{
 			get
 			{

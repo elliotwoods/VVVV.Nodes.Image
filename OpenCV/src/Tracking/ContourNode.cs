@@ -126,7 +126,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Initialise()
 		{
-			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColourFormat.L8);
+			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 		}
 
 		private struct ContourTempData
@@ -141,7 +141,7 @@ namespace VVVV.Nodes.OpenCV
 			if (!Enabled)
 				return;
 
-			FInput.Image.GetImage(TColourFormat.L8, FGrayscale);
+			FInput.Image.GetImage(TColorFormat.L8, FGrayscale);
 			Image<Gray, byte> img = FGrayscale.GetImage() as Image<Gray, byte>;
 			if (img != null)
 			{

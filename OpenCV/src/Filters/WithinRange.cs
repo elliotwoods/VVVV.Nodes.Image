@@ -24,9 +24,9 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Initialise()
 		{
-			FImageGT.Initialise(FInput.Image.ImageAttributes.Size, TColourFormat.L8);
-			FImageLT.Initialise(FInput.Image.ImageAttributes.Size, TColourFormat.L8);
-			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColourFormat.L8);
+			FImageGT.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
+			FImageLT.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
+			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
 		}
 
 		public override void Process()

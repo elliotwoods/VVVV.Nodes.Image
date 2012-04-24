@@ -57,7 +57,7 @@ namespace VVVV.Nodes.OpenCV.Tracking
 
 		public override void Initialise()
 		{
-			FGrayScale.Initialise(FInput.Image.ImageAttributes.Size, TColourFormat.L8);
+			FGrayScale.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
 		}
 
 		public override void Process()

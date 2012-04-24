@@ -8,8 +8,8 @@
     <ProjectGuid>{D9D17924-98D5-468F-840E-3A3F8308BE35}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VVVV.Nodes.EmguCV</RootNamespace>
-    <AssemblyName>VVVV.Nodes.OpenNI</AssemblyName>
+    <RootNamespace>VVVV.Nodes.OpenCV.OpenNI</RootNamespace>
+    <AssemblyName>VVVV.Nodes.OpenCV.OpenNI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -47,7 +47,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Release\</OutputPath>
+    <OutputPath>bin\Rekease\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,12 +55,12 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenNI.Net, Version=1.3.2.3, Culture=neutral, PublicKeyToken=6b43d0c6cf74ee7f, processorArchitecture=x86">
-      <HintPath>..\..\..\Program Files (x86)\OpenNI\Bin\OpenNI.Net.dll</HintPath>
+    <Reference Include="OpenNI.Net, Version=1.5.2.23, Culture=neutral, PublicKeyToken=6b43d0c6cf74ee7f, processorArchitecture=x86">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\OpenNI\Bin\OpenNI.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition.Codeplex">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\System.ComponentModel.Composition.Codeplex.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\lib\core\System.ComponentModel.Composition.Codeplex.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -75,19 +75,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="VVVV.Core">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.Core.dll</HintPath>
     </Reference>
-    <Reference Include="VVVV.Hosting">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.Hosting.dll</HintPath>
-    </Reference>
-    <Reference Include="VVVV.PluginInterfaces">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.PluginInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="VVVV.Utils">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.Utils.dll</HintPath>
-    </Reference>
-    <Reference Include="VVVV.Utils3rdParty">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.Utils3rdParty.dll</HintPath>
+    <Reference Include="VVVV.PluginInterfaces, Version=2.0.4497.24411, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.PluginInterfaces.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +115,21 @@
     <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenCV\VVVV.Nodes.KC.OpenCV-export.csproj">
-      <Project>{e9a7fc26-34e0-4c1e-83d8-c01a169422b2}</Project>
-      <Name>VVVV.Nodes.KC.OpenCV-export</Name>
+    <ProjectReference Include="..\..\..\..\core\Hosting\Hosting.csproj">
+      <Project>{F9A754A6-EEA5-4761-9446-C2AAF9CF8B31}</Project>
+      <Name>Hosting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\core\Utils3rdParty\Utils3rdParty.csproj">
+      <Project>{87863121-C124-4585-B3BB-7706F03ECC64}</Project>
+      <Name>Utils3rdParty</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\core\Utils\Utils.csproj">
+      <Project>{C3773330-81FA-4253-823E-1BDE1529AA99}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenCV\VVVV.Nodes.OpenCV.csproj">
+      <Project>{E9A7FC26-34E0-4C1E-83D8-C01A169422B2}</Project>
+      <Name>VVVV.Nodes.OpenCV</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

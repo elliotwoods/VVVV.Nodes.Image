@@ -29,10 +29,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <OutputPath>Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Emgu.CV">
       <HintPath>..\..\..\..\..\..\..\..\..\Emgu\emgucv-windows-x86 2.3.0.1416\bin\Emgu.CV.dll</HintPath>
     </Reference>
@@ -44,9 +45,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\..\Emgu\emgucv-windows-x86 2.3.0.1416\bin\Emgu.Util.dll</HintPath>
     </Reference>
-    <Reference Include="SlimDX, Version=4.0.12.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\SlimDX.dll</HintPath>
+    <Reference Include="SlimDX, Version=4.0.12.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
+      <HintPath>..\..\..\..\..\..\lib\core\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition.Codeplex">
@@ -60,24 +60,27 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="VVVV.Core">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.Core.dll</HintPath>
     </Reference>
     <Reference Include="VVVV.Hosting">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.Hosting.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="VVVV.PluginInterfaces">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.PluginInterfaces.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.PluginInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="VVVV.Utils">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.Utils.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.Utils.dll</HintPath>
     </Reference>
     <Reference Include="VVVV.Utils3rdParty">
-      <HintPath>..\..\..\..\..\..\..\..\vvvv_45alpha27\lib\core\VVVV.Utils3rdParty.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.Utils3rdParty.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\CameraCalibration\CalibrateCamera.cs" />
+    <Compile Include="src\CameraCalibration\Extrinsics.cs" />
+    <Compile Include="src\CameraCalibration\Intrinsics.cs" />
+    <Compile Include="src\CameraCalibration\StereoCalibrate.cs" />
     <Compile Include="src\CameraCalibration\ExtrinsicsSplitNode.cs" />
     <Compile Include="src\CameraCalibration\FindBoardInstance.cs" />
     <Compile Include="src\CameraCalibration\FindBoardNode.cs" />
@@ -100,6 +103,7 @@
     <None Include="src\Dead\ThreadedNode.cs" />
     <None Include="src\Dead\VideoPlayerNode.cs" />
     <Compile Include="src\CameraCalibration\FindExtrinsicsNode.cs" />
+    <Compile Include="src\CameraCalibration\SolvePnP.cs" />
     <Compile Include="src\Destinations\AsTextureInstance.cs" />
     <Compile Include="src\Destinations\AsTextureNode.cs" />
     <Compile Include="src\Destinations\AvgSdvNode.cs" />
@@ -113,18 +117,20 @@
     <None Include="src\Dead\VideoRecordNode.cs" />
     <Compile Include="src\Filters\BackgroundSubtract.cs" />
     <Compile Include="src\Filters\Canny.cs" />
+    <Compile Include="src\Filters\S+H.cs" />
+    <Compile Include="src\Filters\Not.cs" />
+    <Compile Include="src\Filters\Grayscale.cs" />
+    <Compile Include="src\Filters\TemporalAverage.cs" />
     <Compile Include="src\Filters\Dilate.cs" />
     <Compile Include="src\Filters\Erode.cs" />
     <Compile Include="src\Filters\FrameDelay.cs" />
     <Compile Include="src\Filters\FrameDifference.cs" />
     <Compile Include="src\Filters\GaussianBlur.cs" />
-    <Compile Include="src\Filters\Grayscale.cs" />
     <Compile Include="src\Filters\GT,LT,EQ.cs" />
     <Compile Include="src\Filters\ImageResize.cs" />
     <Compile Include="src\Filters\OpticalFlowHS.cs" />
     <Compile Include="src\Filters\OpticalFlowLK.cs" />
     <Compile Include="src\Filters\Template.cs" />
-    <Compile Include="src\Filters\TemporalAverage.cs" />
     <Compile Include="src\Filters\WithinRange.cs" />
     <Compile Include="src\Image\CVImage.cs" />
     <Compile Include="src\Image\CVImageAttributes.cs" />
@@ -137,10 +143,9 @@
     <Compile Include="src\Image\CVImageUtils.cs" />
     <Compile Include="src\Image\ImageBase.cs" />
     <Compile Include="src\MultiInput\Cons.cs" />
-    <Compile Include="src\MultiInput\SplitCut.cs" />
-    <Compile Include="src\Process\IInstance.cs" />
-    <Compile Include="src\Process\IInstanceInput.cs" />
-    <Compile Include="src\Process\IInstanceOutput.cs" />
+    <Compile Include="src\Interfaces\IInstance.cs" />
+    <Compile Include="src\Interfaces\IInstanceInput.cs" />
+    <Compile Include="src\Interfaces\IInstanceOutput.cs" />
     <Compile Include="src\Process\IProcess.cs" />
     <Compile Include="src\Process\ProcessDestination.cs" />
     <Compile Include="src\Process\ProcessFilter.cs" />
@@ -161,14 +166,15 @@
     <Compile Include="src\Tracking\ContourNode.cs" />
     <Compile Include="src\Tracking\ContourPerimeterSplitNode.cs" />
     <Compile Include="src\Tracking\ObjectTrackingNode.cs" />
-    <Compile Include="src\User Interfaces\IDestinationInstance.cs" />
-    <Compile Include="src\User Interfaces\IDestinationNode.cs" />
-    <Compile Include="src\User Interfaces\IFilterInstance.cs" />
-    <Compile Include="src\User Interfaces\IFilterNode.cs" />
-    <Compile Include="src\User Interfaces\IGeneratorInstance.cs" />
-    <Compile Include="src\User Interfaces\IGeneratorNode.cs" />
-    <Compile Include="src\User Interfaces\INode.cs" />
-    <Compile Include="src\User Interfaces\IStaticGeneratorInstance.cs" />
+    <Compile Include="src\Interfaces\INode.cs" />
+    <Compile Include="src\Interfaces\IStaticGeneratorInstance.cs" />
+    <Compile Include="src\Interfaces\User\IDestinationInstance.cs" />
+    <Compile Include="src\Interfaces\User\IDestinationNode.cs" />
+    <Compile Include="src\Interfaces\User\IFilterInstance.cs" />
+    <Compile Include="src\Interfaces\User\IFilterNode.cs" />
+    <Compile Include="src\Interfaces\User\IGeneratorInstance.cs" />
+    <Compile Include="src\Interfaces\User\IGeneratorNode.cs" />
+    <Compile Include="src\Utilities\MatrixUtils.cs" />
     <Compile Include="src\Utilities\ImageUtils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +185,63 @@
     <EmbeddedResource Include="src\Destinations\ImageViewNode.resx">
       <DependentUpon>ImageViewNode.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="dlls\cvextern.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\cvextern_gpu.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\Emgu.CV.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\Emgu.CV.UI.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\Emgu.Util.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_calib3d231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_contrib231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_core231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_features2d231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_ffmpeg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_flann231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_gpu231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_highgui231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_imgproc231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_legacy231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_ml231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_objdetect231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dlls\opencv_video231.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

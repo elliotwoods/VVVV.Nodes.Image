@@ -42,7 +42,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Initialise()
 		{
-			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColourFormat.L8);
+			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 		}
 
 		override public void Process()
@@ -50,7 +50,7 @@ namespace VVVV.Nodes.OpenCV
 			if (!Enabled)
 				return;
 
-			FInput.Image.GetImage(TColourFormat.L8, FGrayscale);
+			FInput.Image.GetImage(TColorFormat.L8, FGrayscale);
 
 			Size SizeNow = BoardSize;
 			PointF[] points = CameraCalibration.FindChessboardCorners(FGrayscale.GetImage() as Image<Gray, byte>, SizeNow, CALIB_CB_TYPE.ADAPTIVE_THRESH);

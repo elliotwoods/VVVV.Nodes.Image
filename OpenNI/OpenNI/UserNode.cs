@@ -19,10 +19,10 @@ using VVVV.Nodes.OpenCV;
 
 #endregion usings
 
-namespace VVVV.Nodes.OpenNI
+namespace VVVV.Nodes.OpenCV.OpenNI
 {
 	#region PluginInfo
-	[PluginInfo(Name = "Users", Category = "OpenNI", Help = "OpenNI User Generator", Tags = "")]
+	[PluginInfo(Name = "Users", Category = "OpenCV", Version = "OpenNI", Help = "OpenNI User Generator", Tags = "")]
 	#endregion PluginInfo
 	public class UserNode : IPluginEvaluate, IDisposable
 	{
@@ -134,7 +134,7 @@ namespace VVVV.Nodes.OpenNI
 				FUserGenerator.StartGenerating();
 
 				FPinOutMask[0] = FImageMask.Link;
-				FImageMask.Image.Initialise(new Size(640, 480), TColourFormat.L16);
+				FImageMask.Image.Initialise(new Size(640, 480), TColorFormat.L16);
 
 				FState.Update += new EventHandler(FState_Update);
 

@@ -19,7 +19,7 @@ namespace VVVV.Nodes.OpenCV
 		public int Height { get; private set; }
 
 		CVImageDoubleBuffer FBufferConverted;
-		TColourFormat FConvertedFormat;
+		TColorFormat FConvertedFormat;
 		bool FNeedsConversion = false;
 
 		Object FLockTexture = new Object();

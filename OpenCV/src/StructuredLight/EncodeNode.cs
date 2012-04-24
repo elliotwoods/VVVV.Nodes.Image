@@ -35,7 +35,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 			{
 				lock (FPayload)
 				{
-					FOutput.Image.Initialise(FPayload.Size, TColourFormat.L8);
+					FOutput.Image.Initialise(FPayload.Size, TColorFormat.L8);
 					Timestamps.Initialise(FPayload.FrameCount);
 					FrameRendered = -1;
 					Status = "OK";

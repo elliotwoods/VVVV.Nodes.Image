@@ -154,7 +154,9 @@ namespace VVVV.Nodes.OpenCV
 
 			lock (FLockProcess)
 			{
-				if (FInput[0] == null)
+				if (FInput.SliceCount == 0)
+					SpreadMax = 0;
+				else if (FInput[0] == null)
 					SpreadMax = 0;
 
 				for (int i = FProcess.SliceCount; i < SpreadMax; i++)
@@ -207,7 +209,8 @@ namespace VVVV.Nodes.OpenCV
 		protected void Dispose(int i)
 		{
 			FProcess[i].Dispose();
-			FInput[i].Dispose();
+			if (i < FInput.SliceCount)
+				FInput[i].Dispose();
 		}
 
 	}

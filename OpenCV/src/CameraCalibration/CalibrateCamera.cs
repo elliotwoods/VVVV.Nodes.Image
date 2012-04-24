@@ -19,65 +19,6 @@ using System.Collections.Generic;
 
 namespace VVVV.Nodes.OpenCV
 {
-	class Intrinsics
-	{
-		public IntrinsicCameraParameters intrinsics;
-
-		public Intrinsics(IntrinsicCameraParameters intrinsics)
-		{
-			this.intrinsics = intrinsics;
-		}
-
-		public Matrix4x4 Matrix
-		{
-			get
-			{
-				Matrix4x4 m = new Matrix4x4();
-
-				m[0, 0] = intrinsics.IntrinsicMatrix[0, 0];
-				m[1, 1] = intrinsics.IntrinsicMatrix[1, 1];
-				m[2, 0] = intrinsics.IntrinsicMatrix[0, 2];
-				m[2, 1] = intrinsics.IntrinsicMatrix[1, 2];
-				m[2, 2] = 1;
-				m[2, 3] = 1;
-				m[3, 3] = 0;
-
-				return m;
-			}
-		}
-	}
-
-	class Extrinsics
-	{
-		public ExtrinsicCameraParameters extrinsics;
-
-		public Extrinsics(ExtrinsicCameraParameters extrinsics)
-		{
-			this.extrinsics = extrinsics;
-		}
-
-		public Matrix4x4 Matrix
-		{
-		   get
-		   {
-				Matrix<double> t = extrinsics.ExtrinsicMatrix;
-	
-				Matrix4x4 m = new Matrix4x4();
-				for (int x = 0; x < 3; x++)
-					for (int y = 0; y < 4; y++)
-						m[y, x] = t[x, y];
-
-				m[0, 3] = 0;
-				m[1, 3] = 0;
-				m[2, 3] = 0;
-				m[3, 3] = 1;
-
-				return m;
-			}
-		}
-
-	}
-
 	#region PluginInfo
 	[PluginInfo(Name = "CalibrateCamera", Category = "OpenCV", Help = "Finds intrinsics for a single camera", Tags = "")]
 	#endregion PluginInfo
@@ -186,19 +127,15 @@ namespace VVVV.Nodes.OpenCV
 
 				}
 
+				imagePoints = MatrixUtils.ImagePoints(FPinInImage, nPointsPerImage);
+
 				for (int i=0; i<nImages; i++)
 				{
 					objectPoints[i] = new MCvPoint3D32f[nPointsPerImage];
-					imagePoints[i] = new PointF[nPointsPerImage];
 
 					for (int j=0; j<nPointsPerImage; j++)
 					{
-						objectPoints[i][j].x = (float)FPinInObject[j].x;
-						objectPoints[i][j].y = (float)FPinInObject[j].y;
-						objectPoints[i][j].z = (float)FPinInObject[j].z;
-						
-						imagePoints[i][j].X = (float)FPinInImage[i*nPointsPerImage + j].x;
-						imagePoints[i][j].Y = (float)FPinInImage[i*nPointsPerImage + j].y;
+						objectPoints[i] = MatrixUtils.ObjectPoints(FPinInObject);
 					}
 				}
 

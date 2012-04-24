@@ -16,11 +16,11 @@ using OpenNI;
 
 #endregion usings
 
-namespace VVVV.Nodes.OpenNI
+namespace VVVV.Nodes.OpenCV.OpenNI
 {
 
 	#region PluginInfo
-	[PluginInfo(Name = "Context", Category = "OpenNI", Help = "OpenNI context loader", Tags = "", AutoEvaluate=true)]
+	[PluginInfo(Name = "Context", Category = "OpenCV", Version = "OpenNI", Help = "OpenNI context loader", Tags = "", AutoEvaluate=true)]
 	#endregion PluginInfo
 	public class ContextNode : IPluginEvaluate, IDisposable
 	{

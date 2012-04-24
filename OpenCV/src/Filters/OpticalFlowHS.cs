@@ -50,12 +50,12 @@ namespace VVVV.Nodes.OpenCV
 		public override void Initialise()
 		{
 			FSize = FInput.ImageAttributes.Size;
-			FOutput.Image.Initialise(FSize, TColourFormat.RGB32F);
+			FOutput.Image.Initialise(FSize, TColorFormat.RGB32F);
 
-			FCurrent.Initialise(FSize, TColourFormat.L8);
-			FPrevious.Initialise(FSize, TColourFormat.L8);
-			FVelocityX.Initialise(FSize, TColourFormat.L32F);
-			FVelocityY.Initialise(FSize, TColourFormat.L32F);
+			FCurrent.Initialise(FSize, TColorFormat.L8);
+			FPrevious.Initialise(FSize, TColorFormat.L8);
+			FVelocityX.Initialise(FSize, TColorFormat.L32F);
+			FVelocityY.Initialise(FSize, TColorFormat.L32F);
 		}
 
 		public override void Process()
@@ -64,7 +64,7 @@ namespace VVVV.Nodes.OpenCV
 			FPrevious = FCurrent;
 			FCurrent = swap;
 
-			FInput.Image.GetImage(TColourFormat.L8, FCurrent);
+			FInput.Image.GetImage(TColorFormat.L8, FCurrent);
 
 			Image<Gray, byte> p = FPrevious.GetImage() as Image<Gray, byte>;
 			Image<Gray, byte> c = FCurrent.GetImage() as Image<Gray, byte>;

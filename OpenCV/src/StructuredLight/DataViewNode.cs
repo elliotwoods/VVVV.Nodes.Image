@@ -70,13 +70,13 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 					switch (FDataSetType)
 					{
 						case TDataSet.ProjectorInCamera:
-							FOutput.Image.Initialise(FScanSet.CameraSize, TColourFormat.RGBA32F);
+							FOutput.Image.Initialise(FScanSet.CameraSize, TColorFormat.RGBA32F);
 							break;
 						case TDataSet.CameraInProjector:
-							FOutput.Image.Initialise(FScanSet.ProjectorSize, TColourFormat.RGBA32F);
+							FOutput.Image.Initialise(FScanSet.ProjectorSize, TColorFormat.RGBA32F);
 							break;
 						case TDataSet.LuminanceInCamera:
-							FOutput.Image.Initialise(FScanSet.CameraSize, TColourFormat.L8);
+							FOutput.Image.Initialise(FScanSet.CameraSize, TColorFormat.L8);
 							break;
 					}
 				}
