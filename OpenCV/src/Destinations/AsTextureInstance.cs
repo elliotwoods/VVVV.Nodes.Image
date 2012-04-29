@@ -73,10 +73,21 @@ namespace VVVV.Nodes.OpenCV
 		{
 			get
 			{
-				if (FInput == null)
-					return false;
-				if (!FInput.Allocated)
-					return false;
+				if (FNeedsConversion)
+				{
+					if (FBufferConverted == null)
+						return false;
+					if (!FBufferConverted.Allocated)
+						return false;
+				}
+				else
+				{
+					if (FInput== null)
+						return false;
+					if (!FInput.Allocated)
+						return false;
+				}
+				
 				return true;
 			}
 		}
@@ -106,6 +117,9 @@ namespace VVVV.Nodes.OpenCV
 		{
 			lock (FLockTexture)
 			{
+				if (!InputOK)
+					return;
+
 				if (!FNeedsRefresh.ContainsKey(texture))
 				{
 					FNeedsTexture = true;
@@ -176,11 +190,6 @@ namespace VVVV.Nodes.OpenCV
 
 				srf.UnlockRectangle();
 			}
-		}
-
-		public void Dispose()
-		{
-
 		}
 	}
 }

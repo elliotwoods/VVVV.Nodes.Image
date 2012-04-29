@@ -38,6 +38,9 @@ namespace VVVV.Nodes.OpenCV
 		[Output("Camera")]
 		ISpread<Matrix4x4> FPinOutCameraTransform;
 
+		[Output("Normalised projection")]
+		ISpread<Matrix4x4> FPinOutProjectionTransform;
+
 		[Import]
 		ILogger FLogger;
 
@@ -63,6 +66,7 @@ namespace VVVV.Nodes.OpenCV
 			{
 				FPinOutCameraMatrix.SliceCount = 0;
 				FPinOutCameraTransform.SliceCount = 0;
+				FPinOutProjectionTransform.SliceCount = 0;
 				FPinOutDistiortonCoefficients.SliceCount = 0;
 			}
 			else
@@ -70,6 +74,7 @@ namespace VVVV.Nodes.OpenCV
 				FPinOutDistiortonCoefficients.SliceCount = SpreadMax;
 				FPinOutCameraTransform.SliceCount = SpreadMax;
 				FPinOutCameraMatrix.SliceCount = SpreadMax;
+				FPinOutProjectionTransform.SliceCount = SpreadMax;
 
 				for (int i = 0; i < SpreadMax; i++)
 				{
@@ -86,11 +91,9 @@ namespace VVVV.Nodes.OpenCV
 						}
 
 					FPinOutCameraTransform[i] = FPinInIntrinsics[i].Matrix;
-					old = FPinOutCameraTransform[i];
+					FPinOutProjectionTransform[i] = FPinInIntrinsics[i].NormalisedMatrix;
 				}
 			}
 		}
-
-		Matrix4x4 old;
 	}
 }

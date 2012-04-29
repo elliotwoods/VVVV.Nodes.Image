@@ -108,6 +108,14 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
+		public int ChannelCount
+		{
+			get
+			{
+				return ImageUtils.ChannelCount(this.ColourFormat);
+			}
+		}
+
 		public int Stride
 		{
 			get

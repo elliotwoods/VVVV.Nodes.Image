@@ -225,7 +225,7 @@ namespace VVVV.Nodes.OpenCV
 					return TChannelFormat.Float;
 
 				default:
-					throw (new Exception("We haven't implemented ChannelFormat for this TColourFormat"));
+					throw (new Exception("We haven't implemented ChannelFormat for this TColorFormat"));
 			}
 		}
 

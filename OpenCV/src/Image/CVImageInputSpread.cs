@@ -30,9 +30,9 @@ namespace VVVV.Nodes.OpenCV
 		{
 			bool noInput = false;
 			if (FInputPin.SliceCount == 0)
-				noInput = false;
+				noInput = true;
 			else if (FInputPin[0] == null)
-				noInput = false;
+				noInput = true;
 
 			if (noInput)
 			{

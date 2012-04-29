@@ -73,6 +73,9 @@ namespace VVVV.Nodes.OpenCV
 			if (source == null)
 				return false;
 
+			if (source.NativeFormat == TColorFormat.UnInitialised)
+				return false;
+
 			bool Reinitialise = Initialise(source.Size, source.NativeFormat);
 
 			ImageUtils.CopyImage(source, this);

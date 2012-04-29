@@ -52,7 +52,7 @@ namespace VVVV.Nodes.OpenCV
 			//If we want to pull out an image in a specific format
 			//then we must have a local instance of a CVImage initialised to that format
 			//and use
-			//FInput.Image.GetImage(TColourFormat.L8, FInputL8);
+			//FInput.Image.GetImage(TColorFormat.L8, FInputL8);
 			//in that example, we expect to have a FInputL8 locally which has been intialised
 			//with the correct size and colour format
 

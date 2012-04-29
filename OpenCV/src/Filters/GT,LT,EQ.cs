@@ -14,113 +14,129 @@ using VVVV.Utils.VColor;
 
 namespace VVVV.Nodes.OpenCV
 {
-	public class GTInstance : IFilterInstance
+	#region Interfaces
+	public abstract class CMPInstance : IFilterInstance
 	{
-
 		public double Threshold = 0.5;
+		protected CVImage Buffer = new CVImage();
+
+		private bool FPassOriginal = false;
+		public bool PassOriginal
+		{
+			set
+			{
+				FPassOriginal = value;
+				ReInitialise();
+			}
+		}
 
 		public override void Initialise()
 		{
-			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
+			Buffer.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 		}
 
 		public override void Process()
 		{
-			if (!FInput.LockForReading())
-				return;
-			CvInvoke.cvCmpS(FInput.CvMat, Threshold, FOutput.CvMat, CMP_TYPE.CV_CMP_GT);
-			FInput.ReleaseForReading();
-			FOutput.Send();
+			if (FInput.ImageAttributes.ChannelCount == 1)
+			{
+				if (!FInput.LockForReading())
+					return;
+				try
+				{
+					Compare(FInput.CvMat);
+				}
+				finally
+				{
+					FInput.ReleaseForReading();
+				}
+			}
+			else
+			{
+				FInput.GetImage(Buffer);
+				Compare(Buffer.CvMat);
+			}
+
+			if (FPassOriginal)
+				FOutput.Image.SetImage(FInput.Image);
+			if (FPassOriginal)
+			{
+				CvInvoke.cvNot(Buffer.CvMat, Buffer.CvMat);
+				CvInvoke.cvSet(FOutput.Image.CvMat, new MCvScalar(0.0), Buffer.CvMat);
+				FOutput.Send();
+			}
+			else
+				FOutput.Send(Buffer);
 		}
 
+		protected abstract void Compare(IntPtr CvMat);
 	}
 
-	#region PluginInfo
-	[PluginInfo(Name = ">", Category = "OpenCV", Version = "Filter, Scalar", Help = "Greater than", Author = "", Credits = "", Tags = "")]
-	#endregion PluginInfo
-	public class GTNode : IFilterNode<GTInstance>
+	public abstract class CMPNode<T> : IFilterNode<T> where T : CMPInstance, new()
 	{
 		[Input("Input 2", DefaultValue = 0.5)]
 		IDiffSpread<double> FThreshold;
+
+		[Input("Pass original", DefaultValue = 0)]
+		IDiffSpread<bool> FPassOriginal;
 
 		protected override void Update(int InstanceCount, bool SpreadChanged)
 		{
 			if (FThreshold.IsChanged)
 				for (int i = 0; i < InstanceCount; i++)
 					FProcessor[i].Threshold = FThreshold[i];
-		}
-	}
 
-	public class LTInstance : IFilterInstance
-	{
-
-		public double Threshold = 0.5;
-
-		public override void Initialise()
-		{
-			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
-		}
-
-		public override void Process()
-		{
-			if (!FInput.LockForReading())
-				return;
-			CvInvoke.cvCmpS(FInput.CvMat, Threshold, FOutput.CvMat, CMP_TYPE.CV_CMP_LT);
-			FInput.ReleaseForReading();
-			FOutput.Send();
-		}
-
-	}
-	#region PluginInfo
-	[PluginInfo(Name = "<", Category = "OpenCV", Version = "Filter, Scalar", Help = "Less than", Author = "", Credits = "", Tags = "")]
-	#endregion PluginInfo
-	public class LTNode : IFilterNode<LTInstance>
-	{
-		[Input("Input 2", DefaultValue = 0.5)]
-		IDiffSpread<double> FThreshold;
-
-		protected override void Update(int InstanceCount, bool SpreadChanged)
-		{
-			if (FThreshold.IsChanged)
+			if (FPassOriginal.IsChanged)
 				for (int i = 0; i < InstanceCount; i++)
-					FProcessor[i].Threshold = FThreshold[i];
+					FProcessor[i].PassOriginal = FPassOriginal[i];
 		}
 	}
+#endregion Interfaces
 
-	public class EQInstance : IFilterInstance
+	#region Instances
+	public class GTInstance : CMPInstance
 	{
-
-		public double Threshold = 0.5;
-
-		public override void Initialise()
+		protected override void Compare(IntPtr CvMat)
 		{
-			FOutput.Image.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
+			CvInvoke.cvCmpS(CvMat, Threshold, Buffer.CvMat, CMP_TYPE.CV_CMP_GT);
 		}
-
-		public override void Process()
-		{
-			if (!FInput.LockForReading())
-				return;
-			CvInvoke.cvCmpS(FInput.CvMat, Threshold, FOutput.CvMat, CMP_TYPE.CV_CMP_EQ);
-			FInput.ReleaseForReading();
-			FOutput.Send();
-		}
-
 	}
+
+	public class LTInstance : CMPInstance
+	{
+		protected override void Compare(IntPtr CvMat)
+		{
+			CvInvoke.cvCmpS(CvMat, Threshold, Buffer.CvMat, CMP_TYPE.CV_CMP_LT);
+		}
+	}
+
+	public class EQInstance : CMPInstance
+	{
+		protected override void Compare(IntPtr CvMat)
+		{
+			CvInvoke.cvCmpS(CvMat, Threshold, Buffer.CvMat, CMP_TYPE.CV_CMP_EQ);
+		}
+	}
+	#endregion
+
+	#region Nodes
 
 	#region PluginInfo
-	[PluginInfo(Name = "=", Category = "OpenCV", Version = "Filter, Scalar", Help = "Equal to", Author = "", Credits = "", Tags = "")]
+	[PluginInfo(Name = ">", Help = "Greater than", Category = "OpenCV", Version = "Filter, Scalar")]
 	#endregion PluginInfo
-	public class EQNode : IFilterNode<EQInstance>
-	{
-		[Input("Input 2", DefaultValue = 0.5)]
-		IDiffSpread<double> FThreshold;
+	public class GTNode : CMPNode<GTInstance>
+	{	}
 
-		protected override void Update(int InstanceCount, bool SpreadChanged)
-		{
-			if (FThreshold.IsChanged)
-				for (int i = 0; i < InstanceCount; i++)
-					FProcessor[i].Threshold = FThreshold[i];
-		}
-	}
+	#region PluginInfo
+	[PluginInfo(Name = "<", Help = "Less than", Category = "OpenCV", Version = "Filter, Scalar")]
+	#endregion PluginInfo
+	public class LTNode : CMPNode<LTInstance>
+	{	}
+
+	#region PluginInfo
+	[PluginInfo(Name = "=", Help = "Equal to", Category = "OpenCV", Version = "Filter, Scalar")]
+	#endregion PluginInfo
+	public class EQNode : CMPNode<EQInstance>
+	{	}
+
+	#endregion nodes
 }

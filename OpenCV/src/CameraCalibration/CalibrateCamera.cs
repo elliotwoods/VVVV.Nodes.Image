@@ -143,7 +143,7 @@ namespace VVVV.Nodes.OpenCV
 				{
 					FPinOutError[0] = CameraCalibration.CalibrateCamera(objectPoints, imagePoints, imageSize, intrinsicParam, flags, out extrinsicsPerView);
 
-					Intrinsics intrinsics = new Intrinsics(intrinsicParam);
+					Intrinsics intrinsics = new Intrinsics(intrinsicParam, imageSize);
 					FPinOutIntrinsics[0] = intrinsics;
 					FPinOutProjection[0] = intrinsics.Matrix;
 
