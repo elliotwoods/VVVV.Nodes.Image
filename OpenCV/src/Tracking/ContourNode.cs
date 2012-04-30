@@ -88,7 +88,7 @@ namespace VVVV.Nodes.OpenCV
 			get
 			{
 				lock (FLockResults)
-					return FBoundingBox.Clone<Vector4D>();
+					return FBoundingBox.Clone();
 			}
 		}
 
@@ -97,7 +97,7 @@ namespace VVVV.Nodes.OpenCV
 			get
 			{
 				lock (FLockResults)
-					return FArea.Clone<double>();
+					return FArea.Clone();
 			}
 		}
 

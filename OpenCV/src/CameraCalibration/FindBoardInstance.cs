@@ -37,7 +37,7 @@ namespace VVVV.Nodes.OpenCV
 		public Spread<Vector2D> GetFoundCorners()
 		{
 			lock (FFoundPointsLock)
-				return (Spread<Vector2D>)FFoundPoints.Clone<Vector2D>();
+				return (Spread<Vector2D>)FFoundPoints.Clone();
 		}
 
 		public override void Initialise()
