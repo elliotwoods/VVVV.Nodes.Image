@@ -74,8 +74,13 @@ namespace VVVV.Nodes.OpenCV
 
 				if (FOpen)
 				{
-					FOutput.Image.Timestamp = DateTime.UtcNow.Ticks - TimestampDelay * 10000;
-					Generate();
+					if (FOutput.Image.Allocated == false)
+						ReInitialise();
+					else
+					{
+						FOutput.Image.Timestamp = DateTime.UtcNow.Ticks - TimestampDelay * 10000;
+						Generate();
+					}
 				}
 			}
 		}

@@ -139,56 +139,65 @@ namespace VVVV.Nodes.OpenCV
 				Surface srf = texture.GetSurfaceLevel(0);
 				DataRectangle rect = srf.LockRectangle(LockFlags.Discard);
 
-				Size imageSize = FNeedsConversion ? FBufferConverted.ImageAttributes.Size : FInput.ImageAttributes.Size;
-
-				if (srf.Description.Width != imageSize.Width || srf.Description.Height != imageSize.Height)
+				try
 				{
-					ImageUtils.Log(new Exception("AsTextureInstance : srf dimensions don't match image dimensions"));
-					return;
-				}
+					Size imageSize = FNeedsConversion ? FBufferConverted.ImageAttributes.Size : FInput.ImageAttributes.Size;
 
-				if (FNeedsConversion)
+					if (srf.Description.Width != imageSize.Width || srf.Description.Height != imageSize.Height)
+					{
+						throw (new Exception("AsTextureInstance : srf dimensions don't match image dimensions"));
+					}
+
+					if (FNeedsConversion)
+					{
+						FInput.GetImage(FBufferConverted);
+						FBufferConverted.Swap();
+						FBufferConverted.LockForReading();
+						try
+						{
+							if (!FBufferConverted.FrontImage.Allocated)
+								throw (new Exception());
+
+							rect.Data.WriteRange(FBufferConverted.FrontImage.Data, FBufferConverted.ImageAttributes.BytesPerFrame);
+							FNeedsRefresh[texture] = false;
+						}
+						catch (Exception e)
+						{
+							ImageUtils.Log(e);
+						}
+						finally
+						{
+							FBufferConverted.ReleaseForReading();
+						}
+
+					}
+					else
+					{
+						FInput.LockForReading();
+						try
+						{
+							rect.Data.WriteRange(FInput.Data, FInput.ImageAttributes.BytesPerFrame);
+							FNeedsRefresh[texture] = false;
+						}
+						catch (Exception e)
+						{
+							ImageUtils.Log(e);
+						}
+						finally
+						{
+							FInput.ReleaseForReading();
+						}
+					}
+
+				}
+				catch (Exception e)
 				{
-					FInput.GetImage(FBufferConverted);
-					FBufferConverted.Swap();
-					FBufferConverted.LockForReading();
-					try
-					{
-						if (!FBufferConverted.FrontImage.Allocated)
-							throw (new Exception());
-
-						rect.Data.WriteRange(FBufferConverted.FrontImage.Data, FBufferConverted.ImageAttributes.BytesPerFrame);
-						FNeedsRefresh[texture] = false;
-					}
-					catch (Exception e)
-					{
-						ImageUtils.Log(e);
-					}
-					finally
-					{
-						FBufferConverted.ReleaseForReading();
-					}
-
+					throw (e);
 				}
-				else
+				finally
 				{
-					FInput.LockForReading();
-					try
-					{
-						rect.Data.WriteRange(FInput.Data, FInput.ImageAttributes.BytesPerFrame);
-						FNeedsRefresh[texture] = false;
-					}
-					catch (Exception e)
-					{
-						ImageUtils.Log(e);
-					}
-					finally
-					{
-						FInput.ReleaseForReading();
-					}
+					srf.UnlockRectangle();
 				}
-
-				srf.UnlockRectangle();
 			}
 		}
 	}

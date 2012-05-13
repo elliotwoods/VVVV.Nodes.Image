@@ -26,16 +26,16 @@ namespace VVVV.Nodes.OpenCV
 	public class StereoCalibrateNode : IPluginEvaluate, IDisposable
 	{
 		#region fields & pins
-		[Input("Object Points")]
-		ISpread<Vector3D> FPinInObject;
-
 		[Input("Image Points 1")]
 		ISpread<Vector2D> FPinInImage1;
 
 		[Input("Image Points 2")]
 		ISpread<Vector2D> FPinInImage2;
 
-		[Input("Resolution", IsSingle = true)]
+		[Input("Object Points")]
+		ISpread<Vector3D> FPinInObject;
+
+		[Input("Resolution")]
 		ISpread<Vector2D> FPinInSensorSize;
 
 		[Input("Intrinsics 1", IsSingle=true)]

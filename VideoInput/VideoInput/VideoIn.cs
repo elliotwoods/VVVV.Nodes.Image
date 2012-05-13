@@ -77,7 +77,8 @@ namespace VVVV.Nodes.OpenCV.VideoInput
 				{
 					throw new Exception("Failed to open device");
 				}
-				FOutput.Image.Initialise(new Size(FCapture.GetWidth(), FCapture.GetHeight()), TColorFormat.RGB8);
+
+				ReInitialise();
 
 				Status = "OK";
 				return true;
@@ -100,6 +101,11 @@ namespace VVVV.Nodes.OpenCV.VideoInput
 			{
 				Status = e.Message;
 			}
+		}
+
+		public override void Initialise()
+		{
+			FOutput.Image.Initialise(new Size(FCapture.GetWidth(), FCapture.GetHeight()), TColorFormat.RGB8);
 		}
 
 		public void ShowSettings()

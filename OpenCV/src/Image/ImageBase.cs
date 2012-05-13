@@ -21,7 +21,7 @@ namespace VVVV.Nodes.OpenCV
 		{
 			get
 			{
-				return GetImage() != null;
+				return GetImage() != null && Width > 0 && Height > 0;
 			}
 		}
 

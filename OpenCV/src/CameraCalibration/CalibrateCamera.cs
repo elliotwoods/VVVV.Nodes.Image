@@ -20,40 +20,22 @@ using System.Collections.Generic;
 namespace VVVV.Nodes.OpenCV
 {
 	#region PluginInfo
-	[PluginInfo(Name = "CalibrateCamera", Category = "OpenCV", Help = "Finds intrinsics for a single camera", Tags = "")]
+	[PluginInfo(Name = "CalibrateCamera", Category = "OpenCV", Help = "Finds intrinsics for a single camera", Tags = "", AutoEvaluate=true)]
 	#endregion PluginInfo
 	public class CalibrateCameraNode : IPluginEvaluate, IDisposable
 	{
 		#region fields & pins
-		[Input("Object Points")]
-		ISpread<Vector3D> FPinInObject;
-
 		[Input("Image Points")]
 		ISpread<Vector2D> FPinInImage;
 
-		[Input("Resolution", IsSingle=true)]
+		[Input("Object Points")]
+		ISpread<Vector3D> FPinInObject;
+
+		[Input("Resolution")]
 		ISpread<Vector2D> FPinInSensorSize;
 
-		[Input("CV_CALIB_USE_INTRINSIC_GUESS", IsSingle = true)]
-		ISpread<bool> FPinInIntrinsicGuess;
-
-		[Input("CV_CALIB_FIX_ASPECT_RATIO", IsSingle = true)]
-		ISpread<bool> FPinInFixAspectRatio;
-
-		[Input("CV_CALIB_FIX_PRINCIPAL_POINT", IsSingle = true)]
-		ISpread<bool> FPinInFixPincipalPoint;
-
-		[Input("CV_CALIB_ZERO_TANGENT_DIST", IsSingle = true)]
-		ISpread<bool> FPinInZeroTangent;
-
-		[Input("CV_CALIB_FIX_FOCAL_LENGTH", IsSingle = true)]
-		ISpread<bool> FPinInFixFocalLength;
-
-		[Input("CV_CALIB_FIX_KI", IsSingle = true)]
-		ISpread<bool> FPinInFixDistortion;
-
-		[Input("CV_CALIB_RATIONAL_MODEL", IsSingle = true)]
-		ISpread<bool> FPinInRationalModel;
+		[Input("Flags")]
+		ISpread<CALIB_TYPE> FFlags;
 
 		[Input("Do", IsBang=true, IsSingle=true)]
 		ISpread<bool> FPinInDo;
@@ -116,7 +98,7 @@ namespace VVVV.Nodes.OpenCV
 				ExtrinsicCameraParameters[] extrinsicsPerView;
 				GetFlags(out flags);
 
-				if (FPinInIntrinsicGuess[0])
+				if (flags.HasFlag(CALIB_TYPE.CV_CALIB_USE_INTRINSIC_GUESS))
 				{
 					Matrix<double> mat = intrinsicParam.IntrinsicMatrix;
 					mat[0, 0] = FPinInSensorSize[0].x;
@@ -170,26 +152,8 @@ namespace VVVV.Nodes.OpenCV
 		private void GetFlags(out CALIB_TYPE flags)
 		{
 			flags = 0;
-			if (FPinInIntrinsicGuess[0])
-				flags |= CALIB_TYPE.CV_CALIB_USE_INTRINSIC_GUESS;
-
-			if (FPinInFixAspectRatio[0])
-				flags |= CALIB_TYPE.CV_CALIB_FIX_ASPECT_RATIO;
-
-			if (FPinInFixPincipalPoint[0])
-				flags |= CALIB_TYPE.CV_CALIB_FIX_PRINCIPAL_POINT;
-
-			if (FPinInZeroTangent[0])
-				flags |= CALIB_TYPE.CV_CALIB_ZERO_TANGENT_DIST;
- 
-			if (FPinInFixFocalLength[0])
-				flags |= CALIB_TYPE.CV_CALIB_FIX_FOCAL_LENGTH;
- 
-			if (FPinInFixDistortion[0])
-				flags |=  (CALIB_TYPE.CV_CALIB_FIX_K1 | CALIB_TYPE.CV_CALIB_FIX_K2 | CALIB_TYPE.CV_CALIB_FIX_K3 | CALIB_TYPE.CV_CALIB_FIX_K4 | CALIB_TYPE.CV_CALIB_FIX_K5 | CALIB_TYPE.CV_CALIB_FIX_K6);
-
-			if (FPinInRationalModel[0])
-				flags |= CALIB_TYPE.CV_CALIB_RATIONAL_MODEL;
+			foreach (var flag in FFlags)
+				flags |= flag;
 		}
 	}
 }
