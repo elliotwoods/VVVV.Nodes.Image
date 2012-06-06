@@ -33,7 +33,9 @@ namespace VVVV.Nodes.OpenCV.OpenNI
             public string Status = "";
 
             public bool EnableWorld = true;
-            public bool EnableRGB = true;
+            public bool EnableImage = true;
+
+			Object FLock = new Object();
 
             private OpenNIState FState;
             public OpenNIState State
@@ -43,8 +45,13 @@ namespace VVVV.Nodes.OpenCV.OpenNI
                     if (FState == value)
                         return;
                     FState = value;
-                    FState.Initialised += new EventHandler(FState_Initialised);
-                    Initialise();
+
+					if (FState != null)
+					{
+						FState.Initialised += new EventHandler(FState_Initialised);
+						if (FState.Running)
+							Initialise();
+					}
                 }
             }
 
@@ -53,70 +60,112 @@ namespace VVVV.Nodes.OpenCV.OpenNI
                 Initialise();
             }
 
-            ImageGenerator FImageGenerator;
+            ImageGenerator FRGBGenerator;
             IRGenerator FIRGenerator;
 
             public CVImageOutput Image = new CVImageOutput();
             public CVImageOutput Depth = new CVImageOutput();
             public CVImageOutput World = new CVImageOutput();
 
-            public ImageNodeMode Mode = ImageNodeMode.RGB;
+			ImageNodeMode FMode = ImageNodeMode.RGB;
+            public ImageNodeMode Mode
+			{
+				get
+				{
+					return FMode;
+				}
+				set
+				{
+					FMode = value;
+					if (this.FState != null)
+						if (this.FState.Running == true)
+							lock (FLock)
+							{
+								InitialiseImage();
+							}
+				}
+			}
 
             Point3D[] FProjective = new Point3D[640 * 480];
+			Size FSize = new Size(640, 480);
 
             private void Initialise()
             {
-                try
-                {
-                    Size size = new Size(640, 480);
-                    string messages = "";
+				lock (FLock)
+				{
+					try
+					{
+						string messages = "";
 
-                    if (Mode == ImageNodeMode.RGB)
-                    {
-                        FImageGenerator = new ImageGenerator(FState.Context);
-                        MapOutputMode imageMode = new MapOutputMode();
-                        imageMode.XRes = 640;
-                        imageMode.YRes = 480;
-                        imageMode.FPS = 30;
-                        FImageGenerator.MapOutputMode = imageMode;
-                        Image.Image.Initialise(size, TColorFormat.RGB8);
+						Depth.Image.Initialise(FSize, TColorFormat.L16);
+						World.Image.Initialise(FSize, TColorFormat.RGB32F);
+						messages += InitialiseImage();
 
-                        if (FState.DepthGenerator.AlternativeViewpointCapability.IsViewpointSupported(FImageGenerator))
-                        {
-                            FState.DepthGenerator.AlternativeViewpointCapability.SetViewpoint(FImageGenerator);
-                        }
-                        else
-                        {
-                            messages += "AlternativeViewportCapability not supported\n";
-                        }
-                        FImageGenerator.StartGenerating();
-                    }
-                    else
-                    {
-                        FIRGenerator = new IRGenerator(FState.Context);
-                        Image.Image.Initialise(size, TColorFormat.L16);
-                        FIRGenerator.StartGenerating();
-                    }
+						for (int x = 0; x < 640; x++)
+							for (int y = 0; y < 480; y++)
+							{
+								FProjective[x + y * 640].X = x;
+								FProjective[x + y * 640].Y = y;
+							}
 
-                    Depth.Image.Initialise(size, TColorFormat.L16);
-                    World.Image.Initialise(size, TColorFormat.RGB32F);
+						FState.Update += new EventHandler(FState_Update);
 
-                    for (int x = 0; x < 640; x++)
-                        for (int y = 0; y < 480; y++)
-                        {
-                            FProjective[x + y * 640].X = x;
-                            FProjective[x + y * 640].Y = y;
-                        }
-
-                    FState.Update += new EventHandler(FState_Update);
-
-                    Status = "OK";
-                }
-                catch (StatusException e)
-                {
-                    Status = e.Message;
-                }
+						Status = "OK";
+					}
+					catch (StatusException e)
+					{
+						Status = e.Message;
+					}
+				}
             }
+
+			private string InitialiseImage()
+			{
+				string messages = "";
+
+				MapOutputMode imageMode = new MapOutputMode();
+				imageMode.XRes = FSize.Width;
+				imageMode.YRes = FSize.Height;
+				imageMode.FPS = 30;
+
+				if (Mode == ImageNodeMode.RGB)
+				{
+					if (FIRGenerator != null)
+					{
+						FIRGenerator.StopGenerating();
+						FIRGenerator.Dispose();
+					}
+					FRGBGenerator = new ImageGenerator(FState.Context);
+
+					FRGBGenerator.MapOutputMode = imageMode;
+					Image.Image.Initialise(FSize, TColorFormat.RGB8);
+
+					if (FState.DepthGenerator.AlternativeViewpointCapability.IsViewpointSupported(FRGBGenerator))
+					{
+						FState.DepthGenerator.AlternativeViewpointCapability.SetViewpoint(FRGBGenerator);
+					}
+					else
+					{
+						messages += "AlternativeViewportCapability not supported\n";
+					}
+					FRGBGenerator.StartGenerating();
+				}
+				else
+				{
+					if (FRGBGenerator != null)
+					{
+						FRGBGenerator.StopGenerating();
+						FRGBGenerator.Dispose();
+					}
+					FIRGenerator = new IRGenerator(FState.Context);
+					FIRGenerator.MapOutputMode = imageMode;
+					FIRGenerator.StartGenerating();
+
+					Image.Image.Initialise(FSize, TColorFormat.L16);
+				}
+
+				return messages;
+			}
 
             void FState_Update(object sender, EventArgs e)
             {
@@ -125,38 +174,42 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 
             private unsafe void Update()
             {
-                if (EnableRGB)
-                {
+				lock (FLock)
+				{
+					if (EnableImage)
+					{
 
-                    if (Mode == ImageNodeMode.RGB)
-                    {
-                        byte* rgbs = (byte*)FImageGenerator.ImageMapPtr.ToPointer();
-                        byte* rgbd = (byte*)Image.Image.Data.ToPointer();
+						if (Mode == ImageNodeMode.RGB)
+						{
+							byte* rgbs = (byte*)FRGBGenerator.ImageMapPtr.ToPointer();
+							byte* rgbd = (byte*)Image.Image.Data.ToPointer();
 
-                        for (int i = 0; i < 640 * 480; i++)
-                        {
-                            rgbd[2] = rgbs[0];
-                            rgbd[1] = rgbs[1];
-                            rgbd[0] = rgbs[2];
-                            rgbs += 3;
-                            rgbd += 3;
-                        }
-                    }
-                    else if (Mode == ImageNodeMode.IR)
-                    {
-                        Image.Image.SetPixels(FIRGenerator.IRMapPtr);
-                    }
-                    Image.Send();
-                }
+							for (int i = 0; i < 640 * 480; i++)
+							{
+								rgbd[2] = rgbs[0];
+								rgbd[1] = rgbs[1];
+								rgbd[0] = rgbs[2];
+								rgbs += 3;
+								rgbd += 3;
+							}
+						}
+						else if (Mode == ImageNodeMode.IR)
+						{
+							Image.Image.SetPixels(FIRGenerator.IRMapPtr);
+							ushort* dataFixed = (ushort*)FIRGenerator.IRMapPtr;
+						}
+						Image.Send();
+					}
 
-                Depth.Image.SetPixels(FState.DepthGenerator.DepthMapPtr);
-                Depth.Send();
+					Depth.Image.SetPixels(FState.DepthGenerator.DepthMapPtr);
+					Depth.Send();
 
-                if (EnableWorld)
-                {
-                    fillWorld();
-                    World.Send();
-                }
+					if (EnableWorld)
+					{
+						fillWorld();
+						World.Send();
+					}
+				}
             }
 
             private unsafe void fillWorld()
@@ -186,7 +239,7 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 		ISpread<OpenNIState> FPinInContext;
 
 		[Input("Mode")]
-		ISpread<ImageNodeMode> FPinInMode;
+		IDiffSpread<ImageNodeMode> FPinInMode;
 
         [Input("Enable RGB", IsSingle = true, DefaultValue = 1, Visibility = PinVisibility.OnlyInspector)]
         IDiffSpread<bool> FPinInEnableRGB;
@@ -230,13 +283,17 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 
             CheckSliceCount(SpreadMax);
 
+			if (FPinInMode.IsChanged)
+				for (int i = 0; i < SpreadMax; i++)
+					FInstances[i].Mode = FPinInMode[i];
+
             if (FPinInEnableWorld.IsChanged)
                 for (int i = 0; i < SpreadMax; i++)
                     FInstances[i].EnableWorld = FPinInEnableWorld[i];
 
             if (FPinInEnableRGB.IsChanged)
                 for (int i = 0; i < SpreadMax; i++)
-                    FInstances[i].EnableRGB = FPinInEnableRGB[i];
+                    FInstances[i].EnableImage = FPinInEnableRGB[i];
 
             for (int i = 0; i < SpreadMax; i++)
                 FInstances[i].State = FPinInContext[i];

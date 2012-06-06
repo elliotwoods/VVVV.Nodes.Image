@@ -45,6 +45,7 @@ namespace VVVV.Nodes.OpenCV
 						ImageUtils.Log(e);
 					}
 				}
+				Thread.Sleep(1);
 			}
 		}
 

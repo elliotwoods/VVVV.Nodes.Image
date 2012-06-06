@@ -25,8 +25,8 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 	public class ContextNode : IPluginEvaluate, IDisposable
 	{
 		#region fields & pins
-		[Input("Open", IsBang = true, IsSingle = true)]
-		ISpread<bool> FPinInOpen;
+		[Input("Enabled")]
+		ISpread<bool> FPinInEnabled;
 
         [Input("Creation Info")]
         ISpread<string> FPinInNodes;
@@ -64,9 +64,13 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 		{
             CheckSliceCount(SpreadMax);
 
-            for (int i = 0; i < SpreadMax; i++)
-                if (FPinInOpen[i])
-				    Open(i);
+			for (int i = 0; i < SpreadMax; i++)
+			{
+				if (FPinInEnabled[i] && !FState[i].Running)
+					Open(i);
+				else if (!FPinInEnabled[i] && FState[i].Running)
+					Close(i);
+			}
 		}
 
         void CheckSliceCount(int SpreadMax)
@@ -124,6 +128,7 @@ namespace VVVV.Nodes.OpenCV.OpenNI
                 depthMode.FPS = 30;
                 depthMode.XRes = 640;
                 depthMode.YRes = 480;
+
                 state.DepthGenerator.MapOutputMode = depthMode;
                 state.DepthGenerator.StartGenerating();
 
@@ -143,12 +148,11 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 		{
 			if (FState[i].Running)
 			{
+				FState[i].Stop();
                 if (FState[i].Context != null)
 				{
                     FState[i].Context.Release();
 				}
-
-                FState[i].Stop();
 			}
 		}
 

@@ -73,8 +73,8 @@ namespace VVVV.Nodes.OpenCV.CLEye
 		}
 
 		private bool FParameterChange = false;
-		private ISpread<CLEyeCameraParameter> FParameters;
-		public ISpread<CLEyeCameraParameter> Parameters
+		Dictionary<CLEyeCameraParameter, int> FParameters;
+		public Dictionary<CLEyeCameraParameter, int> Parameters
 		{
 			set
 			{
@@ -82,26 +82,17 @@ namespace VVVV.Nodes.OpenCV.CLEye
 				FParameterChange = true;
 			}
 		}
-		private ISpread<int> FParameterValues;
-		public ISpread<int> ParameterValues
-		{
-			set
-			{
-				FParameterValues = value;
-				FParameterChange = true;
-			}
-		}
 
 		private void SetParameters()
 		{
-			if (FCamera == null)
+			if (FCamera == null || FParameters == null)
 				return;
 
-			int count = Math.Max(FParameterValues.SliceCount, FParameters.SliceCount);
-			for (int i = 0; i < count; i++)
+			foreach (var param in FParameters)
 			{
-				FCamera.SetParameter(FParameters[i], FParameterValues[i]);
+				FCamera.SetParameter(param.Key, param.Value);
 			}
+
 			FParameterChange = false;
 		}
 
@@ -220,11 +211,8 @@ namespace VVVV.Nodes.OpenCV.CLEye
 		[Input("LED", DefaultValue = 1)]
 		IDiffSpread<bool> FLED;
 
-		[Input("Parameter")]
-		IDiffSpread<ISpread<CLEyeCameraParameter>> FParameter;
-
-		[Input("Value")]
-		IDiffSpread<ISpread<int>> FParameterValues;
+		[Input("Properties")]
+		IDiffSpread<Dictionary<CLEyeCameraParameter, int>> FPinInProperties;
 
 		override protected void Update(int InstanceCount, bool SpreadCountChanged)
 		{
@@ -258,12 +246,11 @@ namespace VVVV.Nodes.OpenCV.CLEye
 					FProcessor[i].LED = FLED[i];
 			}
 
-			if (SpreadCountChanged || FParameter.IsChanged || FParameterValues.IsChanged)
+			if (SpreadCountChanged || FPinInProperties.IsChanged)
 			{
 				for (int i = 0; i < InstanceCount; i++)
 				{
-					FProcessor[i].Parameters = FParameter[i];
-					FProcessor[i].ParameterValues = FParameterValues[i];
+					FProcessor[i].Parameters = FPinInProperties[i];
 				}
 			}
 		}
