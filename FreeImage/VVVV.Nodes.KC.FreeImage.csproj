@@ -121,7 +121,7 @@
     </ProjectReference>
     <ProjectReference Include="..\OpenCV\VVVV.Nodes.OpenCV.csproj">
       <Project>{E9A7FC26-34E0-4C1E-83D8-C01A169422B2}</Project>
-      <Name>VVVV.Nodes.KC.OpenCV</Name>
+      <Name>VVVV.Nodes.OpenCV</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +131,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FreeImage.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="FreeImage.dll" />
     <Content Include="FreeImageNET.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

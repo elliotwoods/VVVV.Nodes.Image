@@ -67,7 +67,8 @@ namespace VVVV.Nodes.OpenCV.FreeImageNodes
 				uint height = FreeImage.GetHeight(bmp);
 				uint bpp = FreeImage.GetBPP(bmp);
 				FREE_IMAGE_TYPE type = FreeImage.GetImageType(bmp);
-				TColourFormat CVFormat;
+				
+				TColorFormat CVFormat;
 				if (type == FREE_IMAGE_TYPE.FIT_BITMAP)
 				{
 					//standard image (8bbp)
@@ -75,16 +76,16 @@ namespace VVVV.Nodes.OpenCV.FreeImageNodes
 					switch (channels)
 					{
 						case (1):
-							CVFormat = TColourFormat.L8;
+							CVFormat = TColorFormat.L8;
 							break;
 						case (3):
-							CVFormat = TColourFormat.RGB8;
+							CVFormat = TColorFormat.RGB8;
 							break;
 						case (4):
-							CVFormat = TColourFormat.RGBA8;
+							CVFormat = TColorFormat.RGBA8;
 							break;
 						default:
-							CVFormat = TColourFormat.UnInitialised;
+							CVFormat = TColorFormat.UnInitialised;
 							break;
 					}
 				}
@@ -93,31 +94,31 @@ namespace VVVV.Nodes.OpenCV.FreeImageNodes
 					switch (type)
 					{
 						case (FREE_IMAGE_TYPE.FIT_INT16):
-							CVFormat = TColourFormat.L16;
+							CVFormat = TColorFormat.L16;
 							break;
 						case (FREE_IMAGE_TYPE.FIT_FLOAT):
-							CVFormat = TColourFormat.L32F;
+							CVFormat = TColorFormat.L32F;
 							break;
 
 						case (FREE_IMAGE_TYPE.FIT_INT32):
-							CVFormat = TColourFormat.L32S;
+							CVFormat = TColorFormat.L32S;
 							break;
 
 						case (FREE_IMAGE_TYPE.FIT_RGBF):
-							CVFormat = TColourFormat.RGB32F;
+							CVFormat = TColorFormat.RGB32F;
 							break;
 
 						case (FREE_IMAGE_TYPE.FIT_RGBAF):
-							CVFormat = TColourFormat.RGBA32F;
+							CVFormat = TColorFormat.RGBA32F;
 							break;
 
 						default:
-							CVFormat = TColourFormat.UnInitialised;
+							CVFormat = TColorFormat.UnInitialised;
 							break;
 					}
 				}
 
-				if (CVFormat == TColourFormat.UnInitialised)
+				if (CVFormat == TColorFormat.UnInitialised)
 				{
 					FreeImage.Unload(bmp);
 					throw (new Exception("VVVV.Nodes.OpenCV doesn't support this colour type \"" + type.ToString() + "\" yet. Please ask!"));

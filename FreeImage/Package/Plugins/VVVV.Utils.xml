@@ -4,6 +4,57 @@
         <name>VVVV.Utils</name>
     </assembly>
     <members>
+        <member name="T:VVVV.Utils.Streams.IInStream">
+            <summary>
+            Base interface for all input streams.
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Streams.IStream">
+            <summary>
+            Interface which provides the ability to retrieve the length
+            of a stream. It acts as the base interface for all stream
+            implementations.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Streams.IStream.Length">
+            <summary>
+            Gets the length of the stream.
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Streams.ISynchronizable">
+            <summary>
+            Interface which provides the ability to synchronize a stream
+            with its backing data source.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Streams.ISynchronizable.Sync">
+            <summary>
+            Synchronizes this object with the backing data source.
+            </summary>
+            <returns>
+            Whether or not the data changed.
+            Note: Most implementations will return true as the
+            cost to check if the data changed might be too high.
+            </returns>
+        </member>
+        <member name="P:VVVV.Utils.Streams.ISynchronizable.IsChanged">
+            <summary>
+            Whether or not the data changed during last synchronization.
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Streams.IInStream`1">
+            <summary>
+            Defines an input stream. Input streams can be read from by
+            either retrieving a <see cref="T:VVVV.Utils.Streams.IStreamReader`1"/> or
+            or by iterating it with <see cref="T:System.Collections.Generic.IEnumerable`1"/>.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Streams.IInStream`1.GetReader">
+            <summary>
+            Gets a <see cref="T:VVVV.Utils.Streams.IStreamReader`1"/> used to read from this input stream.
+            </summary>
+            <returns>A <see cref="T:VVVV.Utils.Streams.IStreamReader`1"/> to read from this stream.</returns>
+        </member>
         <member name="T:VVVV.Utils.SharedMemory.SharedMemoryCreationFlag">
             <summary>
             Enum for specifying whether a new shared memory 
@@ -368,10 +419,57 @@
             <param name="X">Value in the range [0..1]</param>
             <returns>Shaped value</returns>
         </member>
+        <member name="T:VVVV.Utils.Streams.IStreamer">
+            <summary>
+            Base interface for all stream readers and writers.
+            It provides the ability to test whether or not the end
+            of the stream is reached or to seek in the stream.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Streams.IStreamer.Eos">
+            <summary>
+            Gets whether or not the end of the stream is reached.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Streams.IStreamer.Position">
+            <summary>
+            Gets or sets the position of the reader or writer.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Streams.IStreamer.Length">
+            <summary>
+            Gets the length of the stream this streamer reads from or writes to.
+            </summary>
+        </member>
         <member name="T:VVVV.Utils.OSC.OSCTransmitter">
             <summary>
             OSCTransmitter
             </summary>
+        </member>
+        <member name="M:VVVV.Utils.ArrayExtensions.Init``1(``0[],``0)">
+            <summary>
+            Initializes the array with the defaultValue.
+            </summary>
+            <param name="array">The array to initialize.</param>
+            <param name="defaultVaue">The value to initialize the array with.</param>
+        </member>
+        <member name="M:VVVV.Utils.ArrayExtensions.Fill``1(``0[],System.Int32,System.Int32,``0)">
+            <summary>
+            Fills the array with the defaultValue from index to index + length.
+            </summary>
+            <param name="array">The array to fill.</param>
+            <param name="index">The index into the array where the fill operation starts.</param>
+            <param name="length">The fill operation ends at index + length.</param>
+            <param name="defaultVaue">The value to fill the array with.</param>
+        </member>
+        <member name="M:VVVV.Utils.ArrayExtensions.Replicate``1(``0[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Replicates the values between startIndex and endIndex.
+            </summary>
+            <param name="array">The array to do the replication on.</param>
+            <param name="startIndex">Defines from where to begin the replication.</param>
+            <param name="endIndex">Defines where to end the replication.</param>
+            <param name="times">Defines the number of replications of the values between startIndex and endIndex.</param>
         </member>
         <member name="T:VVVV.Utils.VMath.Matrix4x4">
             <summary>
@@ -660,7 +758,6 @@
             <summary>
             Transpose thi 4x4 matrix
             </summary>
-            <param name="A"></param>
             <returns>Transpose of this matrix</returns>
         </member>
         <member name="P:VVVV.Utils.VMath.Matrix4x4.row1">
@@ -713,10 +810,136 @@
             Unsafe but very fast 2-d indexer for 4x4 matrix, [0..3, 0..3]
             </summary>
         </member>
+        <member name="T:VVVV.Utils.Streams.IOutStream">
+            <summary>
+            Base interface for all output streams. It provides the ability
+            to set the length of an output stream.
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Streams.IFlushable">
+            <summary>
+            Interface which provides the ability to flush all buffered data
+            of a stream to its backing data sink.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Streams.IFlushable.Flush">
+            <summary>
+            Flushes all buffered data to the backing data sink.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Streams.IOutStream.Length">
+            <summary>
+            Gets or sets the length of the output stream.
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Streams.IOutStream`1">
+            <summary>
+            Defines an output stream. Output streams can be written to by
+            by retrieving a <see cref="T:VVVV.Utils.Streams.IStreamWriter`1"/>.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Streams.IOutStream`1.GetWriter">
+            <summary>
+            Gets a <see cref="T:VVVV.Utils.Streams.IStreamWriter`1"/> which can be used to write
+            to this output stream.
+            </summary>
+            <returns>A <see cref="T:VVVV.Utils.Streams.IStreamWriter`1"/> to write to this stream.</returns>
+        </member>
+        <member name="T:VVVV.Utils.Streams.IStreamReader`1">
+            <summary>
+            Interface which provides the ability to read from an input stream.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Streams.IStreamReader`1.Read(System.Int32)">
+            <summary>
+            Reads one item from the stream and advances the position within the
+            stream stride many times.
+            </summary>
+            <param name="stride">The stride by which to advance the position.</param>
+            <returns>The item at the current position.</returns>
+        </member>
+        <member name="M:VVVV.Utils.Streams.IStreamReader`1.Read(`0[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Reads a sequence of items from the current stream and advances the position 
+            within the stream by the number of items read.
+            Use the stride parameter to control advancing of the position after one item has been read.
+            </summary>
+            <param name="buffer">The buffer to read into.</param>
+            <param name="offset">The zero-based offset in buffer at which to begin storing the data read from the current stream.</param>
+            <param name="length">The maximum number of items to be read from the current stream.</param>
+            <param name="stride">The stride by which the position is advanced after reading one item.</param>
+            <returns>
+            The total number of items read into the buffer. 
+            This can be less than the number of items requested if that many items are not currently available, 
+            or zero (0) if the end of the stream has been reached.
+            </returns>
+        </member>
+        <member name="T:VVVV.Utils.Streams.IStreamWriter`1">
+            <summary>
+            Interface which provides the ability to write to an output stream.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Streams.IStreamWriter`1.Write(`0,System.Int32)">
+            <summary>
+            Writes an item to the current position in the stream and 
+            advances the position within the stream stride many times.
+            </summary>
+            <param name="value">The item to write to the stream.</param>
+            <param name="stride">The stride by which to advance the position.</param>
+        </member>
+        <member name="M:VVVV.Utils.Streams.IStreamWriter`1.Write(`0[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Writes a sequence of items to the current stream and advances 
+            the current position within this stream by the number of items written.
+            Use the stride parameter to control advancing of the position after one item has been written.
+            </summary>
+            <param name="buffer">The buffer to copy from.</param>
+            <param name="offset">The zero-based offset in buffer at which to begin copying bytes to the current stream.</param>
+            <param name="length">The number of items to be written to the current stream.</param>
+            <param name="stride">The stride by which the position is advanced after writing one item.</param>
+            <returns>
+            The total number of items written to the stream. 
+            This can be less than the number of items requested if end of the stream has been reached.
+            </returns>
+        </member>
+        <member name="M:VVVV.Utils.Streams.IStreamWriter`1.Reset">
+            <summary>
+            Resets the writer by setting its position back to the beginning of the stream.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Streams.StreamReaderExtensions.Read``1(VVVV.Utils.Streams.IStreamReader{``0},System.ArraySegment{``0},System.Int32)">
+            <summary>
+            Reads a sequence of items from the current stream and advances the position 
+            within the stream by the number of items read.
+            Use the stride parameter to control advancing of the position after one item has been read.
+            </summary>
+            <param name="reader">The reader to use from reading.</param>
+            <param name="segment">The array segment to read into.</param>
+            <param name="stride">The stride by which the position is advanced after reading one item.</param>
+            <returns>
+            The total number of items read into the buffer. 
+            This can be less than the number of items requested if that many items are not currently available, 
+            or zero (0) if the end of the stream has been reached.
+            </returns>
+        </member>
         <member name="T:VVVV.Utils.Application.AppInfo">
             <summary>
             provides information about the entry assembly
             </summary>
+        </member>
+        <member name="M:VVVV.Utils.Streams.StreamWriterExtensions.Write``1(VVVV.Utils.Streams.IStreamWriter{``0},System.ArraySegment{``0},System.Int32)">
+            <summary>
+            Writes a sequence of items to the current stream and advances 
+            the current position within this stream by the number of items written.
+            Use the stride parameter to control advancing of the position after one item has been written.
+            </summary>
+            <param name="writer">The writer to use for writing.</param>
+            <param name="segment">The array segment to copy from.</param>
+            <param name="stride">The stride by which the position is advanced after writing one item.</param>
+            <returns>
+            The total number of items written to the stream. 
+            This can be less than the number of items requested if end of the stream has been reached.
+            </returns>
         </member>
         <member name="T:VVVV.Utils.SharedMemory.Win32Native">
             <summary>
@@ -727,6 +950,64 @@
         <member name="T:VVVV.Utils.OSC.OSCReceiver">
             <summary>
             OSCReceiver
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Network.UDPReceivedEventArgs">
+            <summary>
+            UDP message received event argument
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Network.UDPReceivedEventArgs.RemoteSender">
+            <summary>
+            The remote sender IPEndPoint
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Network.UDPReceivedEventArgs.Data">
+            <summary>
+            The incoming data
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Network.UDPServer">
+            <summary>
+            Class to handle UDP connections
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Network.UDPServer.#ctor(System.Int32)">
+            <summary>
+            Create the UDP server
+            </summary>
+            <param name="port">The listening port</param>
+        </member>
+        <member name="M:VVVV.Utils.Network.UDPServer.Start">
+            <summary>
+            Starts the listening callback loop on the configurated port
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Network.UDPServer.Stop">
+            <summary>
+            Stop the listening callback loop
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Network.UDPServer.Send(System.Byte[],System.Net.IPEndPoint)">
+            <summary>
+            Send UPD data
+            </summary>
+            <param name="data">The bytes to send</param>
+            <param name="receiver">The remote receiver</param>
+        </member>
+        <member name="M:VVVV.Utils.Network.UDPServer.Close">
+            <summary>
+            Close socket
+            </summary>
+        </member>
+        <member name="E:VVVV.Utils.Network.UDPServer.MessageReceived">
+            <summary>
+            This event is rised on incoming UPD data
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Network.UDPServer.Port">
+            <summary>
+            Set port and restart server
             </summary>
         </member>
         <member name="T:VVVV.Utils.VMath.TMapMode">
@@ -850,6 +1131,15 @@
             <param name="n"></param>
             <param name="k"></param>
             <returns>The number of k-tuples of n items</returns>
+        </member>
+        <member name="M:VVVV.Utils.VMath.VMath.Pow(System.Double,System.Int32)">
+            <summary>
+            Raises x to the power of y.
+            </summary>
+            <param name="x">The base.</param>
+            <param name="y">The exponent.</param>
+            <returns>Returns x raised to the power of y.</returns>
+            <remarks>This method should be considerably faster than Math.Pow for small y.</remarks>
         </member>
         <member name="M:VVVV.Utils.VMath.VMath.Min(System.Double,System.Double)">
             <summary>
@@ -1925,6 +2215,76 @@
             <param name="key">The key to look up.</param>
             <returns>The value associated with the key or default(TValue) of key not found.</returns>
         </member>
+        <member name="M:VVVV.Utils.Collections.DictionaryExtensions.EnsureValue``2(System.Collections.Generic.Dictionary{``0,``1},``0,System.Func{``0,``1})">
+            <summary>
+            create the value if not already stored for that key
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Network.INetworkTimeSync">
+            <summary>
+            Common interface for network time server and client
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Network.INetworkTimeSync.Start">
+            <summary>
+            Start serving or requesting time data
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Network.INetworkTimeSync.SetTime(System.Double)">
+            <summary>
+            If on server, this sets the time to a given value
+            </summary>
+            <param name="time"></param>
+        </member>
+        <member name="P:VVVV.Utils.Network.INetworkTimeSync.ElapsedSeconds">
+            <summary>
+            The elapsed seconds since the time server was started.
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Network.UDPTimeServer">
+            <summary>
+            UDP Time server
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Network.UDPTimeServer.#ctor(System.Int32)">
+            <summary>
+            Create the UDP server
+            </summary>
+            <param name="port">The listening port</param>
+        </member>
+        <member name="M:VVVV.Utils.Network.UDPTimeServer.SetTime(System.Double)">
+            <summary>
+            Reset time
+            </summary>
+            <param name="time">Optionally set the time to given value</param>
+        </member>
+        <member name="P:VVVV.Utils.Network.UDPTimeServer.ElapsedSeconds">
+            <summary>
+            The elapsed time in seconds.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Network.UDPTimeServer.Offset">
+            <summary>
+            Clock offset
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Network.UDPTimeClient.#ctor(System.String,System.Int32)">
+            <summary>
+            Create UDP time client
+            </summary>
+            <param name="serverIP">Server IP</param>
+            <param name="port">Server port (internal listening port is set to server port+1)</param>
+        </member>
+        <member name="P:VVVV.Utils.Network.UDPTimeClient.Port">
+            <summary>
+            Set port of time server (internal listening port is set to server port+1)
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.Network.UDPTimeClient.IP">
+            <summary>
+            Set IP if time server
+            </summary>
+        </member>
         <member name="T:VVVV.Utils.OSC.OSCMessage">
             <summary>
             OSCMessage
@@ -2889,6 +3249,33 @@
             </summary>
             <param name="time">Current system time in seconds.</param>
             <returns>False if the particle is dead.</returns>
+        </member>
+        <member name="T:VVVV.Utils.Streams.BufferedIOStream`1">
+            <summary>
+            Implemention of <see cref="T:VVVV.Utils.Streams.IIOStream`1"/> using an array as storage.
+            Useful as wrapper if a stream is accessed randomly.
+            </summary>
+        </member>
+        <member name="T:VVVV.Utils.Animation.IIRFilter">
+            <summary>
+            Basic 1-pole IIR filter with threshold.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.Animation.IIRFilter.Update(System.Double)">
+            <summary>
+            Update filter state. If the difference between 
+            the current filter value and the new value is greater than 
+            the threshold then filter value is set to new value.
+            </summary>
+            <param name="newValue">Target value</param>
+            <returns>Filtered target value</returns>
+        </member>
+        <member name="T:VVVV.Utils.Streams.CyclicStreamReader`1">
+            <summary>
+            A stream reader which reads a stream in a cyclic fashion.
+            It will therefor never go into an end of stream state.
+            Exceptions to this rule is if the stream is empty.
+            </summary>
         </member>
         <member name="M:VVVV.Utils.Reflection.TypeExtensions.GetCSharpName(System.Type)">
             <summary>
