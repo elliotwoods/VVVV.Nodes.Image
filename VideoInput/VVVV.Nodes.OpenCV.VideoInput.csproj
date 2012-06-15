@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="VideoInput\CaptureProperty.cs" />
+    <Compile Include="VideoInput\DeviceLock.cs" />
     <Compile Include="VideoInput\VideoIn.cs" />
     <Compile Include="VideoInput\ListDevices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
