@@ -50,7 +50,11 @@ namespace VVVV.Nodes.OpenCV.VideoInput
 
 		private void Refresh()
 		{
-			string[] devicenames = Capture.ListDevices();
+			string[] devicenames;
+			lock (DeviceLock.LockDevices)
+			{
+				devicenames = Capture.ListDevices();
+			}
 			FPinOutDeviceName.SliceCount = devicenames.Length;
 
 			for (int i = 0; i < devicenames.Length; i++)

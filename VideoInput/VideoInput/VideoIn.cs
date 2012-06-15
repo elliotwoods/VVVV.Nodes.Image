@@ -71,39 +71,45 @@ namespace VVVV.Nodes.OpenCV.VideoInput
 
 		protected override bool Open()
 		{
-			try
+			lock (DeviceLock.LockDevices)
 			{
-				if (!FCapture.Open(FDeviceID, FFramerate, FWidth, FHeight))
+				try
 				{
-					throw new Exception("Failed to open device");
+					if (!FCapture.Open(FDeviceID, FFramerate, FWidth, FHeight))
+					{
+						throw new Exception("Failed to open device");
+					}
+
+					ReAllocate();
+
+					Status = "OK";
+					return true;
 				}
-
-				ReInitialise();
-
-				Status = "OK";
-				return true;
-			}
-			catch (Exception e)
-			{
-				Status = e.Message;
-				return false;
+				catch (Exception e)
+				{
+					Status = e.Message;
+					return false;
+				}
 			}
 		}
 
 		protected override void Close()
 		{
-			try
+			lock (DeviceLock.LockDevices)
 			{
-				FCapture.Close();
-				Status = "Closed";
-			}
-			catch (Exception e)
-			{
-				Status = e.Message;
+				try
+				{
+					FCapture.Close();
+					Status = "Closed";
+				}
+				catch (Exception e)
+				{
+					Status = e.Message;
+				}
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FOutput.Image.Initialise(new Size(FCapture.GetWidth(), FCapture.GetHeight()), TColorFormat.RGB8);
 		}
@@ -172,39 +178,29 @@ namespace VVVV.Nodes.OpenCV.VideoInput
 		//called when data for any output pin is requested
 		protected override void Update(int InstanceCount, bool SpreadChanged)
 		{
-			bool needsOpen = false;
-
 			if (FPinInDeviceID.IsChanged)
 			{
 				for (int i = 0; i < InstanceCount; i++)
 					FProcessor[i].DeviceID = FPinInDeviceID[i];
-				needsOpen = true;
 			}
 
 			if (FPinInWidth.IsChanged)
 			{
 				for (int i = 0; i < InstanceCount; i++)
 					FProcessor[i].Width = FPinInWidth[i];
-				needsOpen = true;
 			}
 
 			if (FPinInHeight.IsChanged)
 			{
 				for (int i = 0; i < InstanceCount; i++)
 					FProcessor[i].Height = FPinInHeight[i];
-				needsOpen = true;
 			}
 
 			if (FPinInFPS.IsChanged)
 			{
 				for (int i = 0; i < InstanceCount; i++)
 					FProcessor[i].Framerate = FPinInFPS[i];
-				needsOpen = true;
 			}
-
-			if (needsOpen)
-				for (int i = 0; i < InstanceCount; i++)
-					FProcessor[i].ReInitialise();
 
 			for (int i = 0; i < InstanceCount; i++)
 				if (FPinInShowSettings[i])
