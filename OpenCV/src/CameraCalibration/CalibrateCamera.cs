@@ -35,7 +35,10 @@ namespace VVVV.Nodes.OpenCV
 		ISpread<Vector2D> FPinInSensorSize;
 
 		[Input("Flags")]
-		ISpread<CALIB_TYPE> FFlags;
+		ISpread<CALIB_TYPE> FPinInFlags;
+
+		[Input("Intrinsic Guess")]
+		ISpread<Intrinsics> FPinInIntrinsics;
 
 		[Input("Do", IsBang=true, IsSingle=true)]
 		ISpread<bool> FPinInDo;
@@ -100,12 +103,19 @@ namespace VVVV.Nodes.OpenCV
 
 				if (flags.HasFlag(CALIB_TYPE.CV_CALIB_USE_INTRINSIC_GUESS))
 				{
-					Matrix<double> mat = intrinsicParam.IntrinsicMatrix;
-					mat[0, 0] = FPinInSensorSize[0].x;
-					mat[1, 1] = FPinInSensorSize[0].y;
-					mat[0, 2] = FPinInSensorSize[0].x / 2.0d;
-					mat[1, 2] = FPinInSensorSize[0].y / 2.0d;
-					mat[2, 2] = 1;
+					if (FPinInIntrinsics[0] == null)
+					{
+						Matrix<double> mat = intrinsicParam.IntrinsicMatrix;
+						mat[0, 0] = FPinInSensorSize[0].x;
+						mat[1, 1] = FPinInSensorSize[0].y;
+						mat[0, 2] = FPinInSensorSize[0].x / 2.0d;
+						mat[1, 2] = FPinInSensorSize[0].y / 2.0d;
+						mat[2, 2] = 1;
+					}
+					else
+					{
+						intrinsicParam = FPinInIntrinsics[0].intrinsics;
+					}
 
 				}
 
@@ -152,7 +162,7 @@ namespace VVVV.Nodes.OpenCV
 		private void GetFlags(out CALIB_TYPE flags)
 		{
 			flags = 0;
-			foreach (var flag in FFlags)
+			foreach (var flag in FPinInFlags)
 				flags |= flag;
 		}
 	}

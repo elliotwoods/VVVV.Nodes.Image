@@ -24,12 +24,12 @@ namespace VVVV.Nodes.OpenCV
 
 			if (FInput.Allocated)
 			{
-				Initialise();
+				Allocate();
 				Process();
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			if(!FInput.Allocated) return;
 

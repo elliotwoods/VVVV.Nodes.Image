@@ -39,7 +39,7 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FNeedsConversion = ImageUtils.NeedsConversion(FInput.ImageAttributes.ColourFormat, out FConvertedFormat);
 			if (FNeedsConversion)

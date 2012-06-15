@@ -11,7 +11,7 @@ namespace VVVV.Nodes.OpenCV
 		/// This should be replaced to different functions
 		/// depending on whether the node has an input or not
 		/// </summary>
-		public abstract void Initialise();
+		public abstract void Allocate();
 		public abstract void Process();
 
 		protected Object FLockProperties = new Object();
@@ -32,12 +32,12 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		protected bool FNeedsInit = true;
-		virtual public bool NeedsInitialise()
+		protected bool FNeedsAllocate = true;
+		virtual public bool NeedsAllocate()
 		{
-			if (FNeedsInit)
+			if (FNeedsAllocate)
 			{
-				FNeedsInit = false;
+				FNeedsAllocate = false;
 				return true;
 			}
 			return false;
@@ -59,13 +59,13 @@ namespace VVVV.Nodes.OpenCV
 		/// Feel free this to call multiple times in 1 evaluate.
 		/// If not threaded, forces an immediate Initialise with lock
 		/// </summary>
-		public void ReInitialise()
+		public void ReAllocate()
 		{
 			if (this.NeedsThread())
-				FNeedsInit = true;
+				FNeedsAllocate = true;
 			else
 				lock (this)
-					Initialise();
+					Allocate();
 		}
 
 		virtual public void Dispose()

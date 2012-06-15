@@ -18,7 +18,7 @@ namespace VVVV.Nodes.OpenCV
 	{
 		CVImage FBuffer = new CVImage();
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FBuffer.Initialise(FInput.ImageAttributes);
 		}

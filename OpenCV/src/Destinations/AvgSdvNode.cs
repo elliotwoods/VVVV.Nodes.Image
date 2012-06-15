@@ -58,7 +58,7 @@ namespace VVVV.Nodes.OpenCV
 		MCvScalar FStandardDeviation = new MCvScalar();
 		int FChannelCount = 1;
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			
 		}

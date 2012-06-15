@@ -17,7 +17,7 @@ namespace VVVV.Nodes.OpenCV
 	public class GrayscaleInstance : IFilterInstance
 	{
 		TColorFormat FOutFormat;
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FOutFormat = ImageUtils.MakeGrayscale(FInput.ImageAttributes.ColourFormat);
 

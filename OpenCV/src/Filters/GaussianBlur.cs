@@ -12,7 +12,7 @@ namespace VVVV.Nodes.OpenCV
 	{
 		public int Width = 3;
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FOutput.Image.Initialise(FInput.ImageAttributes);
 		}

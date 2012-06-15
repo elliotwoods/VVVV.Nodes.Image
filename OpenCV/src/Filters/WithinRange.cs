@@ -22,7 +22,7 @@ namespace VVVV.Nodes.OpenCV
 		CVImage FImageGT = new CVImage();
 		CVImage FImageLT = new CVImage();
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FImageGT.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
 			FImageLT.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);

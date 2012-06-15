@@ -25,7 +25,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 			set
 			{
 				ScanSet.Payload = value;
-				ReInitialise();				
+				ReAllocate();				
 			}
 		}
 
@@ -49,7 +49,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FGreyscale.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 			FPositive.Initialise(FGreyscale.ImageAttributes);

@@ -12,7 +12,7 @@ namespace VVVV.Nodes.OpenCV
 		/// <summary>
 		/// This is invalid for generators
 		/// </summary>
-		public override void Initialise() {}
+		public override void Allocate() {}
 
 		/// <summary>
 		/// Open the device for capture. This is called from inside the thread
@@ -75,7 +75,7 @@ namespace VVVV.Nodes.OpenCV
 				if (FOpen)
 				{
 					if (FOutput.Image.Allocated == false)
-						ReInitialise();
+						ReAllocate();
 					else
 					{
 						FOutput.Image.Timestamp = DateTime.UtcNow.Ticks - TimestampDelay * 10000;

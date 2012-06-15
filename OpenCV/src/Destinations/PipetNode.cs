@@ -23,7 +23,7 @@ namespace VVVV.Nodes.OpenCV
 	{
 		private Object FLock = new Object();
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			
 		}

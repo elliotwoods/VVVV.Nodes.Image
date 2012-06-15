@@ -38,8 +38,8 @@ namespace VVVV.Nodes.OpenCV
 								if (!FInput[i].Allocated)
 									continue;
 
-								if (FInput[i].ImageAttributesChanged || FProcess[i].NeedsInitialise())
-									FProcess[i].Initialise();
+								if (FInput[i].ImageAttributesChanged || FProcess[i].NeedsAllocate())
+									FProcess[i].Allocate();
 
 								if (FInput[i].ImageChanged)
 									for (int iProcess = i; iProcess < SliceCount; iProcess += (FInput.SliceCount > 0 ? FInput.SliceCount : int.MaxValue))

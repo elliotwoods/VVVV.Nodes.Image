@@ -28,7 +28,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 				if (value != null)
 				{
 					FScanSet = value;
-					ReInitialise();
+					ReAllocate();
 					AddListeners();
 				}
 				else
@@ -48,7 +48,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 			set
 			{
 				FDataSetType = value;
-				ReInitialise();
+				ReAllocate();
 			}
 		}
 
@@ -58,11 +58,11 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 			set
 			{
 				FThreshold = value;
-				ReInitialise();
+				ReAllocate();
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			if (Allocated)
 				lock (this)
@@ -101,7 +101,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 			}
 		}
 
-		unsafe void UpdateData()
+		public unsafe void UpdateData()
 		{
 			if (Allocated)
 			{
@@ -257,7 +257,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 
 		void FScanSet_UpdateAttributes(object sender, EventArgs e)
 		{
-			ReInitialise();
+			ReAllocate();
 			UpdateData();
 		}
 	}
@@ -298,6 +298,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 		protected override void Update(int InstanceCount, bool SpreadChanged)
 		{
 			bool needsInit = false;
+			bool needsCalc = false;
 
 			if (FPinInDataSetType.IsChanged)
 			{
@@ -317,12 +318,16 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 			{
 				for (int i=0; i<InstanceCount; i++)
 					FProcessor[i].Threshold = FPinInThreshold[i];
-				needsInit = true;
+				needsCalc = true;
 			}
 
 			if (needsInit)
 				foreach (var process in FProcessor)
-					process.ReInitialise();
+					process.ReAllocate();
+
+			if (needsCalc)
+				foreach (var process in FProcessor)
+					process.UpdateData();
 		}
 
 	}

@@ -31,7 +31,7 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FOutput.Image.Initialise(FInput.Image.ImageAttributes);
 		}

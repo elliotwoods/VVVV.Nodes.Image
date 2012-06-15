@@ -26,11 +26,11 @@ namespace VVVV.Nodes.OpenCV
 			set
 			{
 				FPassOriginal = value;
-				ReInitialise();
+				ReAllocate();
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			Buffer.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 		}

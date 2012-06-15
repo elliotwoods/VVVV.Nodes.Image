@@ -39,7 +39,7 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FSize = FInput.ImageAttributes.Size;
 			FOutput.Image.Initialise(FSize, TColorFormat.RGB32F);

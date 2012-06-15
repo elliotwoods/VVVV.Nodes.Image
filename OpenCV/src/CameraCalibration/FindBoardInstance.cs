@@ -40,7 +40,7 @@ namespace VVVV.Nodes.OpenCV
 				return (Spread<Vector2D>)FFoundPoints.Clone();
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 		}

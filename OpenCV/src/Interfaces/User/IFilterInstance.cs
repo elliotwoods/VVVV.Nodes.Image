@@ -13,7 +13,7 @@ namespace VVVV.Nodes.OpenCV
 		public void SetInput(CVImageInput input)
 		{
 			FInput = input;
-			ReInitialise();
+			ReAllocate();
 		}
 
 		public bool HasInput(CVImageInput input)

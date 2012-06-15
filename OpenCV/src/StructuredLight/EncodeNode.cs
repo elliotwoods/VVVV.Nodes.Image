@@ -20,7 +20,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 			set
 			{
 				FPayload = value;
-				ReInitialise();
+				ReAllocate();
 			}
 		}
 
@@ -29,7 +29,7 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 		public int Frame = 0;
 		public int FrameRendered = -1;
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			if (Allocated)
 			{

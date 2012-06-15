@@ -55,7 +55,7 @@ namespace VVVV.Nodes.OpenCV.Tracking
 			FHaarCascade = new HaarCascade(path);
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FGrayScale.Initialise(FInput.Image.ImageAttributes.Size, TColorFormat.L8);
 		}

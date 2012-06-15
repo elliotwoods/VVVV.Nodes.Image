@@ -18,7 +18,7 @@ namespace VVVV.Nodes.OpenCV
 	{
 		public bool Set = false;
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 		}
 

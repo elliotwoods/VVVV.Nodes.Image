@@ -36,7 +36,7 @@ namespace VVVV.Nodes.OpenCV
 			//Allocate();
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			//This function gets called whenever the output image needs to be initialised
 			//Initialising = setting the attributes (i.e. setting the image header and allocating the memory)

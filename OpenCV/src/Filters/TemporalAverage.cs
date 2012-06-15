@@ -27,12 +27,12 @@ namespace VVVV.Nodes.OpenCV
 					value = 64;
 
 				FFrames = value;
-				ReInitialise();
+				ReAllocate();
 			}
 		}
 		private int FFrame = 0;
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FFrame = 0;
 

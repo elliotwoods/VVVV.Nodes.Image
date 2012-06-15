@@ -124,7 +124,7 @@ namespace VVVV.Nodes.OpenCV
 			}
 		}
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 		}

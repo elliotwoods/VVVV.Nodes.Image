@@ -34,8 +34,8 @@ namespace VVVV.Nodes.OpenCV
 							{
 								if (FProcess[i].Enabled)
 								{
-									if (FProcess[i].NeedsInitialise())
-										FProcess[i].Initialise();
+									if (FProcess[i].NeedsAllocate())
+										FProcess[i].Allocate();
 									FProcess[i].Process();
 								}
 							});

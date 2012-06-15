@@ -32,13 +32,13 @@ namespace VVVV.Nodes.OpenCV
 			set
 			{
 				FThresholdEnabled = value;
-				ReInitialise();
+				ReAllocate();
 			}
 		}
 
 		public TDifferenceMode DifferenceMode = TDifferenceMode.AbsoluteDifference;
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 
 			if (FThresholdEnabled)

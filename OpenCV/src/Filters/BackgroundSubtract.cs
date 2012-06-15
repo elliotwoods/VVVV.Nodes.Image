@@ -32,7 +32,7 @@ namespace VVVV.Nodes.OpenCV
 
 		public bool Hold = false;
 
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FOutput.Image.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
 			FBackground.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);

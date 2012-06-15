@@ -16,7 +16,7 @@ namespace VVVV.Nodes.OpenCV
 {
 	public class NotInstance : IFilterInstance
 	{
-		public override void Initialise()
+		public override void Allocate()
 		{
 			FOutput.Image.Initialise(FInput.ImageAttributes);
 		}

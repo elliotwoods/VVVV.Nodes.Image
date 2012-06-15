@@ -103,14 +103,17 @@ namespace VVVV.Nodes.OpenCV.StructuredLight
 		{
 			lock (this)
 			{
-				this.CameraSize = CameraSize;
-				this.EncodedData = new ulong[CameraPixelCount];
-				this.ProjectorInCamera = new ulong[CameraPixelCount];
-				this.CameraInProjector = new ulong[ProjectorPixelCount];
-				this.Distance = new float[CameraPixelCount];
-				this.Luminance = new byte[CameraPixelCount];
-				this.OnUpdateAttributes();
-				FInitialised = true;
+				if (this.Payload != null)
+				{
+					this.CameraSize = CameraSize;
+					this.EncodedData = new ulong[CameraPixelCount];
+					this.ProjectorInCamera = new ulong[CameraPixelCount];
+					this.CameraInProjector = new ulong[ProjectorPixelCount];
+					this.Distance = new float[CameraPixelCount];
+					this.Luminance = new byte[CameraPixelCount];
+					this.OnUpdateAttributes();
+					FInitialised = true;
+				}
 			}
 		}
 

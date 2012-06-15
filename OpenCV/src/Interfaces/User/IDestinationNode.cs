@@ -24,7 +24,7 @@ namespace VVVV.Nodes.OpenCV
 			if (FConfigThreadMode.IsChanged)
 				FProcessor.ThreadMode = FConfigThreadMode[0];
 
-			bool countChanged = FProcessor.CheckInputSize(SpreadMax);
+			bool countChanged = FProcessor.CheckInputSize(this.OneInstancePerImage() ? FPinInInputImage.SliceCount : SpreadMax);
 			Update(FProcessor.SliceCount, countChanged);
 		}
 
