@@ -72,6 +72,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="VideoInputSharp">
+      <HintPath>.\VideoInputSharp.dll</HintPath>
+    </Reference>
     <Reference Include="VVVV.Core">
       <HintPath>..\..\..\..\..\..\lib\core\VVVV.Core.dll</HintPath>
     </Reference>
@@ -107,10 +110,6 @@
     <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\..\kimchiandchips\Development\videoInput.NET\videoInput.NET\videoInput.NET.vcxproj">
-      <Project>{A07697CF-A7BC-4F19-8FBB-1530C94A634C}</Project>
-      <Name>VideoInputSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\core\Hosting\Hosting.csproj">
       <Project>{F9A754A6-EEA5-4761-9446-C2AAF9CF8B31}</Project>
       <Name>Hosting</Name>
