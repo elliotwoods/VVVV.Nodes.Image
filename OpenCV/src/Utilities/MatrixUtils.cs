@@ -56,5 +56,12 @@ namespace VVVV.Nodes.OpenCV
 
 			return objectPoints;
 		}
+
+		public static Matrix4x4 ConvertToVVVV(Matrix4x4 OpenCVMatrix)
+		{
+			Matrix4x4 flipy = VMath.Scale(1.0, -1.0, 1.0);
+			Matrix4x4 flipz = VMath.Scale(1.0, 1.0, -1.0);
+			return OpenCVMatrix * flipz;
+		}
 	}
 }

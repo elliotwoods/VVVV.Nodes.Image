@@ -26,6 +26,13 @@ namespace VVVV.Nodes.OpenCV
 		private bool FNeedsOpen = false;
 		private bool FNeedsClose = false;
 		private bool FOpen = false;
+		public bool IsOpen
+		{
+			get
+			{
+				return FOpen;	
+			}
+		}
 
 		/// <summary>
 		/// Message the thread to start the capture device. This is called from outside the thread (e.g. the plugin node)
@@ -64,7 +71,7 @@ namespace VVVV.Nodes.OpenCV
 					return;
 				}
 
-				if (FNeedsOpen)
+				if (FNeedsOpen && Enabled)
 				{
 					FNeedsOpen = false;
 					if (FOpen)
@@ -107,11 +114,10 @@ namespace VVVV.Nodes.OpenCV
 			}
 			set
 			{
+				if (FEnabled == value)
+					return;
 				lock (FLockProperties)
 				{
-					if (FEnabled == value)
-						return;
-
 					if (value)
 					{
 

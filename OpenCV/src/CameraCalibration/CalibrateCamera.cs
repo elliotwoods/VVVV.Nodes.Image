@@ -19,6 +19,8 @@ using System.Collections.Generic;
 
 namespace VVVV.Nodes.OpenCV
 {
+	public enum TCoordinateSystem { VVVV, OpenCV };
+
 	#region PluginInfo
 	[PluginInfo(Name = "CalibrateCamera", Category = "OpenCV", Help = "Finds intrinsics for a single camera", Tags = "", AutoEvaluate=true)]
 	#endregion PluginInfo
@@ -37,8 +39,11 @@ namespace VVVV.Nodes.OpenCV
 		[Input("Flags")]
 		ISpread<CALIB_TYPE> FPinInFlags;
 
-		[Input("Intrinsic Guess")]
+		[Input("Intrinsic Guess", IsSingle=true)]
 		ISpread<Intrinsics> FPinInIntrinsics;
+
+		[Input("Coordinates", IsSingle=true)]
+		ISpread<TCoordinateSystem> FPinInCoordSystem;
 
 		[Input("Do", IsBang=true, IsSingle=true)]
 		ISpread<bool> FPinInDo;
@@ -146,6 +151,12 @@ namespace VVVV.Nodes.OpenCV
 						Extrinsics extrinsics = new Extrinsics(extrinsicsPerView[i]);
 						FPinOutExtrinsics[i] = extrinsics;
 						FPinOutView[i] = extrinsics.Matrix;
+					}
+
+					if (FPinInCoordSystem[0] == TCoordinateSystem.VVVV)
+					{
+						for (int i=0; i<FPinOutView.SliceCount; i++)
+							FPinOutView[i] = MatrixUtils.ConvertToVVVV(FPinOutView[i]);
 					}
 
 					FPinOutSuccess[0] = true;

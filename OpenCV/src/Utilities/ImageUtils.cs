@@ -479,5 +479,50 @@ namespace VVVV.Nodes.OpenCV
 			}
 			return output;
 		}
+
+		static byte asByte(int value)
+		{
+			//return (byte)value;
+			if (value > 255)
+				return 255;
+			else if (value < 0)
+				return 0;
+			else
+				return (byte)value;
+		}
+
+		static unsafe void PixelYUV2RGB(byte * rgb, byte y, byte u, byte v)
+		{
+			int C = y - 16;
+			int D = u - 128;
+			int E = v - 128;
+
+			rgb[2] = asByte((298 * C + 409 * E + 128) >> 8);
+			rgb[1] = asByte((298 * C - 100 * D - 208 * E + 128) >> 8);
+			rgb[0] = asByte((298 * C + 516 * D + 128) >> 8);
+		}
+
+		public static unsafe void RawYUV2RGBA(IntPtr source, IntPtr destination, uint size)
+		{
+			byte * yuv = (byte*) source;
+			byte* rgba = (byte*) destination;
+
+			for (uint i=0; i<size / 2; i++)
+			{
+				rgba[0] = yuv[1];
+				//PixelYUV2RGB(rgba, yuv[1], yuv[0], yuv[2]);
+				rgba[3] = 255;
+
+				rgba += 4;
+
+				rgba[0] = yuv[3];
+				//PixelYUV2RGB(rgba, yuv[3], yuv[0], yuv[2]);
+				rgba[3] = 255;
+
+				rgba += 4;
+
+				yuv += 4;
+			}
+		}
 	}
 }

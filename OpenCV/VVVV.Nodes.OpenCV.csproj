@@ -157,7 +157,6 @@
     <Compile Include="src\Image\CVImageLink.cs" />
     <Compile Include="src\Image\CVImageOutput.cs" />
     <Compile Include="src\Image\CVImageOutputSpread.cs" />
-    <Compile Include="src\Image\CVImageUtils.cs" />
     <Compile Include="src\Image\ImageBase.cs" />
     <Compile Include="src\Interfaces\User\IDeviceGeneratorInstance.cs" />
     <Compile Include="src\MultiInput\Cons.cs" />
