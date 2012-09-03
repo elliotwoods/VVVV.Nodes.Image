@@ -31,7 +31,7 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 
 		#region fields & pins
 		[Input("Context")]
-		ISpread<OpenNIState> FPinInContext;
+		ISpread<Device> FPinInContext;
 
 		[Output("ID")]
 		ISpread<int> FPinOutID;
@@ -57,7 +57,7 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 
 		#region OpenNI
 		
-		OpenNIState FState;
+		Device FState;
 		UserGenerator FUserGenerator;
 		bool FStarted = false;
 		#endregion

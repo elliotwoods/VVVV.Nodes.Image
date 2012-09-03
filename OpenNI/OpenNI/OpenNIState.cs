@@ -7,7 +7,13 @@ using System.Threading;
 
 namespace VVVV.Nodes.OpenCV.OpenNI
 {
-	class OpenNIState
+    interface Listener
+    {
+        void ContextInitialise();
+        void ContextUpdate();
+    }
+
+	class Device
 	{
 		public string CreationInfo = "";
 		public Context Context;
@@ -17,7 +23,38 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 		/// generator.
 		/// </summary>
 		public DepthGenerator DepthGenerator;
-		
+
+        HashSet<Listener> FListeners = new HashSet<Listener>();
+
+        void OnInitialised()
+        {
+            foreach (var listener in FListeners)
+            {
+                listener.ContextInitialise();
+            }
+        }
+
+        void OnUpdate()
+        {
+            foreach (var listener in FListeners)
+            {
+                listener.ContextUpdate();
+            }
+        }
+
+        public void RegisterListener(Listener listener)
+        {
+            FListeners.Add(listener);
+            if (this.Running)
+                listener.ContextInitialise();
+        }
+
+        public void UnregisterListener(Listener listener)
+        {
+            if (FListeners.Contains(listener))
+                FListeners.Remove(listener);
+        }
+
 		private bool FRunning = false;
 		public bool Running 
 		{
@@ -28,22 +65,6 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 		}
 
 		public string Status = "";
-
-		public event EventHandler Initialised;
-		public void OnInitialised()
-		{
-			if (Initialised == null)
-				return;
-			Initialised(this, EventArgs.Empty);
-		}
-
-		public event EventHandler Update;
-		public void OnUpdate()
-		{
-			if (Update == null)
-				return;
-			Update(this, EventArgs.Empty);
-		}
 
 		private Thread FThread;
 		public void Start()

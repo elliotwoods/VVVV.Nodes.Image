@@ -16,6 +16,7 @@ using OpenNI;
 using System.Runtime.InteropServices;
 
 using VVVV.Nodes.OpenCV;
+using System.Diagnostics;
 
 #endregion usings
 
@@ -28,7 +29,7 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 	#endregion PluginInfo
 	public class ImageNode : IPluginEvaluate, IDisposable
 	{
-        class ImageInstance
+        class ImageInstance : Listener, IDisposable
         {
             public string Status = "";
 
@@ -37,28 +38,31 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 
 			Object FLock = new Object();
 
-            private OpenNIState FState;
-            public OpenNIState State
+            private Device FState;
+            public Device State
             {
                 set
                 {
                     if (FState == value)
                         return;
-                    FState = value;
+                    if (FState != null)
+                        FState.UnregisterListener(this);
 
-					if (FState != null)
-					{
-						FState.Initialised += new EventHandler(FState_Initialised);
-						if (FState.Running)
-							Initialise();
-					}
+                    FState = value;
+                    FState.RegisterListener(this);
                 }
             }
-
-            void FState_Initialised(object sender, EventArgs e)
+            
+            void Listener.ContextInitialise()
             {
                 Initialise();
             }
+
+            void Listener.ContextUpdate()
+            {
+                this.Update();
+            }
+
 
             ImageGenerator FRGBGenerator;
             IRGenerator FIRGenerator;
@@ -107,8 +111,6 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 								FProjective[x + y * 640].X = x;
 								FProjective[x + y * 640].Y = y;
 							}
-
-						FState.Update += new EventHandler(FState_Update);
 
 						Status = "OK";
 					}
@@ -167,11 +169,6 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 				return messages;
 			}
 
-            void FState_Update(object sender, EventArgs e)
-            {
-                Update();
-            }
-
             private unsafe void Update()
             {
 				lock (FLock)
@@ -229,6 +226,12 @@ namespace VVVV.Nodes.OpenCV.OpenNI
                     xyz[2] = xyzp[i].Z / 1000.0f;
                 }
             }
+
+            public void Dispose()
+            {
+                if (FState != null)
+                    FState.UnregisterListener(this);
+            }
         }
 
 		[DllImport("msvcrt.dll", EntryPoint = "memcpy")]
@@ -236,7 +239,7 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 
 		#region fields & pins
 		[Input("Context")]
-		ISpread<OpenNIState> FPinInContext;
+		ISpread<Device> FPinInContext;
 
 		[Input("Mode")]
 		IDiffSpread<ImageNodeMode> FPinInMode;
@@ -273,7 +276,6 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 
 		public void Dispose()
 		{
-
 		}
 
 		//called when data for any output pin is requested
