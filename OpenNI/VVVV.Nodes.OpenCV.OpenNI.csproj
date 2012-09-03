@@ -55,7 +55,8 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenNI.Net, Version=1.5.2.23, Culture=neutral, PublicKeyToken=6b43d0c6cf74ee7f, processorArchitecture=x86">
+    <Reference Include="OpenNI.Net, Version=1.5.4.0, Culture=neutral, PublicKeyToken=6b43d0c6cf74ee7f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\OpenNI\Bin\OpenNI.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -87,7 +88,7 @@
     <Compile Include="OpenNI\ImageNode.cs" />
     <Compile Include="OpenNI\ListDevices.cs" />
     <Compile Include="OpenNI\OpenNIState.cs" />
-    <Compile Include="OpenNI\UserNode.cs" />
+    <None Include="OpenNI\UserNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
