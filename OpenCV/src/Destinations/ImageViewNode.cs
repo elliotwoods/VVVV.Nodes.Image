@@ -81,6 +81,12 @@ namespace VVVV.Nodes.OpenCV
 		//called when data for any output pin is requested
 		public void Evaluate(int SpreadMax)
 		{
+			if (SpreadMax == 0)
+			{
+				RemoveListeners();
+				return;
+			}
+
 			int slice = FPinInSlice[0];
 			if (FInput != FPinInInput[slice])
 			{

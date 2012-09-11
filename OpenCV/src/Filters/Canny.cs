@@ -20,6 +20,7 @@ namespace VVVV.Nodes.OpenCV
 		public double ThresholdMin = 20;
 		public double ThresholdMax = 40;
 
+		private bool FNeedsConversion = false;
 		private CVImage FGrayscale = new CVImage();
 
 		private int FAperture = 5;
@@ -41,14 +42,36 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Allocate()
 		{
-			FGrayscale.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
+			TColorFormat AsGrayscale = TypeUtils.ToGrayscale(FInput.ImageAttributes.ColourFormat);
+			FNeedsConversion = (AsGrayscale != FInput.ImageAttributes.ColourFormat);
+
+			if (FNeedsConversion)
+			{
+				FGrayscale.Initialise(FInput.ImageAttributes.Size, AsGrayscale);
+			}
+
 			FOutput.Image.Initialise(FGrayscale.ImageAttributes);
 		}
 
 		public override void Process()
 		{
-			FInput.GetImage(FGrayscale);
-			CvInvoke.cvCanny(FGrayscale.CvMat, FOutput.CvMat, ThresholdMin, ThresholdMax, FAperture);
+			if (FNeedsConversion)
+			{
+				FInput.GetImage(FGrayscale);
+				CvInvoke.cvCanny(FGrayscale.CvMat, FOutput.CvMat, ThresholdMin, ThresholdMax, FAperture);
+			}
+			else
+			{
+				FInput.LockForReading();
+				try
+				{
+					CvInvoke.cvCanny(FInput.CvMat, FOutput.CvMat, ThresholdMin, ThresholdMax, FAperture);
+				}
+				finally
+				{
+					FInput.ReleaseForReading();
+				}
+			}
 			FOutput.Send();
 		}
 
