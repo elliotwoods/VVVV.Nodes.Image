@@ -53,7 +53,7 @@ namespace VVVV.Nodes.OpenCV
 		//called when data for any output pin is requested
 		public void Evaluate(int SpreadMax)
 		{
-			if (FInput[0] == null)
+			if (FInput.SliceCount == 0 || FInput[0] == null)
 			{
 				FOutPosition.SliceCount = 0;
 				FOutLength.SliceCount = 0;

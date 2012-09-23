@@ -419,6 +419,55 @@
             <param name="X">Value in the range [0..1]</param>
             <returns>Shaped value</returns>
         </member>
+        <member name="T:VVVV.Utils.IO.KeyboardState">
+            <summary>
+            Encapsulates the state of a keyboard. GetHashCode and Equals methods are overwritten
+            so that two keyboard states can be easily compared.
+            Use the KeyChars property to retrieve all pressed characters.
+            
+            Example:
+            Keys = { Shift, a, d }
+            KeyChars = { A, D }
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.IO.KeyboardState.Equals(VVVV.Utils.IO.KeyboardState)">
+            <summary>
+            Returns true if the other keyboard state contains the same keys, has the same caps lock state
+            and time value.
+            </summary>
+            <param name="other">The keyboard state to compare with the current keyboard state.</param>
+            <returns>True if the specified keyboard state is equal to the current keyboard state.</returns>
+        </member>
+        <member name="P:VVVV.Utils.IO.KeyboardState.KeyCodes">
+            <summary>
+            Returns all the pressed keys.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.IO.KeyboardState.CapsLock">
+            <summary>
+            Gets whether or not the caps lock is enabled.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.IO.KeyboardState.KeyChars">
+            <summary>
+            Returns all the pressed characters. 
+            
+            For example if the KeyCodes property contains SHIFT and A, this property will return 'A'
+            or if the KeyCodes property contains CTRL, ALT and Q, this property will return '@'
+            on a german keyboard.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.IO.KeyboardState.Time">
+            <summary>
+            Used to distinguish two keyboard states if they contain the same same key codes.
+            Useful if a key is pressed for a long time which should generate repeated key strokes.
+            </summary>
+        </member>
+        <member name="P:VVVV.Utils.IO.KeyboardState.Modifiers">
+            <summary>
+            Returns all the pressed modifier keys in one enumeration.
+            </summary>
+        </member>
         <member name="T:VVVV.Utils.Streams.IStreamer">
             <summary>
             Base interface for all stream readers and writers.
@@ -445,31 +494,6 @@
             <summary>
             OSCTransmitter
             </summary>
-        </member>
-        <member name="M:VVVV.Utils.ArrayExtensions.Init``1(``0[],``0)">
-            <summary>
-            Initializes the array with the defaultValue.
-            </summary>
-            <param name="array">The array to initialize.</param>
-            <param name="defaultVaue">The value to initialize the array with.</param>
-        </member>
-        <member name="M:VVVV.Utils.ArrayExtensions.Fill``1(``0[],System.Int32,System.Int32,``0)">
-            <summary>
-            Fills the array with the defaultValue from index to index + length.
-            </summary>
-            <param name="array">The array to fill.</param>
-            <param name="index">The index into the array where the fill operation starts.</param>
-            <param name="length">The fill operation ends at index + length.</param>
-            <param name="defaultVaue">The value to fill the array with.</param>
-        </member>
-        <member name="M:VVVV.Utils.ArrayExtensions.Replicate``1(``0[],System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Replicates the values between startIndex and endIndex.
-            </summary>
-            <param name="array">The array to do the replication on.</param>
-            <param name="startIndex">Defines from where to begin the replication.</param>
-            <param name="endIndex">Defines where to end the replication.</param>
-            <param name="times">Defines the number of replications of the values between startIndex and endIndex.</param>
         </member>
         <member name="T:VVVV.Utils.VMath.Matrix4x4">
             <summary>
@@ -810,6 +834,31 @@
             Unsafe but very fast 2-d indexer for 4x4 matrix, [0..3, 0..3]
             </summary>
         </member>
+        <member name="T:VVVV.Utils.IO.MouseState">
+            <summary>
+            Encapsulates the state of a mouse.
+            </summary>
+        </member>
+        <member name="F:VVVV.Utils.IO.MouseState.X">
+            <summary>
+            The x coordinate of the mouse.
+            </summary>
+        </member>
+        <member name="F:VVVV.Utils.IO.MouseState.Y">
+            <summary>
+            The y coordinate of the mouse.
+            </summary>
+        </member>
+        <member name="F:VVVV.Utils.IO.MouseState.Button">
+            <summary>
+            The pressed mouse button.
+            </summary>
+        </member>
+        <member name="F:VVVV.Utils.IO.MouseState.MouseWheel">
+            <summary>
+            The position of the mouse wheel.
+            </summary>
+        </member>
         <member name="T:VVVV.Utils.Streams.IOutStream">
             <summary>
             Base interface for all output streams. It provides the ability
@@ -1119,7 +1168,7 @@
         </member>
         <member name="M:VVVV.Utils.VMath.VMath.Factorial(System.Int32)">
             <summary>
-            Factorial function
+            Factorial function, DON'T FEED ME WITH LARGE NUMBERS !!! (n>10 can be huge)
             </summary>
             <param name="n"></param>
             <returns>The product n * n-1 * n-2 * n-3 * .. * 3 * 2 * 1</returns>
@@ -1140,6 +1189,17 @@
             <param name="y">The exponent.</param>
             <returns>Returns x raised to the power of y.</returns>
             <remarks>This method should be considerably faster than Math.Pow for small y.</remarks>
+        </member>
+        <member name="M:VVVV.Utils.VMath.VMath.SolveQuadratic(System.Double,System.Double,System.Double,System.Double@,System.Double@)">
+            <summary>
+            Solves a quadratic equation a*x^2 + b*x + c for x
+            </summary>
+            <param name="a">Coefficient of x^2</param>
+            <param name="b">Coefficient of x</param>
+            <param name="c">Constant</param>
+            <param name="x1">First solution</param>
+            <param name="x2">Second solution</param>
+            <returns>Number of solution, 0, 1, 2 or int.MaxValue</returns>
         </member>
         <member name="M:VVVV.Utils.VMath.VMath.Min(System.Double,System.Double)">
             <summary>
@@ -1649,6 +1709,20 @@
             </summary>
             <param name="q">A quaternion, can be non normalized</param>
             <returns>3d-vector with x=pitch, y=yaw, z=roll</returns>
+        </member>
+        <member name="M:VVVV.Utils.VMath.VMath.Trilateration(VVVV.Utils.VMath.Vector3D,VVVV.Utils.VMath.Vector3D,VVVV.Utils.VMath.Vector3D,System.Double,System.Double,System.Double,VVVV.Utils.VMath.Vector3D@,VVVV.Utils.VMath.Vector3D@)">
+            <summary>
+            Intersaction of 3 Spheres
+            </summary>
+            <param name="P1">Center sphere 1</param>
+            <param name="P2">Center sphere 2</param>
+            <param name="P3">Center sphere 3</param>
+            <param name="r1">Radius sphere 1</param>
+            <param name="r2">Radius sphere 2</param>
+            <param name="r3">Radius sphere 3</param>
+            <param name="S1">Intersection Point 1</param>
+            <param name="S2">Intersection Point 2</param>
+            <returns>Number of intersections</returns>
         </member>
         <member name="M:VVVV.Utils.VMath.VMath.Translate(System.Double,System.Double,System.Double)">
             <summary>
@@ -2623,6 +2697,26 @@
             Data component for the z dimension
             </summary>
         </member>
+        <member name="F:VVVV.Utils.VMath.Vector3D.Zero">
+            <summary>
+            (0, 0, 0) Vector
+            </summary>
+        </member>
+        <member name="F:VVVV.Utils.VMath.Vector3D.eX">
+            <summary>
+            (1, 0, 0) basis vector in x direction
+            </summary>
+        </member>
+        <member name="F:VVVV.Utils.VMath.Vector3D.eY">
+            <summary>
+            (0, 1, 0) basis vector in y direction
+            </summary>
+        </member>
+        <member name="F:VVVV.Utils.VMath.Vector3D.eZ">
+            <summary>
+            (0, 0, 1) basis vector in z direction
+            </summary>
+        </member>
         <member name="M:VVVV.Utils.VMath.Vector3D.#ctor(VVVV.Utils.VMath.Vector3D)">
             <summary>
             Copies a 3d-vecor
@@ -2806,7 +2900,7 @@
         </member>
         <member name="M:VVVV.Utils.VMath.Vector3D.op_BitwiseAnd(VVVV.Utils.VMath.Vector3D,VVVV.Utils.VMath.Vector3D)">
             <summary>
-            3d-vector &amp; 3d-vector, performs a 3d cross product
+            3d-vector &amp; 3d-vector, performs a left handed 3d cross product
             
             code is:
             <c>
@@ -2826,6 +2920,20 @@
             <param name="v1"></param>
             <param name="v2"></param>
             <returns>Dot product of v1 and v2</returns>
+        </member>
+        <member name="M:VVVV.Utils.VMath.Vector3D.CrossRH(VVVV.Utils.VMath.Vector3D)">
+            <summary>
+            performs a righ handed 3d cross product
+            
+            code is:
+            <c>
+            x = v1.y * v2.z - v2.y * v1.z;
+            y = v1.z * v2.x - v2.z * v1.x;
+            z = v1.x * v2.y - v2.x * v1.y;
+            </c>
+            </summary>
+            <param name="v">right vector</param>
+            <returns>New vector which is orthogonal to this and v</returns>
         </member>
         <member name="M:VVVV.Utils.VMath.Vector3D.op_GreaterThan(VVVV.Utils.VMath.Vector3D,System.Double)">
             <summary>
@@ -3255,6 +3363,31 @@
             Implemention of <see cref="T:VVVV.Utils.Streams.IIOStream`1"/> using an array as storage.
             Useful as wrapper if a stream is accessed randomly.
             </summary>
+        </member>
+        <member name="M:VVVV.Utils.ArrayExtensions.Init``1(``0[],``0)">
+            <summary>
+            Initializes the array with the defaultValue.
+            </summary>
+            <param name="array">The array to initialize.</param>
+            <param name="defaultVaue">The value to initialize the array with.</param>
+        </member>
+        <member name="M:VVVV.Utils.ArrayExtensions.Fill``1(``0[],System.Int32,System.Int32,``0)">
+            <summary>
+            Fills the array with the defaultValue from index to index + length.
+            </summary>
+            <param name="array">The array to fill.</param>
+            <param name="index">The index into the array where the fill operation starts.</param>
+            <param name="length">The fill operation ends at index + length.</param>
+            <param name="defaultVaue">The value to fill the array with.</param>
+        </member>
+        <member name="M:VVVV.Utils.ArrayExtensions.Replicate``1(``0[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Replicates the values between startIndex and endIndex.
+            </summary>
+            <param name="array">The array to do the replication on.</param>
+            <param name="startIndex">Defines from where to begin the replication.</param>
+            <param name="endIndex">Defines where to end the replication.</param>
+            <param name="times">Defines the number of replications of the values between startIndex and endIndex.</param>
         </member>
         <member name="T:VVVV.Utils.Animation.IIRFilter">
             <summary>

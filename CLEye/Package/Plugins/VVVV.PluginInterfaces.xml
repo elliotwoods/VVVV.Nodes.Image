@@ -4,6 +4,35 @@
         <name>VVVV.PluginInterfaces</name>
     </assembly>
     <members>
+        <member name="P:VVVV.PluginInterfaces.V2.NonGeneric.ISpread.Item(System.Int32)">
+            <summary>
+            Provides random read/write access to the actual data.
+            </summary>
+        </member>
+        <member name="P:VVVV.PluginInterfaces.V2.NonGeneric.ISpread.SliceCount">
+            <summary>
+            Get/Set the size of this spread.
+            </summary>
+        </member>
+        <member name="T:VVVV.PluginInterfaces.V2.NonGeneric.IDiffSpread">
+            <summary>
+            Extension to the non-generic <see cref="T:VVVV.PluginInterfaces.V2.NonGeneric.ISpread"/> interface, to check if the data changes from frame to frame.
+            </summary>
+        </member>
+        <member name="E:VVVV.PluginInterfaces.V2.NonGeneric.IDiffSpread.Changed">
+            <summary>
+            Subscribe to this event to get noticed when the data changes.
+            </summary>
+            <remarks>
+            Only data from this spread is valid in an event handler.
+            If you access data from another spread, don't expect it to be valid.
+            </remarks>
+        </member>
+        <member name="P:VVVV.PluginInterfaces.V2.NonGeneric.IDiffSpread.IsChanged">
+            <summary>
+            Is true if the spread data has changed in this frame.
+            </summary>
+        </member>
         <member name="T:VVVV.PluginInterfaces.V2.IIOContainer">
             <summary>
             IO containers are used by the IO registry and IO factory to create and
@@ -272,6 +301,11 @@
         <member name="P:VVVV.PluginInterfaces.V2.IOBuildContext`1.IOAttribute">
             <summary>
             Gets or sets the io attribute.
+            </summary>
+        </member>
+        <member name="T:VVVV.PluginInterfaces.V2.IExposedNodeService">
+            <summary>
+            Provides access to nodes that have been exposed for being remotely controlled
             </summary>
         </member>
         <member name="T:VVVV.PluginInterfaces.V2.EX9.DXLayerOutPluginBase`1">
@@ -645,6 +679,18 @@
             <param name="OnDevice">The device for which the texture is accessed.</param>
             <param name="Slice">Slice Index of the texture to be accessed.</param>
         </member>
+        <member name="P:VVVV.PluginInterfaces.V2.Resource`3.Metadata">
+            <summary>
+            Some arbitrary data associated with this resource.
+            </summary>
+        </member>
+        <member name="P:VVVV.PluginInterfaces.V2.Resource`3.NeedsUpdate">
+            <summary>
+            Whether or not the Update method has to be called for this resource.
+            By default this flag is true.
+            Note: The Update method will always get called for new resources.
+            </summary>
+        </member>
         <member name="T:VVVV.PluginInterfaces.V1.IPluginHost">
             <summary>
             The interface to be implemented by a program to host IPlugins.
@@ -971,41 +1017,6 @@
         <member name="P:VVVV.PluginInterfaces.V2.INode.Tag">
             <summary>
             For internal use only.
-            </summary>
-        </member>
-        <member name="T:VVVV.PluginInterfaces.V2.IDiffSpread">
-            <summary>
-            Extension to the non-generic <see cref="T:VVVV.PluginInterfaces.V2.ISpread"/> interface, to check if the data changes from frame to frame.
-            </summary>
-        </member>
-        <member name="T:VVVV.PluginInterfaces.V2.ISpread">
-            <summary>
-            Common non-generic interface to the underlying input/output/config pins.
-            Set/Get, Read/Write methods are only implemented when it makes sense.
-            </summary>
-        </member>
-        <member name="P:VVVV.PluginInterfaces.V2.ISpread.Item(System.Int32)">
-            <summary>
-            Provides random read/write access to the actual data.
-            </summary>
-        </member>
-        <member name="P:VVVV.PluginInterfaces.V2.ISpread.SliceCount">
-            <summary>
-            Get/Set the size of this spread.
-            </summary>
-        </member>
-        <member name="E:VVVV.PluginInterfaces.V2.IDiffSpread.Changed">
-            <summary>
-            Subscribe to this event to get noticed when the data changes.
-            </summary>
-            <remarks>
-            Only data from this spread is valid in an event handler.
-            If you access data from another spread, don't expect it to be valid.
-            </remarks>
-        </member>
-        <member name="P:VVVV.PluginInterfaces.V2.IDiffSpread.IsChanged">
-            <summary>
-            Is true if the spread data has changed in this frame.
             </summary>
         </member>
         <member name="T:VVVV.PluginInterfaces.V2.IDiffSpread`1">
@@ -1637,6 +1648,11 @@
         <member name="P:VVVV.PluginInterfaces.V2.IHDEHost.MainLoop">
             <summary>
             Gets the main loop, which exposes events from the main loop.
+            </summary>
+        </member>
+        <member name="P:VVVV.PluginInterfaces.V2.IHDEHost.ExposedNodeService">
+            <summary>
+            Provides access to nodes that have been exposed for being remotely controlled
             </summary>
         </member>
         <member name="P:VVVV.PluginInterfaces.V2.IHDEHost.IsBoygroupClient">
@@ -3507,23 +3523,27 @@
         </member>
         <member name="P:VVVV.PluginInterfaces.V2.Graph.IWindow2.WindowType">
             <summary>
-            Get the window's type.
+            Returns the window's type.
             </summary>
         </member>
         <member name="P:VVVV.PluginInterfaces.V2.Graph.IWindow2.Node">
             <summary>
-            Get the window's associated INode2.
+            Returns the window's associated INode2.
             </summary>
         </member>
         <member name="P:VVVV.PluginInterfaces.V2.Graph.IWindow2.IsVisible">
             <summary>
-            Gets the window's visible state. 
-            Returns true if this window is visible, false if not.
+            Returns the window's visible state (true if visible, false if not).
             </summary>
         </member>
         <member name="P:VVVV.PluginInterfaces.V2.Graph.IWindow2.Bounds">
             <summary>
-            Gets the window's bounds.
+            Returns the window's bounds.
+            </summary>
+        </member>
+        <member name="P:VVVV.PluginInterfaces.V2.Graph.IWindow2.Handle">
+            <summary>
+            Returns the window's handle
             </summary>
         </member>
     </members>

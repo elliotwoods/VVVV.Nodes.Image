@@ -23,7 +23,7 @@ namespace VVVV.Nodes.OpenCV
 
 	public class FrameDifferenceInstance : IFilterInstance
 	{
-		CVImage FBuffer = new CVImage();
+		CVImage FLastFrame = new CVImage();
 
 		public double Threshold = 0.1;
 		private bool FThresholdEnabled = false;
@@ -40,57 +40,45 @@ namespace VVVV.Nodes.OpenCV
 
 		public override void Allocate()
 		{
-
-			if (FThresholdEnabled)
-			{
-				FOutput.Image.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
-				FBuffer.Initialise(FInput.ImageAttributes.Size, TColorFormat.L8);
-			}
-			else
-			{
-				FOutput.Image.Initialise(FInput.ImageAttributes);
-				FBuffer.Initialise(FInput.ImageAttributes);
-			}
+			FOutput.Image.Initialise(FInput.ImageAttributes);
+			FLastFrame.Initialise(FInput.ImageAttributes);
 		}
 
 		public override void Process()
 		{
+			FInput.LockForReading();
+			try
+			{
+				switch (DifferenceMode)
+				{
+					case TDifferenceMode.AbsoluteDifference:
+						CvInvoke.cvAbsDiff(FInput.CvMat, FLastFrame.CvMat, FOutput.CvMat);
+						break;
+					case TDifferenceMode.Negative:
+						CvInvoke.cvSub(FInput.CvMat, FLastFrame.CvMat, FOutput.CvMat, new IntPtr());
+						break;
+					case TDifferenceMode.Positive:
+						CvInvoke.cvSub(FLastFrame.CvMat, FInput.CvMat, FOutput.CvMat, new IntPtr());
+						break;
+				}
+			}
+			catch
+			{
+			}
+			finally
+			{
+				FInput.ReleaseForReading();
+			}
+
 			if (FThresholdEnabled)
 			{
 				if (FInput.ImageAttributes.ColourFormat != TColorFormat.L8)
-				{
-					FInput.Image.GetImage(TColorFormat.L8, FOutput.Image);
-
-					if (DifferenceMode == TDifferenceMode.AbsoluteDifference)
-						CvInvoke.cvAbsDiff(FOutput.CvMat, FBuffer.CvMat, FOutput.CvMat);
-
-					CvInvoke.cvThreshold(FOutput.CvMat, FOutput.CvMat, 255.0d * Threshold, 255, THRESH.CV_THRESH_BINARY);
-
-					FInput.Image.GetImage(TColorFormat.L8, FBuffer);
-				}
+					Status = "Cannot perform threshold on image type " + FInput.ImageAttributes.ColourFormat.ToString() + ". Can only perform threshold on L8";
 				else
-				{
-					if (DifferenceMode == TDifferenceMode.AbsoluteDifference)
-					{
-						if (!FInput.LockForReading())
-							return;
-						CvInvoke.cvAbsDiff(FInput.CvMat, FBuffer.CvMat, FOutput.CvMat);
-						FInput.ReleaseForReading();
-					}
-
 					CvInvoke.cvThreshold(FOutput.CvMat, FOutput.CvMat, 255.0d * Threshold, 255, THRESH.CV_THRESH_BINARY);
-				}
-			} else {
-				if (DifferenceMode == TDifferenceMode.AbsoluteDifference)
-				{
-					if (!FInput.LockForReading())
-						return;
-					CvInvoke.cvAbsDiff(FInput.CvMat, FBuffer.CvMat, FOutput.CvMat);
-					FInput.ReleaseForReading();
-				}
-
-				FBuffer.SetImage(FInput.Image);
 			}
+
+			FInput.GetImage(FLastFrame);
 
 			FOutput.Send();
 		}

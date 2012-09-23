@@ -48,13 +48,17 @@ namespace VVVV.Nodes.OpenCV
 		{
 			FNeedsClose = true;
 		}
+
 		/// <summary>
-		/// Used to restart the device (e.g. you change a setting)
+		/// Used to restart the device (e.g. you change a setting). If not open, this action does nothing
 		/// </summary>
 		public void Restart()
 		{
-			FNeedsClose = true;
-			FNeedsOpen = true;
+			if (this.IsOpen)
+			{
+				FNeedsClose = true;
+				FNeedsOpen = true;
+			}
 		}
 
 		override public void Process()
@@ -71,7 +75,7 @@ namespace VVVV.Nodes.OpenCV
 					return;
 				}
 
-				if (FNeedsOpen && Enabled)
+				if (FNeedsOpen && Enabled || (!FOpen && Enabled))
 				{
 					FNeedsOpen = false;
 					if (FOpen)
