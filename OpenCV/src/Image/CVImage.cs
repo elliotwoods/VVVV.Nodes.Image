@@ -42,6 +42,11 @@ namespace VVVV.Nodes.OpenCV
 				return false;
 		}
 
+		public bool Initialise(int Width, int Height, TColorFormat Format)
+		{
+			return this.Initialise(new System.Drawing.Size(Width, Height), Format);
+		}
+
 		public void GetImage(TColorFormat format, CVImage target)
 		{
 			if (format == this.NativeFormat)
@@ -50,6 +55,10 @@ namespace VVVV.Nodes.OpenCV
 				ImageUtils.CopyImageConverted(this, target);
 		}
 
+		/// <summary>
+		/// Copy CVImage into target CVImage 
+		/// </summary>
+		/// <param name="target"></param>
 		public void GetImage(CVImage target)
 		{
 			GetImage(target.ImageAttributes.ColourFormat, target);
@@ -93,6 +102,15 @@ namespace VVVV.Nodes.OpenCV
 			if (rawData == IntPtr.Zero)
 				return;
 
+			ImageUtils.CopyImage(rawData, this);
+		}
+
+		/// <summary>
+		/// Copy data from byte array. Presume we're initialised and data is of correct size.
+		/// </summary>
+		/// <param name="rawData"></param>
+		public void SetPixels(byte[] rawData)
+		{
 			ImageUtils.CopyImage(rawData, this);
 		}
 

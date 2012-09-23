@@ -334,9 +334,14 @@ namespace VVVV.Nodes.OpenCV
 			CopyImage(source.Ptr, target.CvMat, target.ImageAttributes.BytesPerFrame);
 		}
 
-		public static void CopyImage(IntPtr rawData, CVImage target)
+		public static void CopyImage(IntPtr source, CVImage target)
 		{
-			CopyMemory(target.Data, rawData, target.ImageAttributes.BytesPerFrame);
+			CopyMemory(target.Data, source, target.ImageAttributes.BytesPerFrame);
+		}
+
+		public static void CopyImage(byte[] source, CVImage target)
+		{
+			Marshal.Copy(source, 0, target.Data, (int) target.ImageAttributes.BytesPerFrame);
 		}
 
 		/// <summary>
