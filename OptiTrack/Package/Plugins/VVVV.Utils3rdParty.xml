@@ -4,331 +4,40 @@
         <name>VVVV.Utils3rdParty</name>
     </assembly>
     <members>
-        <member name="T:VVVV.Utils.SlimDX.MatrixExtensions">
+        <member name="T:VVVV.Utils.VMath.Matrix4x4Utils">
             <summary>
-            Extension methods for type <see cref="T:SlimDX.Matrix">Matrix</see>.
+            VMath Matrix utils.
             </summary>
         </member>
-        <member name="M:VVVV.Utils.SlimDX.MatrixExtensions.ToMatrix4x4(SlimDX.Matrix)">
+        <member name="M:VVVV.Utils.VMath.Matrix4x4Utils.Decompose(VVVV.Utils.VMath.Matrix4x4,VVVV.Utils.VMath.Vector3D@,VVVV.Utils.VMath.Vector4D@,VVVV.Utils.VMath.Vector3D@)">
             <summary>
-            Converts a <see cref="T:SlimDX.Matrix">Matrix</see> to a <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see>.
+            Decomposes the <see cref="T:VVVV.Utils.VMath.Matrix4x4">matrix</see> into its scalar, rotational, and translational elements. 
             </summary>
-            <param name="Input">The <see cref="T:SlimDX.Matrix">Matrix</see> to convert.</param>
-            <returns>The converted <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see>.</returns>
+            <param name="m">The matrix to decompose.</param>
+            <param name="scale">The scalar element.</param>
+            <param name="rotationQuaternion">The rotational element.</param>
+            <param name="translation">The translational element.</param>
         </member>
-        <member name="T:VVVV.Utils.SlimDX.TextureFillFunction">
+        <member name="M:VVVV.Utils.VMath.Matrix4x4Utils.Decompose(VVVV.Utils.VMath.Matrix4x4,VVVV.Utils.VMath.Vector3D@,VVVV.Utils.VMath.Vector3D@,VVVV.Utils.VMath.Vector3D@)">
             <summary>
-            Method delegate for pixelshader like texture fill functions.
+            Decomposes the <see cref="T:VVVV.Utils.VMath.Matrix4x4">matrix</see> into its scalar, rotational, and translational elements. 
             </summary>
+            <param name="m">The matrix to decompose.</param>
+            <param name="scale">The scalar element.</param>
+            <param name="rotation">The rotational element.</param>
+            <param name="translation">The translational element.</param>
         </member>
-        <member name="T:VVVV.Utils.SlimDX.TextureFillFunction`1">
+        <member name="M:VVVV.Utils.VMath.Matrix4x4Utils.Blend(VVVV.Utils.VMath.Matrix4x4,VVVV.Utils.VMath.Matrix4x4,System.Double,System.Double,VVVV.Utils.VMath.Matrix4x4@)">
             <summary>
-            Method delegate for pixelshader like texture fill functions carrying user defined metadata in its arguments.
+            Blends a matrix <see cref="T:VVVV.Utils.VMath.Matrix4x4">m1</see> by amount1 and a matrix <see cref="T:VVVV.Utils.VMath.Matrix4x4">m2</see> by
+            amount2 into a new matrix <see cref="T:VVVV.Utils.VMath.Matrix4x4">m</see>.
             </summary>
-        </member>
-        <member name="T:VVVV.Utils.SlimDX.TextureFillFunctionInPlace">
-            <summary>
-            Method delegate for pixelshader like in place texture fill functions.
-            </summary>
-        </member>
-        <member name="T:VVVV.Utils.SlimDX.TextureFillFunctionInPlace`1">
-            <summary>
-            Method delegate for pixelshader like in place texture fill functions carrying user defined metadata in its arguments.
-            </summary>
-        </member>
-        <member name="T:VVVV.Utils.SlimDX.TextureUtils">
-            <summary>
-            Provides some utils to work with DX textures
-            </summary>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.CreateTexture(SlimDX.Direct3D9.Device,System.Int32,System.Int32)">
-            <summary>
-            Create a <see cref="T:SlimDX.Direct3D9.Texture">texture</see> of <paramref name="width"/>
-            and <paramref name="height"/> on <paramref name="device"/>.
-            </summary>
-            <param name="device">The device to create the texture on.</param>
-            <param name="width">The width of the texture.</param>
-            <param name="height">The height of the texture.</param>
-            <returns>The newly created <see cref="T:SlimDX.Direct3D9.Texture">texture</see>.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.CreateTextureNoAlpha(SlimDX.Direct3D9.Device,System.Int32,System.Int32)">
-            <summary>
-            Create a <see cref="T:SlimDX.Direct3D9.Texture">texture</see> without an alpha channel of <paramref name="width"/>
-            and <paramref name="height"/> on <paramref name="device"/>.
-            </summary>
-            <param name="device">The device to create the texture on.</param>
-            <param name="width">The width of the texture.</param>
-            <param name="height">The height of the texture.</param>
-            <returns>The newly created <see cref="T:SlimDX.Direct3D9.Texture">texture</see>.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.CreateColoredTexture(SlimDX.Direct3D9.Device,System.Int32,System.Int32,System.UInt32)">
-            <summary>
-            Create a <see cref="T:SlimDX.Direct3D9.Texture">texture</see> of <paramref name="width"/>
-            and <paramref name="height"/> on <paramref name="device"/>
-            and fill it with <paramref name="argbColor"/>.
-            </summary>
-            <param name="device">The device to create the texture on.</param>
-            <param name="width">The width of the texture.</param>
-            <param name="height">The height of the texture.</param>
-            <param name="argbColor">The color to fill the texture with.</param>
-            <returns>The newly created <see cref="T:SlimDX.Direct3D9.Texture">texture</see>.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.CopyBitmapToTexture(System.Drawing.Bitmap,SlimDX.Direct3D9.Texture)">
-            <summary>
-            Copies all pixels of the bitmap into the texture.
-            no checks are done, make sure the pixel count of the bitmap and texture matches
-            </summary>
-            <param name="bm"></param>
-            <param name="texture"></param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.GetPtrVal2D(System.UInt32*,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Retrievies the value at position <paramref name="row" />, <paramref name="col" />
-            from a data buffer of width <paramref name="width" />.
-            </summary>
-            <param name="data">The pointer to the data buffer to retrieve the value from.</param>
-            <param name="row">The row.</param>
-            <param name="col">The column.</param>
-            <param name="width">The width of the data buffer.</param>
-            <returns>The value at position row, col.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.SetPtrVal2D(System.UInt32*,System.UInt32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Sets the value at position <paramref name="row" />, <paramref name="col" />
-            in a data buffer of width <paramref name="width" />.
-            </summary>
-            <param name="data">The pointer to the data buffer.</param>
-            <param name="value">The value to set at position row, col.</param>
-            <param name="row">The row.</param>
-            <param name="col">The column.</param>
-            <param name="width">The width of the data buffer.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.GetArrayVal2D(System.UInt32[],System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Retrievies the value at position <paramref name="row" />, <paramref name="col" />
-            from a data array of width <paramref name="width" />.
-            </summary>
-            <param name="data">The data array to retrieve the value from.</param>
-            <param name="row">The row.</param>
-            <param name="col">The column.</param>
-            <param name="width">The width of the data array.</param>
-            <returns>The value at position row, col.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.SetArrayVal2D(System.UInt32[],System.UInt32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Sets the value at position <paramref name="row" />, <paramref name="col" /> in a data array of 
-            width <paramref name="width" />.
-            </summary>
-            <param name="data">The data array.</param>
-            <param name="value">The value to set at position row, col.</param>
-            <param name="row">The row.</param>
-            <param name="col">The column.</param>
-            <param name="width">The width of the data array.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Copy32BitTexToArray(System.IntPtr,System.UInt32[],System.Int32)">
-            <summary>
-            Copy texture pixels to an array.
-            </summary>
-            <param name="src">Pointer to the texture.</param>
-            <param name="dest">Array to fill with the pixel data</param>
-            <param name="size">The size of the resulting array.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTex``1(SlimDX.Direct3D9.Texture,System.UInt32[],``0,VVVV.Utils.SlimDX.TextureFillFunction{``0})">
-            <summary>
-            Fill a 32 bit texture with values retrieved from the function fillFunc.
-            </summary>
-            <param name="tex">The texture to fill.</param>
-            <param name="oldData">Array to fill with the old data.</param>
-            <param name="metadata">User defined metadata to hand over to the fillFunc.</param>
-            <param name="fillFunc">The function used to fill the texture.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTex(SlimDX.Direct3D9.Texture,System.UInt32[],VVVV.Utils.SlimDX.TextureFillFunction)">
-            <summary>
-            Fill a 32 bit texture with values retrieved from the function fillFunc.
-            </summary>
-            <param name="tex">The texture to fill.</param>
-            <param name="oldData">Array to fill with the old data</param>
-            <param name="fillFunc">The function used to fill the texture.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexParallel``1(SlimDX.Direct3D9.Texture,System.UInt32[],``0,VVVV.Utils.SlimDX.TextureFillFunction{``0})">
-            <summary>
-            Fill a 32 bit texture in parallel with values retrieved from the function fillFunc.
-            </summary>
-            <param name="tex">The texture to fill.</param>
-            <param name="oldData">Array to fill with the old data</param>
-            <param name="metadata">User defined metadata to hand over to the fillFunc.</param>
-            <param name="fillFunc">The function used to fill the texture.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexParallel(SlimDX.Direct3D9.Texture,System.UInt32[],VVVV.Utils.SlimDX.TextureFillFunction)">
-            <summary>
-            Fill a 32 bit texture in parallel with values retrieved from the function fillFunc.
-            </summary>
-            <param name="tex">The texture to fill.</param>
-            <param name="oldData">Array to fill with the old data</param>
-            <param name="fillFunc">The function used to fill the texture.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexInPlace``1(SlimDX.Direct3D9.Texture,``0,VVVV.Utils.SlimDX.TextureFillFunctionInPlace{``0})">
-            <summary>
-            Fill a 32 bit texture in place with values retrieved from the function fillFunc.
-            </summary>
-            <param name="tex">The texture to fill.</param>
-            <param name="metadata">User defined metadata to hand over to the fillFunc.</param>
-            <param name="fillFunc">The function used to fill the texture.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexInPlace(SlimDX.Direct3D9.Texture,VVVV.Utils.SlimDX.TextureFillFunctionInPlace)">
-            <summary>
-            Fill a 32 bit texture in place with values retrieved from the function fillFunc.
-            </summary>
-            <param name="tex">The texture to fill.</param>
-            <param name="fillFunc">The function used to fill the texture.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexInPlaceParallel``1(SlimDX.Direct3D9.Texture,``0,VVVV.Utils.SlimDX.TextureFillFunctionInPlace{``0})">
-            <summary>
-            Fill a 32 bit texture parallel in place with values retrieved from the function fillFunc.
-            </summary>
-            <param name="tex">The texture to fill.</param>
-            <param name="metadata">User defined metadata to hand over to the fillFunc.</param>
-            <param name="fillFunc">The function used to fill the texture.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexInPlaceParallel(SlimDX.Direct3D9.Texture,VVVV.Utils.SlimDX.TextureFillFunctionInPlace)">
-            <summary>
-            Fill a 32 bit texture parallel in place with values retrieved from the function fillFunc.
-            </summary>
-            <param name="tex">The texture to fill.</param>
-            <param name="fillFunc">The function used to fill the texture.</param>
-        </member>
-        <member name="T:VVVV.Utils.SlimDX.UInt32Utils">
-            <summary>
-            Low level utils to use uint as 32bit color
-            </summary>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.BitwiseToInt(System.UInt32)">
-            <summary>
-            Converts a color stored as uint to a color of type int.
-            </summary>
-            <param name="col">The color to convert.</param>
-            <returns>The converted color as int.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.BitwiseToUInt(System.Int32)">
-            <summary>
-            Converts a color stored as int to a color of type uint.
-            </summary>
-            <param name="col">The color to convert.</param>
-            <returns>The converted color as uint.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.fromARGB(System.Byte,System.Byte,System.Byte,System.Byte)">
-            <summary>
-            Set up uint color.
-            </summary>
-            <param name="a">Alpha.</param>
-            <param name="r">Red.</param>
-            <param name="g">Green.</param>
-            <param name="b">Blue.</param>
-            <returns>The color as uint.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getARGB(System.UInt32,System.Byte@,System.Byte@,System.Byte@,System.Byte@)">
-            <summary>
-            Retrieve color channels from uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <param name="a">Alpha.</param>
-            <param name="r">Red.</param>
-            <param name="g">Green.</param>
-            <param name="b">Blue.</param>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getA(System.UInt32)">
-            <summary>
-            Retrieves the alpha channel from a uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <returns>The alpha channel.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getR(System.UInt32)">
-            <summary>
-            Retrieves the red channel from a uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <returns>The red channel.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getG(System.UInt32)">
-            <summary>
-            Retrieves the green channel from a uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <returns>The green channel.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getB(System.UInt32)">
-            <summary>
-            Retrieves the blue channel from a uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <returns>The blue channel.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.setA(System.UInt32,System.Byte)">
-            <summary>
-            Sets the alpha channel in a uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <param name="a">The alpha channel.</param>
-            <returns>The color as uint with new alpha channel set.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.setR(System.UInt32,System.Byte)">
-            <summary>
-            Sets the red channel in a uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <param name="r">The red channel.</param>
-            <returns>The color as uint with new red channel set.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.setG(System.UInt32,System.Byte)">
-            <summary>
-            Sets the green channel in a uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <param name="g">The green channel.</param>
-            <returns>The color as uint with new green channel set.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.setB(System.UInt32,System.Byte)">
-            <summary>
-            Sets the blue channel in a uint color.
-            </summary>
-            <param name="col">The color as uint.</param>
-            <param name="b">The blue channel.</param>
-            <returns>The color as uint with new blue channel set.</returns>
-        </member>
-        <member name="T:VVVV.Utils.SlimDX.VectorExtensions">
-            <summary>
-            Extension methods for <see cref="T:SlimDX.Vector2">Vector2</see>, <see cref="T:SlimDX.Vector3">Vector3</see>
-            and <see cref="T:SlimDX.Vector4">Vector4</see>.
-            </summary>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.VectorExtensions.ToVector2D(SlimDX.Vector2)">
-            <summary>
-            Converts a <see cref="T:SlimDX.Vector2">Vector2</see> to a <see cref="T:VVVV.Utils.VMath.Vector2D">Vector2D</see>.
-            </summary>
-            <param name="Input">The <see cref="T:SlimDX.Vector2">Vector2</see> to convert.</param>
-            <returns>The converted <see cref="T:VVVV.Utils.VMath.Vector2D">Vector2D</see>.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.VectorExtensions.ToVector3D(SlimDX.Vector3)">
-            <summary>
-            Converts a <see cref="T:SlimDX.Vector3">Vector3</see> to a <see cref="T:VVVV.Utils.VMath.Vector3D">Vector3D</see>.
-            </summary>
-            <param name="Input">The <see cref="T:SlimDX.Vector3">Vector3</see> to convert.</param>
-            <returns>The converted <see cref="T:VVVV.Utils.VMath.Vector3D">Vector3D</see>.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.VectorExtensions.ToVector4D(SlimDX.Vector4)">
-            <summary>
-            Converts a <see cref="T:SlimDX.Vector4">Vector4</see> to a <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see>.
-            </summary>
-            <param name="Input">The <see cref="T:SlimDX.Vector4">Vector4</see> to convert.</param>
-            <returns>The converted <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see>.</returns>
-        </member>
-        <member name="M:VVVV.Utils.SlimDX.VectorExtensions.ToVector4D(SlimDX.Quaternion)">
-            <summary>
-            Converts a <see cref="T:SlimDX.Quaternion">Quaternion</see> to a <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see>.
-            </summary>
-            <param name="Input">The <see cref="T:SlimDX.Quaternion">Quaternion</see> to convert.</param>
-            <returns>The converted <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see>.</returns>
+            <param name="m1">Matrix 1 to blend.</param>
+            <param name="m2">Matrix 2 to blend.</param>
+            <param name="amount1">Amount of matrix 1 to be used in new blended matrix.</param>
+            <param name="amount2">Amount of matrix 2 to be used in new blended matrix.</param>
+            <param name="m">The new blenden matrix.</param>
+            <returns>True if matrix 1 and matrix 2 could be decomposed, otherwise false.</returns>
         </member>
         <member name="T:VVVV.Utils.SlimDX.SimpleVertex">
             <summary>
@@ -700,52 +409,232 @@
             The data size in bytes
             </summary>
         </member>
-        <member name="T:VVVV.Utils.VMath.Matrix4x4Extensions">
+        <member name="T:VVVV.Utils.SlimDX.TextureFillFunction">
             <summary>
-            Extension methods for type <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see>.
+            Method delegate for pixelshader like texture fill functions.
             </summary>
         </member>
-        <member name="M:VVVV.Utils.VMath.Matrix4x4Extensions.ToSlimDXMatrix(VVVV.Utils.VMath.Matrix4x4)">
+        <member name="T:VVVV.Utils.SlimDX.TextureFillFunction`1">
             <summary>
-            Converts a <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see> to a <see cref="T:SlimDX.Matrix">Matrix</see>.
-            </summary>
-            <param name="Input">The <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see> to convert.</param>
-            <returns>The converted <see cref="T:SlimDX.Matrix">Matrix</see>.</returns>
-        </member>
-        <member name="T:VVVV.Utils.VMath.Matrix4x4Utils">
-            <summary>
-            VMath Matrix utils.
+            Method delegate for pixelshader like texture fill functions carrying user defined metadata in its arguments.
             </summary>
         </member>
-        <member name="M:VVVV.Utils.VMath.Matrix4x4Utils.Decompose(VVVV.Utils.VMath.Matrix4x4,VVVV.Utils.VMath.Vector3D@,VVVV.Utils.VMath.Vector4D@,VVVV.Utils.VMath.Vector3D@)">
+        <member name="T:VVVV.Utils.SlimDX.TextureFillFunctionInPlace">
             <summary>
-            Decomposes the <see cref="T:VVVV.Utils.VMath.Matrix4x4">matrix</see> into its scalar, rotational, and translational elements. 
+            Method delegate for pixelshader like in place texture fill functions.
             </summary>
-            <param name="m">The matrix to decompose.</param>
-            <param name="scale">The scalar element.</param>
-            <param name="rotationQuaternion">The rotational element.</param>
-            <param name="translation">The translational element.</param>
         </member>
-        <member name="M:VVVV.Utils.VMath.Matrix4x4Utils.Decompose(VVVV.Utils.VMath.Matrix4x4,VVVV.Utils.VMath.Vector3D@,VVVV.Utils.VMath.Vector3D@,VVVV.Utils.VMath.Vector3D@)">
+        <member name="T:VVVV.Utils.SlimDX.TextureFillFunctionInPlace`1">
             <summary>
-            Decomposes the <see cref="T:VVVV.Utils.VMath.Matrix4x4">matrix</see> into its scalar, rotational, and translational elements. 
+            Method delegate for pixelshader like in place texture fill functions carrying user defined metadata in its arguments.
             </summary>
-            <param name="m">The matrix to decompose.</param>
-            <param name="scale">The scalar element.</param>
-            <param name="rotation">The rotational element.</param>
-            <param name="translation">The translational element.</param>
         </member>
-        <member name="M:VVVV.Utils.VMath.Matrix4x4Utils.Blend(VVVV.Utils.VMath.Matrix4x4,VVVV.Utils.VMath.Matrix4x4,System.Double,System.Double,VVVV.Utils.VMath.Matrix4x4@)">
+        <member name="T:VVVV.Utils.SlimDX.TextureUtils">
             <summary>
-            Blends a matrix <see cref="T:VVVV.Utils.VMath.Matrix4x4">m1</see> by amount1 and a matrix <see cref="T:VVVV.Utils.VMath.Matrix4x4">m2</see> by
-            amount2 into a new matrix <see cref="T:VVVV.Utils.VMath.Matrix4x4">m</see>.
+            Provides some utils to work with DX textures
             </summary>
-            <param name="m1">Matrix 1 to blend.</param>
-            <param name="m2">Matrix 2 to blend.</param>
-            <param name="amount1">Amount of matrix 1 to be used in new blended matrix.</param>
-            <param name="amount2">Amount of matrix 2 to be used in new blended matrix.</param>
-            <param name="m">The new blenden matrix.</param>
-            <returns>True if matrix 1 and matrix 2 could be decomposed, otherwise false.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.CreateTexture(SlimDX.Direct3D9.Device,System.Int32,System.Int32)">
+            <summary>
+            Create a <see cref="T:SlimDX.Direct3D9.Texture">texture</see> of <paramref name="width"/>
+            and <paramref name="height"/> on <paramref name="device"/>.
+            </summary>
+            <param name="device">The device to create the texture on.</param>
+            <param name="width">The width of the texture.</param>
+            <param name="height">The height of the texture.</param>
+            <returns>The newly created <see cref="T:SlimDX.Direct3D9.Texture">texture</see>.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.CreateTextureNoAlpha(SlimDX.Direct3D9.Device,System.Int32,System.Int32)">
+            <summary>
+            Create a <see cref="T:SlimDX.Direct3D9.Texture">texture</see> without an alpha channel of <paramref name="width"/>
+            and <paramref name="height"/> on <paramref name="device"/>.
+            </summary>
+            <param name="device">The device to create the texture on.</param>
+            <param name="width">The width of the texture.</param>
+            <param name="height">The height of the texture.</param>
+            <returns>The newly created <see cref="T:SlimDX.Direct3D9.Texture">texture</see>.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.CreateColoredTexture(SlimDX.Direct3D9.Device,System.Int32,System.Int32,System.UInt32)">
+            <summary>
+            Create a <see cref="T:SlimDX.Direct3D9.Texture">texture</see> of <paramref name="width"/>
+            and <paramref name="height"/> on <paramref name="device"/>
+            and fill it with <paramref name="argbColor"/>.
+            </summary>
+            <param name="device">The device to create the texture on.</param>
+            <param name="width">The width of the texture.</param>
+            <param name="height">The height of the texture.</param>
+            <param name="argbColor">The color to fill the texture with.</param>
+            <returns>The newly created <see cref="T:SlimDX.Direct3D9.Texture">texture</see>.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.CopyBitmapToTexture(System.Drawing.Bitmap,SlimDX.Direct3D9.Texture)">
+            <summary>
+            Copies all pixels of the bitmap into the texture.
+            no checks are done, make sure the pixel count of the bitmap and texture matches
+            </summary>
+            <param name="bm"></param>
+            <param name="texture"></param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.GetPtrVal2D(System.UInt32*,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Retrievies the value at position <paramref name="row" />, <paramref name="col" />
+            from a data buffer of width <paramref name="width" />.
+            </summary>
+            <param name="data">The pointer to the data buffer to retrieve the value from.</param>
+            <param name="row">The row.</param>
+            <param name="col">The column.</param>
+            <param name="width">The width of the data buffer.</param>
+            <returns>The value at position row, col.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.SetPtrVal2D(System.UInt32*,System.UInt32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the value at position <paramref name="row" />, <paramref name="col" />
+            in a data buffer of width <paramref name="width" />.
+            </summary>
+            <param name="data">The pointer to the data buffer.</param>
+            <param name="value">The value to set at position row, col.</param>
+            <param name="row">The row.</param>
+            <param name="col">The column.</param>
+            <param name="width">The width of the data buffer.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.GetArrayVal2D(System.UInt32[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Retrievies the value at position <paramref name="row" />, <paramref name="col" />
+            from a data array of width <paramref name="width" />.
+            </summary>
+            <param name="data">The data array to retrieve the value from.</param>
+            <param name="row">The row.</param>
+            <param name="col">The column.</param>
+            <param name="width">The width of the data array.</param>
+            <returns>The value at position row, col.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.SetArrayVal2D(System.UInt32[],System.UInt32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the value at position <paramref name="row" />, <paramref name="col" /> in a data array of 
+            width <paramref name="width" />.
+            </summary>
+            <param name="data">The data array.</param>
+            <param name="value">The value to set at position row, col.</param>
+            <param name="row">The row.</param>
+            <param name="col">The column.</param>
+            <param name="width">The width of the data array.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Copy32BitTexToArray(System.IntPtr,System.UInt32[],System.Int32)">
+            <summary>
+            Copy texture pixels to an array.
+            </summary>
+            <param name="src">Pointer to the texture.</param>
+            <param name="dest">Array to fill with the pixel data</param>
+            <param name="size">The size of the resulting array.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTex``1(SlimDX.Direct3D9.Texture,System.UInt32[],``0,VVVV.Utils.SlimDX.TextureFillFunction{``0})">
+            <summary>
+            Fill a 32 bit texture with values retrieved from the function fillFunc.
+            </summary>
+            <param name="tex">The texture to fill.</param>
+            <param name="oldData">Array to fill with the old data.</param>
+            <param name="metadata">User defined metadata to hand over to the fillFunc.</param>
+            <param name="fillFunc">The function used to fill the texture.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTex(SlimDX.Direct3D9.Texture,System.UInt32[],VVVV.Utils.SlimDX.TextureFillFunction)">
+            <summary>
+            Fill a 32 bit texture with values retrieved from the function fillFunc.
+            </summary>
+            <param name="tex">The texture to fill.</param>
+            <param name="oldData">Array to fill with the old data</param>
+            <param name="fillFunc">The function used to fill the texture.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexParallel``1(SlimDX.Direct3D9.Texture,System.UInt32[],``0,VVVV.Utils.SlimDX.TextureFillFunction{``0})">
+            <summary>
+            Fill a 32 bit texture in parallel with values retrieved from the function fillFunc.
+            </summary>
+            <param name="tex">The texture to fill.</param>
+            <param name="oldData">Array to fill with the old data</param>
+            <param name="metadata">User defined metadata to hand over to the fillFunc.</param>
+            <param name="fillFunc">The function used to fill the texture.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexParallel(SlimDX.Direct3D9.Texture,System.UInt32[],VVVV.Utils.SlimDX.TextureFillFunction)">
+            <summary>
+            Fill a 32 bit texture in parallel with values retrieved from the function fillFunc.
+            </summary>
+            <param name="tex">The texture to fill.</param>
+            <param name="oldData">Array to fill with the old data</param>
+            <param name="fillFunc">The function used to fill the texture.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexInPlace``1(SlimDX.Direct3D9.Texture,``0,VVVV.Utils.SlimDX.TextureFillFunctionInPlace{``0})">
+            <summary>
+            Fill a 32 bit texture in place with values retrieved from the function fillFunc.
+            </summary>
+            <param name="tex">The texture to fill.</param>
+            <param name="metadata">User defined metadata to hand over to the fillFunc.</param>
+            <param name="fillFunc">The function used to fill the texture.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexInPlace(SlimDX.Direct3D9.Texture,VVVV.Utils.SlimDX.TextureFillFunctionInPlace)">
+            <summary>
+            Fill a 32 bit texture in place with values retrieved from the function fillFunc.
+            </summary>
+            <param name="tex">The texture to fill.</param>
+            <param name="fillFunc">The function used to fill the texture.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexInPlaceParallel``1(SlimDX.Direct3D9.Texture,``0,VVVV.Utils.SlimDX.TextureFillFunctionInPlace{``0})">
+            <summary>
+            Fill a 32 bit texture parallel in place with values retrieved from the function fillFunc.
+            </summary>
+            <param name="tex">The texture to fill.</param>
+            <param name="metadata">User defined metadata to hand over to the fillFunc.</param>
+            <param name="fillFunc">The function used to fill the texture.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.TextureUtils.Fill32BitTexInPlaceParallel(SlimDX.Direct3D9.Texture,VVVV.Utils.SlimDX.TextureFillFunctionInPlace)">
+            <summary>
+            Fill a 32 bit texture parallel in place with values retrieved from the function fillFunc.
+            </summary>
+            <param name="tex">The texture to fill.</param>
+            <param name="fillFunc">The function used to fill the texture.</param>
+        </member>
+        <member name="T:VVVV.Utils.SlimDX.MatrixExtensions">
+            <summary>
+            Extension methods for type <see cref="T:SlimDX.Matrix">Matrix</see>.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.MatrixExtensions.ToMatrix4x4(SlimDX.Matrix)">
+            <summary>
+            Converts a <see cref="T:SlimDX.Matrix">Matrix</see> to a <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see>.
+            </summary>
+            <param name="Input">The <see cref="T:SlimDX.Matrix">Matrix</see> to convert.</param>
+            <returns>The converted <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see>.</returns>
+        </member>
+        <member name="T:VVVV.Utils.SlimDX.VectorExtensions">
+            <summary>
+            Extension methods for <see cref="T:SlimDX.Vector2">Vector2</see>, <see cref="T:SlimDX.Vector3">Vector3</see>
+            and <see cref="T:SlimDX.Vector4">Vector4</see>.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.VectorExtensions.ToVector2D(SlimDX.Vector2)">
+            <summary>
+            Converts a <see cref="T:SlimDX.Vector2">Vector2</see> to a <see cref="T:VVVV.Utils.VMath.Vector2D">Vector2D</see>.
+            </summary>
+            <param name="Input">The <see cref="T:SlimDX.Vector2">Vector2</see> to convert.</param>
+            <returns>The converted <see cref="T:VVVV.Utils.VMath.Vector2D">Vector2D</see>.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.VectorExtensions.ToVector3D(SlimDX.Vector3)">
+            <summary>
+            Converts a <see cref="T:SlimDX.Vector3">Vector3</see> to a <see cref="T:VVVV.Utils.VMath.Vector3D">Vector3D</see>.
+            </summary>
+            <param name="Input">The <see cref="T:SlimDX.Vector3">Vector3</see> to convert.</param>
+            <returns>The converted <see cref="T:VVVV.Utils.VMath.Vector3D">Vector3D</see>.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.VectorExtensions.ToVector4D(SlimDX.Vector4)">
+            <summary>
+            Converts a <see cref="T:SlimDX.Vector4">Vector4</see> to a <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see>.
+            </summary>
+            <param name="Input">The <see cref="T:SlimDX.Vector4">Vector4</see> to convert.</param>
+            <returns>The converted <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see>.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.VectorExtensions.ToVector4D(SlimDX.Quaternion)">
+            <summary>
+            Converts a <see cref="T:SlimDX.Quaternion">Quaternion</see> to a <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see>.
+            </summary>
+            <param name="Input">The <see cref="T:SlimDX.Quaternion">Quaternion</see> to convert.</param>
+            <returns>The converted <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see>.</returns>
         </member>
         <member name="T:VVVV.Utils.VMath.VectorExtensions">
             <summary>
@@ -773,6 +662,117 @@
             </summary>
             <param name="Input">The <see cref="T:VVVV.Utils.VMath.Vector4D">Vector4D</see> to convert.</param>
             <returns>The converted <see cref="T:SlimDX.Vector4">Vector4</see>.</returns>
+        </member>
+        <member name="T:VVVV.Utils.SlimDX.UInt32Utils">
+            <summary>
+            Low level utils to use uint as 32bit color
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.BitwiseToInt(System.UInt32)">
+            <summary>
+            Converts a color stored as uint to a color of type int.
+            </summary>
+            <param name="col">The color to convert.</param>
+            <returns>The converted color as int.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.BitwiseToUInt(System.Int32)">
+            <summary>
+            Converts a color stored as int to a color of type uint.
+            </summary>
+            <param name="col">The color to convert.</param>
+            <returns>The converted color as uint.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.fromARGB(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Set up uint color.
+            </summary>
+            <param name="a">Alpha.</param>
+            <param name="r">Red.</param>
+            <param name="g">Green.</param>
+            <param name="b">Blue.</param>
+            <returns>The color as uint.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getARGB(System.UInt32,System.Byte@,System.Byte@,System.Byte@,System.Byte@)">
+            <summary>
+            Retrieve color channels from uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <param name="a">Alpha.</param>
+            <param name="r">Red.</param>
+            <param name="g">Green.</param>
+            <param name="b">Blue.</param>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getA(System.UInt32)">
+            <summary>
+            Retrieves the alpha channel from a uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <returns>The alpha channel.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getR(System.UInt32)">
+            <summary>
+            Retrieves the red channel from a uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <returns>The red channel.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getG(System.UInt32)">
+            <summary>
+            Retrieves the green channel from a uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <returns>The green channel.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.getB(System.UInt32)">
+            <summary>
+            Retrieves the blue channel from a uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <returns>The blue channel.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.setA(System.UInt32,System.Byte)">
+            <summary>
+            Sets the alpha channel in a uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <param name="a">The alpha channel.</param>
+            <returns>The color as uint with new alpha channel set.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.setR(System.UInt32,System.Byte)">
+            <summary>
+            Sets the red channel in a uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <param name="r">The red channel.</param>
+            <returns>The color as uint with new red channel set.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.setG(System.UInt32,System.Byte)">
+            <summary>
+            Sets the green channel in a uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <param name="g">The green channel.</param>
+            <returns>The color as uint with new green channel set.</returns>
+        </member>
+        <member name="M:VVVV.Utils.SlimDX.UInt32Utils.setB(System.UInt32,System.Byte)">
+            <summary>
+            Sets the blue channel in a uint color.
+            </summary>
+            <param name="col">The color as uint.</param>
+            <param name="b">The blue channel.</param>
+            <returns>The color as uint with new blue channel set.</returns>
+        </member>
+        <member name="T:VVVV.Utils.VMath.Matrix4x4Extensions">
+            <summary>
+            Extension methods for type <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see>.
+            </summary>
+        </member>
+        <member name="M:VVVV.Utils.VMath.Matrix4x4Extensions.ToSlimDXMatrix(VVVV.Utils.VMath.Matrix4x4)">
+            <summary>
+            Converts a <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see> to a <see cref="T:SlimDX.Matrix">Matrix</see>.
+            </summary>
+            <param name="Input">The <see cref="T:VVVV.Utils.VMath.Matrix4x4">Matrix4x4</see> to convert.</param>
+            <returns>The converted <see cref="T:SlimDX.Matrix">Matrix</see>.</returns>
         </member>
     </members>
 </doc>

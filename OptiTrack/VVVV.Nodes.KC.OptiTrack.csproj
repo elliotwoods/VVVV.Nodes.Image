@@ -75,10 +75,26 @@
     <Reference Include="VVVV.Core">
       <HintPath>..\..\..\..\..\..\lib\core\VVVV.Core.dll</HintPath>
     </Reference>
+    <Reference Include="VVVV.Hosting">
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="VVVV.PluginInterfaces">
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.PluginInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="VVVV.Utils">
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="VVVV.Utils3rdParty">
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.Utils3rdParty.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Info.cs" />
-    <Compile Include="ListDevices.cs" />
+    <Compile Include="Lib\Context.cs" />
+    <Compile Include="Lib\TrackingObject.cs" />
+    <Compile Include="Nodes\CaptureProperty.cs" />
+    <Compile Include="Nodes\Info.cs" />
+    <Compile Include="Nodes\ListDevices.cs" />
+    <Compile Include="Nodes\ObjectSplit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,25 +118,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\..\..\dev\libraries\OptiTrack.NET\OptiTrack.NET\OptiTrack.NET.vcxproj">
-      <Project>{d10f7abc-e06c-48b3-92c7-e9cb3c7c0864}</Project>
-      <Name>OptiTrackNET</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\core\Hosting\Hosting.csproj">
-      <Project>{F9A754A6-EEA5-4761-9446-C2AAF9CF8B31}</Project>
-      <Name>Hosting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\core\PluginInterfaces\PluginInterfaces.csproj">
-      <Project>{837C740A-485C-424C-8C38-086ED3DC73CB}</Project>
-      <Name>PluginInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\core\Utils3rdParty\Utils3rdParty.csproj">
-      <Project>{87863121-C124-4585-B3BB-7706F03ECC64}</Project>
-      <Name>Utils3rdParty</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\core\Utils\Utils.csproj">
-      <Project>{C3773330-81FA-4253-823E-1BDE1529AA99}</Project>
-      <Name>Utils</Name>
+    <ProjectReference Include="..\..\..\..\..\..\..\..\..\dev\libraries\OptiTrackNET\NPCameraSDKDotNet.vcxproj">
+      <Project>{D04530D4-58C9-476E-8249-30CCEB669D63}</Project>
+      <Name>NPCameraSDKDotNet</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenCV\VVVV.Nodes.OpenCV.csproj">
       <Project>{E9A7FC26-34E0-4C1E-83D8-C01A169422B2}</Project>
@@ -128,10 +128,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cameralibrary.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Compile Include="VideoIn.cs" />
+    <Compile Include="Nodes\VideoIn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
