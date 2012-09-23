@@ -132,6 +132,7 @@
     <Compile Include="src\Destinations\PipetNode.cs" />
     <None Include="src\Dead\VideoRecordNode.cs" />
     <Compile Include="src\Destinations\Writer.cs" />
+    <Compile Include="src\Filters\AdaptiveThreshold.cs" />
     <Compile Include="src\Filters\BackgroundSubtract.cs" />
     <Compile Include="src\Filters\Canny.cs" />
     <Compile Include="src\Filters\S+H.cs" />
