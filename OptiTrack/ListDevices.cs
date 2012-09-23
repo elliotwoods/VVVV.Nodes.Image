@@ -12,7 +12,7 @@ using VVVV.Core.Logging;
 using ThreadState = System.Threading.ThreadState;
 using System.Collections.Generic;
 
-using OptiTrackNET;
+using NPCameraSDKDotNet;
 
 using VVVV.Nodes.OpenCV;
 
@@ -30,20 +30,25 @@ namespace VVVV.Nodes.OptiTrack
 		ISpread<bool> FPinInRefresh;
 
 		[Output("Device")]
-		ISpread<Camera> FPinOutCameras;
+		ISpread<MCamera> FPinOutCameras;
 
 		[Import]
 		ILogger FLogger;
 
 		bool FFirstRun = true;
-		OptiTrackNET.Context FContext = new OptiTrackNET.Context();
 
 		#endregion fields & pins
 
 		[ImportingConstructor]
 		public CameraListNode(IPluginHost host)
 		{
-
+			if (MCameraManager.AreCamerasInitialized())
+			{
+#if (DEBUG)
+				MCameraManager.EnableDevelopment();
+#endif
+				MCameraManager.WaitForInitialization();
+			}
 		}
 
 		public void Dispose()
@@ -63,7 +68,7 @@ namespace VVVV.Nodes.OptiTrack
 
 		void Refresh()
 		{
-			var Cameras = Context.Cameras;
+			var Cameras = MCameraManager.GetCameras();
 			FPinOutCameras.SliceCount = 0;
 
 			foreach (var Camera in Cameras)

@@ -1,4 +1,4 @@
-﻿using OptiTrackNET;
+﻿using NPCameraSDKDotNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace VVVV.Nodes.OptiTrack
 	{
 		#region fields & pins
 		[Input("Device")]
-		IDiffSpread<Camera> FInCamera;
+		IDiffSpread<MCamera> FInCamera;
 
 		[Input("Update", IsBang = true)]
 		ISpread<bool> FInUpdate;
@@ -28,7 +28,7 @@ namespace VVVV.Nodes.OptiTrack
 
 		[Output("Height")]
 		ISpread<int> FOutHeight;
-		
+
 		[Output("Model")]
 		ISpread<int> FOutModel;
 
@@ -51,10 +51,13 @@ namespace VVVV.Nodes.OptiTrack
 
 			for (int i = 0; i < SpreadMax; i++)
 			{
-				FOutWidth[i] = FInCamera[i].Size.Width;
-				FOutWidth[i] = FInCamera[i].Size.Height;
-				FOutModel[i] = FInCamera[i].Model;
-				FOutSerial[i] = FInCamera[i].Serial;
+				if (allupdate || FInUpdate[i])
+				{
+					FOutWidth[i] = FInCamera[i].Width();
+					FOutHeight[i] = FInCamera[i].Height();
+					FOutModel[i] = FInCamera[i].Model();
+					FOutSerial[i] = FInCamera[i].Serial();
+				}
 			}
 		}
 
