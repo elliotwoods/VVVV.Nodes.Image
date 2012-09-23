@@ -8,6 +8,7 @@ using Emgu.CV.Structure;
 using Emgu.Util;
 using System.Runtime.InteropServices;
 using Emgu.CV.CvEnum;
+using System.Drawing;
 
 namespace VVVV.Nodes.OpenCV
 {
@@ -73,6 +74,7 @@ namespace VVVV.Nodes.OpenCV
 			bool Reinitialise = Initialise(source.Size, sourceFormat);
 
 			ImageUtils.CopyImage(source, this);
+			this.Timestamp = DateTime.UtcNow.Ticks;
 
 			return Reinitialise;
 		}
@@ -89,6 +91,25 @@ namespace VVVV.Nodes.OpenCV
 
 			ImageUtils.CopyImage(source, this);
 			this.Timestamp = source.Timestamp;
+
+			return Reinitialise;
+		}
+
+		public bool SetImage(Bitmap source)
+		{
+			if (source == null)
+				return false;
+
+			TColorFormat format = ImageUtils.GetFormat(source.PixelFormat);
+			if (format == TColorFormat.UnInitialised)
+				return false;
+
+			bool Reinitialise = Initialise(source.Size, format);
+
+			var bitmapData = source.LockBits(new Rectangle(0, 0, source.Width, source.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, source.PixelFormat);
+			ImageUtils.CopyImage(bitmapData.Scan0, this);
+			source.UnlockBits(bitmapData);
+			this.Timestamp = DateTime.UtcNow.Ticks;
 
 			return Reinitialise;
 		}

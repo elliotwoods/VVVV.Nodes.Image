@@ -102,6 +102,7 @@
     <Compile Include="src\CameraCalibration\FindBoardNode.cs" />
     <Compile Include="src\CameraCalibration\IntrinsicsSplitNode.cs" />
     <Compile Include="src\CameraCalibration\ProjectPointsNode.cs" />
+    <Compile Include="src\Utilities\TypeUtils.cs" />
     <None Include="src\Dead\AbstractInstance.cs" />
     <None Include="src\Dead\AsTextureL16Node.cs" />
     <None Include="src\Dead\AsTextureRGB8Node.cs" />
@@ -135,6 +136,8 @@
     <Compile Include="src\Filters\AdaptiveThreshold.cs" />
     <Compile Include="src\Filters\BackgroundSubtract.cs" />
     <Compile Include="src\Filters\Canny.cs" />
+    <Compile Include="src\Filters\Multiply.cs" />
+    <Compile Include="src\Filters\Sobel.cs" />
     <Compile Include="src\Filters\S+H.cs" />
     <Compile Include="src\Filters\Not.cs" />
     <Compile Include="src\Filters\Grayscale.cs" />

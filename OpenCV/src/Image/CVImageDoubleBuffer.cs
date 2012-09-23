@@ -145,6 +145,21 @@ namespace VVVV.Nodes.OpenCV
 			Swap();
 		}
 
+		public void Send(Bitmap source)
+		{
+			bool Reinitialise;
+
+			lock (FBackLock)
+				Reinitialise = FBackBuffer.SetImage(source);
+
+			if (Reinitialise)
+			{
+				InitialiseFrontFromBack();
+			}
+
+			Swap();
+		}
+
 		public void Initialise(CVImageAttributes attributes)
 		{
 			FImageAttributes = attributes;

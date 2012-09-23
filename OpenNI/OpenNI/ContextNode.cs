@@ -32,7 +32,7 @@ namespace VVVV.Nodes.OpenCV.OpenNI
         ISpread<string> FPinInNodes;
 
 		[Output("Context")]
-		ISpread<OpenNIState> FPinOutContext;
+		ISpread<Device> FPinOutContext;
 
 		[Output("Status")]
 		ISpread<String> FPinOutStatus;
@@ -42,7 +42,7 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 
 		string FStatus = "";
 
-        Spread<OpenNIState> FState = new Spread<OpenNIState>(0);
+        Spread<Device> FState = new Spread<Device>(0);
 		License FLicense = new License();
 		#endregion fields & pins
 
@@ -70,6 +70,8 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 					Open(i);
 				else if (!FPinInEnabled[i] && FState[i].Running)
 					Close(i);
+                if (FPinOutContext[i] != FState[i])
+                    FPinOutContext[i] = FState[i];
 			}
 		}
 
@@ -79,11 +81,11 @@ namespace VVVV.Nodes.OpenCV.OpenNI
                 return;
 
             for (int i = FState.SliceCount; i < SpreadMax; i++)
-                FState.Add<OpenNIState>(new OpenNIState());
+                FState.Add<Device>(new Device());
             for (int i = SpreadMax; i < FState.SliceCount; i++)
             {
                 FState[i] = null;
-                FState.RemoveAt<OpenNIState>(i);
+                FState.RemoveAt<Device>(i);
             }
 
             FPinOutContext.SliceCount = FState.SliceCount;
@@ -97,12 +99,11 @@ namespace VVVV.Nodes.OpenCV.OpenNI
 				Close(i);
 
 
-                OpenNIState state = FState[i];
+                Device state = FState[i];
                 var context = new Context();
 				FState[i].Context = context;
                 context.AddLicense(FLicense);
                 context.GlobalMirror = false;
-
 
                 NodeInfoList list = context.EnumerateProductionTrees(global::OpenNI.NodeType.Device, null);
                 NodeInfo node = null;

@@ -9,6 +9,7 @@ using SlimDX.Direct3D9;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using VVVV.PluginInterfaces.V2;
+using System.Drawing.Imaging;
 
 namespace VVVV.Nodes.OpenCV
 {
@@ -130,6 +131,18 @@ namespace VVVV.Nodes.OpenCV
 				return TColorFormat.RGBA8;
 
 			return TColorFormat.UnInitialised;
+		}
+
+		public static TColorFormat GetFormat(PixelFormat format)
+		{
+			switch (format)
+			{
+				case PixelFormat.Format32bppRgb:
+					return TColorFormat.RGBA8;
+				case PixelFormat.Format24bppRgb:
+					return TColorFormat.RGB8;
+			}
+			throw (new Exception("Color format not supported by GetFormat(PixelFormat)"));
 		}
 
 		public static uint BytesPerPixel(TColorFormat format)
