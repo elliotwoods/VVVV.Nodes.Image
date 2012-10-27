@@ -65,7 +65,7 @@
       <HintPath>..\..\..\..\..\..\lib\core\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition.Codeplex">
+    <Reference Include="System.ComponentModel.Composition.Codeplex, Version=4.1.2.0, Culture=neutral, PublicKeyToken=13e5ffd4e05db186, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\..\lib\core\System.ComponentModel.Composition.Codeplex.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
@@ -75,19 +75,25 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="VVVV.Core">
+    <Reference Include="VVVV.Core, Version=1.0.4649.26810, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\..\lib\core\VVVV.Core.dll</HintPath>
     </Reference>
-    <Reference Include="VVVV.Hosting">
+    <Reference Include="VVVV.HDE.Viewer.PiccoloGraphicalEditor">
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.HDE.Viewer.PiccoloGraphicalEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="VVVV.HDE.Viewer.WinFormsViewer">
+      <HintPath>..\..\..\..\..\..\lib\core\VVVV.HDE.Viewer.WinFormsViewer.dll</HintPath>
+    </Reference>
+    <Reference Include="VVVV.Hosting, Version=1.0.4649.27099, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\..\lib\core\VVVV.Hosting.dll</HintPath>
     </Reference>
-    <Reference Include="VVVV.PluginInterfaces">
+    <Reference Include="VVVV.PluginInterfaces, Version=2.0.4649.27099, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\..\lib\core\VVVV.PluginInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="VVVV.Utils">
+    <Reference Include="VVVV.Utils, Version=1.0.4649.26809, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\..\lib\core\VVVV.Utils.dll</HintPath>
     </Reference>
-    <Reference Include="VVVV.Utils3rdParty">
+    <Reference Include="VVVV.Utils3rdParty, Version=1.0.4649.26810, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\..\lib\core\VVVV.Utils3rdParty.dll</HintPath>
     </Reference>
   </ItemGroup>
